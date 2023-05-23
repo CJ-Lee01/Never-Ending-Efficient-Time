@@ -8,9 +8,9 @@ import {
 import React from "react";
 import AuthButtons from "./AuthButtons";
 import Logo from "./Logo";
+import AccessBar from "./AccessBar";
 
 const Navbar: React.FC = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Flex
       bg={useColorModeValue("gray.100", "gray.900")}
@@ -19,6 +19,7 @@ const Navbar: React.FC = () => {
     >
       <Logo />
       <Spacer />
+      {/* <AccessBar /> */}
       <AuthButtons />
     </Flex>
   );

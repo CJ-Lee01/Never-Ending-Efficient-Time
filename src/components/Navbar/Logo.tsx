@@ -1,16 +1,9 @@
 import { Link } from "@chakra-ui/next-js";
 import NextLink from "next/link";
-import {
-  Button,
-  Flex,
-  Image,
-  useColorMode,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { FC } from "react";
 
 const Logo: FC = ({}) => {
-  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Flex
       align="center"
@@ -30,13 +23,3 @@ const Logo: FC = ({}) => {
 };
 
 export default Logo;
-
-{
-  /* <Link as={"a"} href="/">
-        {colorMode === "light" ? (
-          <Image src="/images/logoblack.png" width="64px" />
-        ) : (
-          <Image src="/images/teamlogowhite.png" width="64px" />
-        )}
-      </Link> */
-}

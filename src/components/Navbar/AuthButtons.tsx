@@ -1,5 +1,6 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "@chakra-ui/next-js";
+import NextLink from "next/link";
 import {
   Flex,
   Stack,
@@ -8,7 +9,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FC } from "react";
-import NextLink from "next/link";
 
 const AuthButtons: FC = ({}) => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -31,7 +31,6 @@ const AuthButtons: FC = ({}) => {
 
         <Button
           as={NextLink}
-          //display={{ base: "none", md: "inline-flex" }}
           fontSize={"sm"}
           fontWeight={600}
           color={"white"}
