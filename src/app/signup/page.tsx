@@ -36,12 +36,22 @@ export default function SignUpPage() {
 
   const signupHandler = async (event: FormEvent<HTMLFormElement>) => {  
     event.preventDefault();
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: enteredEmail,
-      password: enterPassword,
-    });
+    const { data, error } = await supabase.auth.signUp(
+      {
+        email: enteredEmail,
+        password: enterPassword,
+        options: {
+          data: {
+            name: enteredName,
+          },
+          emailRedirectTo: process.env.ROOT_URL ?? "https://google.com"
+        }
+
+      }
+    )
     setData(data);
     setError(error);
+    error && alert(error.message);
   }
 
   
@@ -73,6 +83,7 @@ export default function SignUpPage() {
           p={8}
         >
           <Stack spacing={4}>
+            <form onSubmit={signupHandler}>
             <InputFormFields type="name" changeHandler={nameFormHandler} isRequired>
               Name
             </InputFormFields>
@@ -89,10 +100,12 @@ export default function SignUpPage() {
                 _hover={{
                   bg: "blue.500",
                 }}
+                type="submit"
               >
                 Sign up
               </Button>
             </Stack>
+            </form>
             <Stack pt={6}>
               <Text align={"center"}>
                 Already a user?{" "}
