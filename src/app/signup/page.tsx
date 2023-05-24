@@ -16,12 +16,39 @@ import {
   useColorModeValue,
   Link,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
+import InputFormFields, { genericFormHandler } from "@/components/FormsUI/InputFormFields";
+import PasswordFormField from "@/components/FormsUI/PasswordFormField";
+import { supabaseUser } from "@/lib/initSupabase";
+import { AuthError } from "@supabase/supabase-js";
 
 export default function SignUpPage() {
-  const [showPassword, setShowPassword] = useState(false);
+  const supabase = supabaseUser();
+
+  const [enteredEmail, setEmail] = useState<string>("");
+  const [enterPassword, setPassword] = useState<string>("");
+  const [enteredName, setName] = useState<string>("")
+  const [authError, setError] = useState<AuthError | null>();
+  const [data, setData] = useState<{}>();
+
+
+  const signupHandler = async (event: FormEvent<HTMLFormElement>) => {  
+    event.preventDefault();
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: enteredEmail,
+      password: enterPassword,
+    });
+    setData(data);
+    setError(error);
+  }
+
+  
+  const passwordFormHandler = genericFormHandler(setPassword);
+  const emailFormHandler = genericFormHandler(setEmail);
+  const nameFormHandler = genericFormHandler(setName);
+
 
   return (
     <Flex
@@ -46,40 +73,13 @@ export default function SignUpPage() {
           p={8}
         >
           <Stack spacing={4}>
-            <HStack>
-              <Box>
-                <FormControl id="firstName" isRequired>
-                  <FormLabel>First Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl id="lastName">
-                  <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-            </HStack>
-            <FormControl id="email" isRequired>
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password" isRequired>
-              <FormLabel>Password</FormLabel>
-              <InputGroup>
-                <Input type={showPassword ? "text" : "password"} />
-                <InputRightElement h={"full"}>
-                  <Button
-                    variant={"ghost"}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
+            <InputFormFields type="name" changeHandler={nameFormHandler} isRequired>
+              Name
+            </InputFormFields>
+            <InputFormFields type="email" changeHandler={emailFormHandler} isRequired>
+              Email address
+            </InputFormFields>
+            <PasswordFormField changeHandler={passwordFormHandler} />
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"
