@@ -19,7 +19,7 @@ import {
 import { ChangeEvent, FormEvent, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
-import InputFormFields, { genericFormHandler } from "@/components/FormsUI/InputFormFields";
+import InputFormFields, { genericInputHandler } from "@/components/FormsUI/InputFormFields";
 import PasswordFormField from "@/components/FormsUI/PasswordFormField";
 import { supabaseUser } from "@/lib/initSupabase";
 import { AuthError } from "@supabase/supabase-js";
@@ -57,9 +57,9 @@ export default function SignUpPage() {
   }
 
   
-  const passwordFormHandler = genericFormHandler(setPassword);
-  const emailFormHandler = genericFormHandler(setEmail);
-  const nameFormHandler = genericFormHandler(setName);
+  const passwordFormHandler = genericInputHandler(setPassword);
+  const emailFormHandler = genericInputHandler(setEmail);
+  const nameFormHandler = genericInputHandler(setName);
 
 
   return (

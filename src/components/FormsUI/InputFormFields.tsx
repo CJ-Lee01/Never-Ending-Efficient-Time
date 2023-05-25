@@ -13,7 +13,7 @@ export default function InputFormFields({type, changeHandler, children, isRequir
   )
 }
 
-export function genericFormHandler(setter: Dispatch<SetStateAction<string>>) {
+export function genericInputHandler(setter: Dispatch<SetStateAction<string>>) {
   return (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     setter(event.currentTarget.value);

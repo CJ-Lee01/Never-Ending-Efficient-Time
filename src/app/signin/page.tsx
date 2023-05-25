@@ -12,13 +12,14 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 
 import { ChangeEvent, FormEvent, useState } from "react";
-import InputFormFields, { genericFormHandler } from "@/components/FormsUI/InputFormFields";
-import { Session, useSupabaseClient } from '@supabase/auth-helpers-react'
+import InputFormFields, { genericInputHandler } from "@/components/FormsUI/InputFormFields";
 import { AuthError, User } from "@supabase/supabase-js";
-import {supabaseUser} from "../../lib/initSupabase";
+import { supabaseUser } from "../../lib/initSupabase";
 import PasswordFormField from "@/components/FormsUI/PasswordFormField";
 
 
@@ -33,7 +34,7 @@ export default function SignInPage() {
   const [data, setData] = useState<{}>();
 
 
-  const signInHandler = async (event: FormEvent<HTMLFormElement>) => {  
+  const signInHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { data, error } = await supabase.auth.signInWithPassword({
       email: enteredEmail,
@@ -41,11 +42,10 @@ export default function SignInPage() {
     });
     setData(data);
     setError(error);
-    error && alert(error.message);
   }
-  const passwordFormHandler = genericFormHandler(setPassword);
+  const passwordFormHandler = genericInputHandler(setPassword);
 
-  const emailFormHandler = genericFormHandler(setEmail);
+  const emailFormHandler = genericInputHandler(setEmail);
 
   return (
     <Flex
@@ -68,32 +68,35 @@ export default function SignInPage() {
           p={8}
         >
           <Stack spacing={4}>
-          <form onSubmit={signInHandler}>
-            <InputFormFields type="email" changeHandler={emailFormHandler} isRequired>
-              Email address
-            </InputFormFields>
-            <PasswordFormField changeHandler={passwordFormHandler} />
-            <Stack spacing={10}>
-              <Stack
-                direction={{ base: "column", sm: "row" }}
-                align={"start"}
-                justify={"space-between"}
-              >
-                <Checkbox>Remember me</Checkbox>
-                <Link color={"blue.400"}>Forgot password?</Link>
+            <form onSubmit={signInHandler}>
+              <InputFormFields type="email" changeHandler={emailFormHandler} isRequired>
+                Email address
+              </InputFormFields>
+              <PasswordFormField changeHandler={passwordFormHandler} />
+              <Stack spacing={10}>
+                <Stack
+                  direction={{ base: "column", sm: "row" }}
+                  align={"start"}
+                  justify={"space-between"}
+                >
+                  <Checkbox>Remember me</Checkbox>
+                  <Link color={"blue.400"}>Forgot password?</Link>
+                </Stack>
+                <Button
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                  type="submit"
+                >
+                  Sign in
+                </Button>
+                {authError && <Alert status='error'>
+                  <AlertIcon /> {authError.message}
+                </Alert>}
               </Stack>
-              <Button
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-                type="submit"
-              >
-                Sign in
-              </Button>
-            </Stack>
-          </form>
+            </form>
           </Stack>
         </Box>
       </Stack>
