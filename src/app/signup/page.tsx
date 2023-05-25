@@ -15,6 +15,8 @@ import {
   Text,
   useColorModeValue,
   Link,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -35,7 +37,7 @@ export default function SignUpPage() {
   const [data, setData] = useState<UserData>();
 
 
-  const signupHandler = async (event: FormEvent<HTMLFormElement>) => {  
+  const signupHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { data, error } = await supabase.auth.signUp(
       {
@@ -52,11 +54,9 @@ export default function SignUpPage() {
     )
     setData(data);
     setError(error);
-    error && alert(error.message);
-    data && console.log(data);
   }
 
-  
+
   const passwordFormHandler = genericInputHandler(setPassword);
   const emailFormHandler = genericInputHandler(setEmail);
   const nameFormHandler = genericInputHandler(setName);
@@ -86,27 +86,30 @@ export default function SignUpPage() {
         >
           <Stack spacing={4}>
             <form onSubmit={signupHandler}>
-            <InputFormFields type="name" changeHandler={nameFormHandler} isRequired>
-              Name
-            </InputFormFields>
-            <InputFormFields type="email" changeHandler={emailFormHandler} isRequired>
-              Email address
-            </InputFormFields>
-            <PasswordFormField changeHandler={passwordFormHandler} />
-            <Stack spacing={10} pt={2}>
-              <Button
-                loadingText="Submitting"
-                size="lg"
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-                type="submit"
-              >
-                Sign up
-              </Button>
-            </Stack>
+              <InputFormFields type="name" changeHandler={nameFormHandler} isRequired>
+                Name
+              </InputFormFields>
+              <InputFormFields type="email" changeHandler={emailFormHandler} isRequired>
+                Email address
+              </InputFormFields>
+              <PasswordFormField changeHandler={passwordFormHandler} />
+              <Stack spacing={10} pt={2}>
+                <Button
+                  loadingText="Submitting"
+                  size="lg"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                  type="submit"
+                >
+                  Sign up
+                </Button>
+                {authError && <Alert status='error'>
+                  <AlertIcon /> {authError.message}
+                </Alert>}
+              </Stack>
             </form>
             <Stack pt={6}>
               <Text align={"center"}>
