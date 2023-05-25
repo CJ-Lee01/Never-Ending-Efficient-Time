@@ -26,7 +26,6 @@ export default function dashboard() {
   }
 
   refreshStatus();
-
   return haventFetch 
     ? <>Fetching data....</>
     : isLoggedIn
