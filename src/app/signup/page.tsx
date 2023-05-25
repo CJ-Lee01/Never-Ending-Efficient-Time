@@ -23,7 +23,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 import InputFormFields, { genericInputHandler } from "@/components/FormsUI/InputFormFields";
 import PasswordFormField from "@/components/FormsUI/PasswordFormField";
-import { supabaseUser } from "@/lib/initSupabase";
+import { ROOT_URL, supabaseUser } from "@/lib/initSupabase";
 import { AuthError } from "@supabase/supabase-js";
 import { UserData } from "@/lib/types";
 
@@ -47,7 +47,7 @@ export default function SignUpPage() {
           data: {
             full_name: enteredName,
           },
-          emailRedirectTo: process.env.ROOT_URL ?? "https://google.com"
+          emailRedirectTo: ROOT_URL + "/dashboard"
         }
 
       }
