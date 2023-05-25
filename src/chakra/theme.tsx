@@ -1,5 +1,5 @@
 // 1. Import the extendTheme function
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/400.css";
 import "@fontsource/open-sans/700.css";
@@ -17,6 +17,11 @@ import "@fontsource/open-sans/700.css";
 
 // export const theme = extendTheme({ colors, fonts });
 
+const config: ThemeConfig = {
+  initialColorMode: "light",
+  useSystemColorMode: false,
+};
+
 export const theme = extendTheme({
   colors: {
     brand: {
@@ -33,8 +38,5 @@ export const theme = extendTheme({
       },
     }),
   },
-  config: {
-    initialColorMode: "light",
-    useSystemColorMode: false,
-  },
+  config,
 });

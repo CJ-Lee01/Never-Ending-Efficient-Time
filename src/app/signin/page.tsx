@@ -12,9 +12,44 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 
+import { ChangeEvent, FormEvent, useState } from "react";
+import InputFormFields, { genericInputHandler } from "@/components/FormsUI/InputFormFields";
+import { AuthError, User } from "@supabase/supabase-js";
+import { supabaseUser } from "../../lib/initSupabase";
+import PasswordFormField from "@/components/FormsUI/PasswordFormField";
+import { useRouter } from "next/navigation"
+
+
+
 export default function SignInPage() {
+
+  const supabase = supabaseUser();
+  const router = useRouter();
+
+  const [enteredEmail, setEmail] = useState<string>("");
+  const [enterPassword, setPassword] = useState<string>("");
+  const [authError, setError] = useState<AuthError | null>();
+  const [data, setData] = useState<{}>();
+
+
+  const signInHandler = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: enteredEmail,
+      password: enterPassword,
+    });
+    setData(data);
+    setError(error);
+    data.session && router.push('/dashboard');
+  }
+  const passwordFormHandler = genericInputHandler(setPassword);
+
+  const emailFormHandler = genericInputHandler(setEmail);
+
   return (
     <Flex
       minH={"100vh"}
@@ -36,33 +71,35 @@ export default function SignInPage() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input type="password" />
-            </FormControl>
-            <Stack spacing={10}>
-              <Stack
-                direction={{ base: "column", sm: "row" }}
-                align={"start"}
-                justify={"space-between"}
-              >
-                <Checkbox>Remember me</Checkbox>
-                <Link color={"blue.400"}>Forgot password?</Link>
+            <form onSubmit={signInHandler}>
+              <InputFormFields type="email" changeHandler={emailFormHandler} isRequired>
+                Email address
+              </InputFormFields>
+              <PasswordFormField changeHandler={passwordFormHandler} />
+              <Stack spacing={10}>
+                <Stack
+                  direction={{ base: "column", sm: "row" }}
+                  align={"start"}
+                  justify={"space-between"}
+                >
+                  <Checkbox>Remember me</Checkbox>
+                  <Link color={"blue.400"}>Forgot password?</Link>
+                </Stack>
+                <Button
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                  type="submit"
+                >
+                  Sign in
+                </Button>
+                {authError && <Alert status='error'>
+                  <AlertIcon /> {authError.message}
+                </Alert>}
               </Stack>
-              <Button
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-              >
-                Sign in
-              </Button>
-            </Stack>
+            </form>
           </Stack>
         </Box>
       </Stack>

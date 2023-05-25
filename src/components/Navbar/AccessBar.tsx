@@ -16,7 +16,6 @@ import {
 import Link from "next/link";
 import { FC } from "react";
 import NextLink from "next/link";
-import React from "react";
 
 const AccessBar: FC = ({}) => {
   return (
@@ -37,7 +36,7 @@ const DesktopNav = () => {
     <Stack direction={"row"} spacing={7} display={{ base: "none", md: "flex" }}>
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label} pt={2}>
-          <Link href={navItem.href ?? "#"} color={linkColor}>
+          <Link href={navItem.href} color={linkColor}>
             {navItem.label}
           </Link>
         </Box>
@@ -83,7 +82,7 @@ const MobileNav = () => {
         <MenuList>
           {NAV_ITEMS.map((navItem) => (
             <MenuItem>
-              <Link href={navItem.href ?? "#"} color={linkColor}>
+              <Link href={navItem.href} color={linkColor}>
                 {navItem.label}
               </Link>
             </MenuItem>

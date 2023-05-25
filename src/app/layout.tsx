@@ -4,7 +4,6 @@ import "@/styles/globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
 import { Inter } from "next/font/google";
-import { Providers } from "./providers";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { theme } from "@/chakra/theme";
 
