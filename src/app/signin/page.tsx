@@ -21,12 +21,14 @@ import InputFormFields, { genericInputHandler } from "@/components/FormsUI/Input
 import { AuthError, User } from "@supabase/supabase-js";
 import { supabaseUser } from "../../lib/initSupabase";
 import PasswordFormField from "@/components/FormsUI/PasswordFormField";
+import { useRouter } from "next/navigation"
 
 
 
 export default function SignInPage() {
 
   const supabase = supabaseUser();
+  const router = useRouter();
 
   const [enteredEmail, setEmail] = useState<string>("");
   const [enterPassword, setPassword] = useState<string>("");
@@ -42,6 +44,7 @@ export default function SignInPage() {
     });
     setData(data);
     setError(error);
+    data.session && router.push('/dashboard');
   }
   const passwordFormHandler = genericInputHandler(setPassword);
 
