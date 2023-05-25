@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { ReactElement } from "react";
 import NextLink from "next/link";
+import featuresList from "@/lib/features";
 
 interface CardProps {
   heading: string;
@@ -81,46 +82,13 @@ export default function Features() {
 
       <Container maxW={"5xl"} mt={12}>
         <Flex flexWrap="wrap" gridGap={6} justify="center">
+          {featuresList.map(feature => 
           <Card
-            heading={"Timer"}
-            icon={<Image src="/images/stopwatch.png" w={10} h={10} />}
-            description={
-              "The Timer enables effective time management through the use of various features such as the Pomodoro Timer."
-            }
+            heading={feature.heading}
+            icon={<Image src={feature.icon} w={10} h={10} />}
+            description={feature.description}
             href={"#"}
-          />
-          <Card
-            heading={"Calendar and Schedule"}
-            icon={<Image src="/images/calendar.png" w={10} h={10} />}
-            description={
-              "This provides a convenient and easy way for users to view and manage their timetables and tasks."
-            }
-            href={"#"}
-          />
-          <Card
-            heading={"Todo List"}
-            icon={<Image src="/images/to-do-list.png" w={10} h={10} />}
-            description={
-              "This allows users to easily keep track of their tasks and deadlines."
-            }
-            href={"#"}
-          />
-          <Card
-            heading={"NUS Mods Syncing"}
-            icon={<Image src="/images/NUSMods.png" w={10} h={10} />}
-            description={
-              "Integration of the NUSMods schedule allows for convenient planning using the NUS lesson timetable."
-            }
-            href={"#"}
-          />
-          <Card
-            heading={"Canvas Syncing"}
-            icon={<Image src="/images/canvas1-logo.png" w={10} h={10} />}
-            description={
-              "Integration of Canvas API allows for integration of tasks, assignments and deadlines into the to-do lists and calendars."
-            }
-            href={"#"}
-          />
+          />)}
         </Flex>
       </Container>
     </Box>

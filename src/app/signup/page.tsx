@@ -23,6 +23,7 @@ import InputFormFields, { genericFormHandler } from "@/components/FormsUI/InputF
 import PasswordFormField from "@/components/FormsUI/PasswordFormField";
 import { supabaseUser } from "@/lib/initSupabase";
 import { AuthError } from "@supabase/supabase-js";
+import { UserData } from "@/lib/types";
 
 export default function SignUpPage() {
   const supabase = supabaseUser();
@@ -31,7 +32,7 @@ export default function SignUpPage() {
   const [enterPassword, setPassword] = useState<string>("");
   const [enteredName, setName] = useState<string>("")
   const [authError, setError] = useState<AuthError | null>();
-  const [data, setData] = useState<{}>();
+  const [data, setData] = useState<UserData>();
 
 
   const signupHandler = async (event: FormEvent<HTMLFormElement>) => {  
@@ -42,7 +43,7 @@ export default function SignUpPage() {
         password: enterPassword,
         options: {
           data: {
-            name: enteredName,
+            full_name: enteredName,
           },
           emailRedirectTo: process.env.ROOT_URL ?? "https://google.com"
         }
@@ -52,6 +53,7 @@ export default function SignUpPage() {
     setData(data);
     setError(error);
     error && alert(error.message);
+    data && console.log(data);
   }
 
   
