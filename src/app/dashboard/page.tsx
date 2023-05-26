@@ -6,6 +6,9 @@ import { AuthError, Session } from "@supabase/supabase-js";
 import { useState } from "react";
 import { supabaseUser } from "@/lib/initSupabase";
 import SignOutButton from "@/components/AuthUI/SignOutButton";
+import ToDoSummary from "@/components/Dashboard/ToDoSummary";
+import Annoucements from "@/components/Dashboard/Annoucements";
+import { Flex, Stack } from "@chakra-ui/react";
 
 export default function dashboard() {
   const supabase = supabaseUser();
@@ -30,6 +33,12 @@ export default function dashboard() {
     <div>
       You are logged in! Future dashboard UI here.
       <SignOutButton />
+      <Flex>
+        <Stack direction={{ base: "column", md: "row" }}>
+          <ToDoSummary />
+          <Annoucements />
+        </Stack>
+      </Flex>
     </div>
   ) : (
     <NotLoggedIn />
