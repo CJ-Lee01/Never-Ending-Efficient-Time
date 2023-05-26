@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import { FC } from "react";
 import NextLink from "next/link";
+import SignOutButton from "@/components/AuthUI/SignOutButton";
 
 const AccessBar: FC = ({}) => {
   return (
@@ -45,7 +46,7 @@ const DesktopNav = () => {
         <Button onClick={toggleColorMode}>
           {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
         </Button>
-        <Button
+        {/* <Button
           as={NextLink}
           fontSize={"sm"}
           fontWeight={600}
@@ -57,7 +58,8 @@ const DesktopNav = () => {
           }}
         >
           Sign Out
-        </Button>
+        </Button> */}
+        <SignOutButton />
       </Stack>
     </Stack>
   );
@@ -89,7 +91,7 @@ const MobileNav = () => {
           ))}
           <MenuDivider />
           <MenuItem>
-            <Button
+            {/* <Button
               as={NextLink}
               fontSize={"sm"}
               fontWeight={600}
@@ -101,7 +103,8 @@ const MobileNav = () => {
               }}
             >
               Sign Out
-            </Button>
+            </Button> */}
+            <SignOutButton />
           </MenuItem>
         </MenuList>
       </Menu>
