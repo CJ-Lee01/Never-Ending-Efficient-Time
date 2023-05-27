@@ -1,16 +1,12 @@
 import {
   Flex,
-  Image,
-  useColorMode,
   useColorModeValue,
   Spacer,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import AuthButtons from "./AuthButtons";
 import Logo from "./Logo";
 import AccessBar from "./AccessBar";
 import { supabaseUser } from "@/lib/initSupabase";
-import { AuthError, Session } from "@supabase/supabase-js";
 
 const Navbar: React.FC = () => {
   const supabase = supabaseUser();

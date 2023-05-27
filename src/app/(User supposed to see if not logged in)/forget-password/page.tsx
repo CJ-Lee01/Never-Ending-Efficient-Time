@@ -20,7 +20,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import InputFormFields, { genericInputHandler } from "@/components/FormsUI/InputFormFields";
 import { Session, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { AuthError, User } from "@supabase/supabase-js";
-import { supabaseUser } from "../../lib/initSupabase";
+import { supabaseUser } from "../../../lib/initSupabase";
 import { UserData } from "@/lib/types";
 
 export default function PasswordRecovery() {

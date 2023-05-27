@@ -5,7 +5,7 @@ import ToDoSummary from "@/components/Dashboard/ToDoSummary";
 export default function ToDoPage() {
   return (
     <Stack align="center">
-      <Image src="/images/WIP.png" w="300px" p={6} />
+      <Image src="/images/WIP.png" w="300px" p={6} alt="WIP"/>
       <Button>Add Item</Button>
       <ToDoSummary />
     </Stack>

@@ -83,9 +83,9 @@ export default function Features() {
       <Container maxW={"5xl"} mt={12}>
         <Flex flexWrap="wrap" gridGap={6} justify="center">
           {featuresList.map(feature => 
-          <Card
+          <Card key={feature.heading}
             heading={feature.heading}
-            icon={<Image src={feature.icon} w={10} h={10} />}
+            icon={<Image src={feature.icon} w={10} h={10} alt={feature.heading}/>}
             description={feature.description}
             href={"#"}
           />)}

@@ -8,6 +8,7 @@ const CalendarGrid: FC = ({}) => {
         src="/images/calendar-placeholder.png"
         borderRadius={20}
         w="600px"
+        alt="calendar"
       />
     </Stack>
   );

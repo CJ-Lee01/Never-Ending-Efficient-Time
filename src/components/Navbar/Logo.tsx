@@ -16,6 +16,7 @@ const Logo: FC = () => {
           src="/images/logo-cropped.png"
           height={14}
           borderRadius="10px 15px"
+          alt="NEET"
         />
       </Link>
     </Flex>

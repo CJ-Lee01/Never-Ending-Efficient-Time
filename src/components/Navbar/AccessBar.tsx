@@ -19,7 +19,7 @@ import Link from "next/link";
 import { FC } from "react";
 import SignOutButton from "@/components/AuthUI/SignOutButton";
 
-const AccessBar: FC = ({}) => {
+const AccessBar: FC = ({ }) => {
   return (
     <Flex alignItems={"center"}>
       <Stack direction={"row"} spacing={7}>
@@ -72,7 +72,11 @@ const MobileNav = () => {
         <MenuList>
           <MenuGroup>
             {NAV_ITEMS.map((navItem) => (
-              <MenuItem as={Link} href={navItem.href} color={linkColor}>
+              <MenuItem
+                as={Link}
+                href={navItem.href}
+                color={linkColor}
+                key={navItem.label}>
                 {navItem.label}
               </MenuItem>
             ))}
@@ -93,6 +97,10 @@ interface NavItem {
 }
 
 const NAV_ITEMS: Array<NavItem> = [
+  {
+    label: "Dashboard",
+    href: "/dashboard",
+  },
   {
     label: "Timer",
     href: "/timer",
