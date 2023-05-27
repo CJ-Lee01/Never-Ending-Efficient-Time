@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import Logo from "./Logo";
 import AccessBar from "./AccessBar";
 import { supabaseUser } from "@/lib/initSupabase";
+import AuthButtons from "./AuthButtons";
 
 const Navbar: React.FC = () => {
   const supabase = supabaseUser();
@@ -31,9 +32,7 @@ const Navbar: React.FC = () => {
     >
       <Logo />
       <Spacer />
-      {/* {isLoggedIn ? <AccessBar /> : <AuthButtons />} */}
-      <AccessBar />
-      {/* <AuthButtons /> */}
+      {isLoggedIn ? <AccessBar /> : <AuthButtons />}
     </Flex>
   );
 };
