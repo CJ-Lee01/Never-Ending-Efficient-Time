@@ -6,9 +6,13 @@ import TimerSettings from "@/components/Timer/TimerSettings";
 
 export default function TimerPage() {
   return (
-    <Stack direction={"row"}>
+    <Stack
+      align={"center"}
+      spacing={{ base: 8, md: 10 }}
+      py={{ base: 20, md: 28 }}
+      direction={{ base: "column", md: "row" }}
+    >
       <Clock />
-      <Spacer />
       <TimerSettings />
     </Stack>
   );

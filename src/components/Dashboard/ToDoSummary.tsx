@@ -28,11 +28,11 @@ const items: ItemAttributes[] = [
     created_at: "21 Jan 2022",
   },
   {
-    title: "Create professional portfolio website with Nextjs and ChakraUI",
+    title: "Create professional Web Application with Nextjs and ChakraUI",
     created_at: "20 Jun 2021",
   },
   {
-    title: `Find out what's new in my portfolio website`,
+    title: `Get Good Grades for University`,
     created_at: "31 Sept 2022",
   },
 ];

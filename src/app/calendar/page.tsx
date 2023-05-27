@@ -1,6 +1,6 @@
 "use client";
 import CalendarGrid from "@/components/Calendar/calendarGrid";
-import { Grid, GridItem, Stack } from "@chakra-ui/react";
+import { Button, Grid, GridItem, Stack, Image } from "@chakra-ui/react";
 
 export default function CalendarPage() {
   return (
@@ -11,18 +11,20 @@ export default function CalendarPage() {
                       "calendar events"`}
         gridTemplateRows={"1fr 2fr 2fr"}
         gridTemplateColumns={"5fr 1fr"}
+        gap={6}
+        p={16}
       >
-        <GridItem bg="orange.300" area={"calendar"}>
+        <GridItem area={"calendar"}>
           <CalendarGrid />
         </GridItem>
-        <GridItem bg="pink.300" area={"button"}>
-          button
+        <GridItem area={"button"} p={6}>
+          <Button bg="orange.300">Switch View</Button>
         </GridItem>
-        <GridItem bg="green.300" area={"NUSmods"}>
-          NUSmods Schedule
+        <GridItem bg="green.300" area={"NUSmods"} borderRadius={15}>
+          <Image src="/images/NUSmods.png" />
         </GridItem>
-        <GridItem bg="blue.300" area={"events"}>
-          events
+        <GridItem bg="blue.300" area={"events"} borderRadius={15} p={6}>
+          Events List
         </GridItem>
       </Grid>
     </Stack>

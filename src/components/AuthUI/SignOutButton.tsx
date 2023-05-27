@@ -1,6 +1,7 @@
+"use client";
+
 import { supabaseUser } from "@/lib/initSupabase";
 import { Button, useColorModeValue } from "@chakra-ui/react";
-import NextLink from "next/link";
 
 export default function SignOutButton() {
   const supabase = supabaseUser();

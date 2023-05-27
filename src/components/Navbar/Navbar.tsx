@@ -35,8 +35,8 @@ const Navbar: React.FC = () => {
     >
       <Logo />
       <Spacer />
-      {isLoggedIn ? <AccessBar /> : <AuthButtons />}
-      {/* <AccessBar /> */}
+      {/* {isLoggedIn ? <AccessBar /> : <AuthButtons />} */}
+      <AccessBar />
       {/* <AuthButtons /> */}
     </Flex>
   );

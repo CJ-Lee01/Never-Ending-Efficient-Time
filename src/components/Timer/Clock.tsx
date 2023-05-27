@@ -3,8 +3,8 @@ import { FC } from "react";
 
 const Clock: FC = ({}) => {
   return (
-    <Stack align="center">
-      <Image src="/images/stopwatch.png" borderRadius={20} w="600px" />
+    <Stack align="center" flex={1} spacing={{ base: 5, md: 10 }}>
+      <Image src="/images/time.jpg" borderRadius={20} w="600px" />
     </Stack>
   );
 };
