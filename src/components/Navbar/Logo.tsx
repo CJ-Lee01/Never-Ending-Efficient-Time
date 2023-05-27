@@ -3,7 +3,7 @@ import NextLink from "next/link";
 import { Flex, Image } from "@chakra-ui/react";
 import { FC } from "react";
 
-const Logo: FC = ({}) => {
+const Logo: FC = () => {
   return (
     <Flex
       align="center"

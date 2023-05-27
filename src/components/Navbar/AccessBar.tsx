@@ -12,10 +12,12 @@ import {
   MenuList,
   MenuDivider,
   useColorMode,
+  MenuGroup,
+  Center,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { FC } from "react";
-import NextLink from "next/link";
+import SignOutButton from "@/components/AuthUI/SignOutButton";
 
 const AccessBar: FC = ({}) => {
   return (
@@ -45,19 +47,7 @@ const DesktopNav = () => {
         <Button onClick={toggleColorMode}>
           {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
         </Button>
-        <Button
-          as={NextLink}
-          fontSize={"sm"}
-          fontWeight={600}
-          color={"white"}
-          href="#"
-          bg={useColorModeValue("orange.400", "green.400")}
-          _hover={{
-            bg: useColorModeValue("orange.300", "green.300"),
-          }}
-        >
-          Sign Out
-        </Button>
+        <SignOutButton />
       </Stack>
     </Stack>
   );
@@ -80,29 +70,17 @@ const MobileNav = () => {
           variant="outline"
         />
         <MenuList>
-          {NAV_ITEMS.map((navItem) => (
-            <MenuItem>
-              <Link href={navItem.href} color={linkColor}>
+          <MenuGroup>
+            {NAV_ITEMS.map((navItem) => (
+              <MenuItem as={Link} href={navItem.href} color={linkColor}>
                 {navItem.label}
-              </Link>
-            </MenuItem>
-          ))}
+              </MenuItem>
+            ))}
+          </MenuGroup>
           <MenuDivider />
-          <MenuItem>
-            <Button
-              as={NextLink}
-              fontSize={"sm"}
-              fontWeight={600}
-              color={"white"}
-              href="#"
-              bg={useColorModeValue("orange.400", "green.400")}
-              _hover={{
-                bg: useColorModeValue("orange.300", "green.300"),
-              }}
-            >
-              Sign Out
-            </Button>
-          </MenuItem>
+          <Center>
+            <SignOutButton />
+          </Center>
         </MenuList>
       </Menu>
     </Stack>
@@ -117,15 +95,15 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Timer",
-    href: "#",
+    href: "/timer",
   },
   {
     label: "Calendar",
-    href: "#",
+    href: "/calendar",
   },
   {
     label: "To-Do List",
-    href: "#",
+    href: "/to-do-list",
   },
 ];
 

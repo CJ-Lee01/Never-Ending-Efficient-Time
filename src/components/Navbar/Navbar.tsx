@@ -5,12 +5,28 @@ import {
   useColorModeValue,
   Spacer,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AuthButtons from "./AuthButtons";
 import Logo from "./Logo";
 import AccessBar from "./AccessBar";
+import { supabaseUser } from "@/lib/initSupabase";
+import { AuthError, Session } from "@supabase/supabase-js";
 
 const Navbar: React.FC = () => {
+  const supabase = supabaseUser();
+  const [isLoggedIn, setLogin] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event == "SIGNED_IN") {
+        setLogin(true);
+      }
+      if (event == "SIGNED_OUT") {
+        setLogin(false);
+      }
+    });
+  }, [isLoggedIn]);
+
   return (
     <Flex
       bg={useColorModeValue("gray.100", "gray.900")}
@@ -19,8 +35,9 @@ const Navbar: React.FC = () => {
     >
       <Logo />
       <Spacer />
-      {/* <AccessBar /> */}
-      <AuthButtons />
+      {/* {isLoggedIn ? <AccessBar /> : <AuthButtons />} */}
+      <AccessBar />
+      {/* <AuthButtons /> */}
     </Flex>
   );
 };
