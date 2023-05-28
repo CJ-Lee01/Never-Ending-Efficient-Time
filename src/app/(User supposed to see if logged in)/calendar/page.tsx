@@ -21,7 +21,7 @@ export default function CalendarPage() {
           <Button bg="orange.300">Switch View</Button>
         </GridItem>
         <GridItem bg="green.300" area={"NUSmods"} borderRadius={15}>
-          <Image src="/images/NUSmods.png" />
+          <Image src="/images/NUSmods.png" alt=""/>
         </GridItem>
         <GridItem bg="blue.300" area={"events"} borderRadius={15} p={6}>
           Events List

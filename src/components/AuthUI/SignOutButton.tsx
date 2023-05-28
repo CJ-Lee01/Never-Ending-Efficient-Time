@@ -1,5 +1,3 @@
-"use client";
-
 import { supabaseUser } from "@/lib/initSupabase";
 import { Button, useColorModeValue } from "@chakra-ui/react";
 

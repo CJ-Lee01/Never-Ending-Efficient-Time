@@ -1,21 +1,16 @@
 import { Fragment } from "react";
 import {
   Container,
-  Box,
   chakra,
   Flex,
   Stack,
   VStack,
-  HStack,
   Grid,
-  Icon,
   Divider,
   Link,
   useColorModeValue,
-  Spacer,
 } from "@chakra-ui/react";
-import { IconType } from "react-icons";
-import { FaRegComment, FaRegHeart, FaRegEye } from "react-icons/fa";
+
 
 interface ItemAttributes {
   title: string;
@@ -38,6 +33,10 @@ const items: ItemAttributes[] = [
 ];
 
 const Annoucements = () => {
+
+  const bgColorScheme = useColorModeValue("gray.200", "gray.700");
+  const otherStuffPlsExplainRichie = useColorModeValue("gray.600", "gray.300");
+
   return (
     <Container maxW="5xl" p={{ base: 5, md: 10 }}>
       <Flex justify="left" mb={3}>
@@ -61,7 +60,7 @@ const Annoucements = () => {
               p={{ base: 2, sm: 4 }}
               gap={3}
               alignItems="center"
-              _hover={{ bg: useColorModeValue("gray.200", "gray.700") }}
+              _hover={{ bg: bgColorScheme }}
             >
               <Stack gridColumnEnd={{ base: "span 2", md: "unset" }}>
                 <chakra.h3 fontWeight="bold" fontSize="lg">
@@ -70,7 +69,7 @@ const Annoucements = () => {
                 <chakra.p
                   fontWeight="medium"
                   fontSize="sm"
-                  color={useColorModeValue("gray.600", "gray.300")}
+                  color={otherStuffPlsExplainRichie}
                 >
                   Created: {item.created_at}
                 </chakra.p>

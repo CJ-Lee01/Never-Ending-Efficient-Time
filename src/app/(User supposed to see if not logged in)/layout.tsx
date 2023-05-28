@@ -1,16 +1,16 @@
 "use client";
 
 import NotLoggedIn from "@/components/AuthUI/NotLoggedIn";
-import { UserData } from "@/lib/types";
 import { AuthError, Session } from "@supabase/supabase-js";
 import { useState } from "react";
 import { supabaseUser } from "@/lib/initSupabase";
-import SignOutButton from "@/components/AuthUI/SignOutButton";
-import ToDoSummary from "@/components/Dashboard/ToDoSummary";
-import Annoucements from "@/components/Dashboard/Annoucements";
-import { Flex, Stack } from "@chakra-ui/react";
+import AlreadySignedIn from "@/components/AuthUI/AlreadySignIn";
 
-export default function dashboard() {
+export default function LayoutForNonUser({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const supabase = supabaseUser();
   const [isLoggedIn, setLogin] = useState(false);
   const [authError, setError] = useState<AuthError | null>();
@@ -24,23 +24,12 @@ export default function dashboard() {
     setData(data);
     setError(error);
     setLogin(session !== null);
+    error && alert(error.message);
   };
 
   refreshStatus();
-  return haventFetch ? (
-    <>Fetching data....</>
-  ) : isLoggedIn ? (
-    <div>
-      You are logged in! Future dashboard UI here.
-      <SignOutButton />
-      <Flex>
-        <Stack direction={{ base: "column", md: "row" }}>
-          <ToDoSummary />
-          <Annoucements />
-        </Stack>
-      </Flex>
-    </div>
-  ) : (
-    <NotLoggedIn />
-  );
+
+  return haventFetch ? <>Fetching data....</>
+    : isLoggedIn ? <AlreadySignedIn />
+      : <>{children}</>;
 }

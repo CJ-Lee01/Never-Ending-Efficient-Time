@@ -38,6 +38,9 @@ const items: ItemAttributes[] = [
 ];
 
 const ToDoSummary = () => {
+
+  const bgColorScheme = useColorModeValue("gray.200", "gray.700");
+  const otherStuffPlsExplainRichie = useColorModeValue("gray.600", "gray.300");
   return (
     <Container maxW="5xl" p={{ base: 5, md: 10 }}>
       <Flex justify="left" mb={3}>
@@ -61,7 +64,7 @@ const ToDoSummary = () => {
               p={{ base: 2, sm: 4 }}
               gap={3}
               alignItems="center"
-              _hover={{ bg: useColorModeValue("gray.200", "gray.700") }}
+              _hover={{ bg: bgColorScheme }}
             >
               <Stack gridColumnEnd={{ base: "span 2", md: "unset" }}>
                 <chakra.h3 fontWeight="bold" fontSize="lg">
@@ -70,7 +73,7 @@ const ToDoSummary = () => {
                 <chakra.p
                   fontWeight="medium"
                   fontSize="sm"
-                  color={useColorModeValue("gray.600", "gray.300")}
+                  color={otherStuffPlsExplainRichie}
                 >
                   Created: {item.created_at}
                 </chakra.p>
