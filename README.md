@@ -13,18 +13,23 @@ Our project is driven by the goal of empowering students to effectively manage t
 
 Time and workload management stands as a prominent concern among NUS students who aim to optimise their limited time during their university years.
 
-A common challenge arises when numerous assignments are suddenly assigned within a single week, as lecturers and professors from different modules release their respective tasks (e.g., the week before recess week). This influx of assignments can create difficulties in tracking assignments for students who are already juggling various activities, such as involvement in NUS student organisations. Furthermore, students may have additional personal aspirations, such as learning a programming language or acquiring skills beyond the scope of their NUS curriculum.
+A common challenge arises when numerous assignments are suddenly assigned within a single week, as lecturers and professors from different modules release their respective tasks (e.g. the week before recess week). This influx of assignments can create difficulties in tracking assignments for students who are already juggling various activities, such as involvement in NUS student organisations. Furthermore, students may have additional personal aspirations, such as learning a programming language or acquiring skills beyond the scope of their NUS curriculum.
 
 Additionally, keeping up with Canvas Announcements can become overwhelming, as they often multiply in number and complexity.
 
 </details>
 <details>
 <summary>Aim</summary>
+
 We hope to provide students with a convenient way to effectively manage their time for studies, hobbies and their personal interests, without needing to spend a lot of energy on planning via:
- - syncing NUSMods, Canvas and students’ personal schedules into 1 calendar to allow easier timetabling and planning for events.
- - To-Do List to enable students to track and manage their tasks and assignments easily.
- - Course Announcements to enable students to be up to date.
- - Configurable Timers such as Pomodoro Timers to aid students with simple productivity methods.
+
+syncing of NUSMods, Canvas and students’ personal schedules into 1 calendar to allow easier timetabling and planning for events.
+
+To-Do List to enable students to track and manage their tasks and assignments easily.
+
+Course Announcements to enable students to be up to date.
+
+Configurable Timers such as Pomodoro Timers to aid students with simple productivity methods.
 
 </details>
 <details>
@@ -32,6 +37,7 @@ We hope to provide students with a convenient way to effectively manage their ti
 
 <details>
 <summary>General</summary>
+
 As a student, I want to log in to my personal account where my details are stored securely.
 
 As a student, I want to sign up for an account.
@@ -45,6 +51,7 @@ As a student, I want to change my theme between light and dark mode for an appli
 </details>
 <details>
 <summary>Tasks</summary>
+
 As a student, I want to see an overview of the tasks that I need to complete so that I can prioritise which tasks need to be done.
 
 As a student, I want to add my own tasks to my to-do list so that I can keep track of them easily.
@@ -60,6 +67,7 @@ As a student, I want to add and edit the expected amount of time that I will all
 </details>
 <details>
 <summary>Calendar/Weekly Schedule</summary>
+
 As a student, I want to add, edit and delete events to my calendar for ease of management of events.
 
 As a student, I want to choose to mark my event as a regular event (e.g. weekly/monthly) or mark my event as one-off for ease of management of the timetable.
@@ -78,7 +86,8 @@ As a student, I want to delete announcements from Canvas when I have read them.
 
 </details>
 <details>
-<summary>Configurable Timer</summary>:
+<summary>Configurable Timer</summary>
+
 As a student, I want to start the timer to let myself focus on the assignment at hand.
 
 As a student, I want to configure the timer to my preference in case the default timer is not ideal.
