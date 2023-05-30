@@ -1,18 +1,5 @@
-import {
-  Container,
-  Divider,
-  Grid,
-  Stack,
-  VStack,
-  Button,
-  chakra,
-  Link,
-  useColorModeValue,
-  Checkbox,
-} from "@chakra-ui/react";
-import { FC, Fragment } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { Container, Stack, chakra } from "@chakra-ui/react";
+import { FC } from "react";
 import AddTaskModal from "./AddTaskModal";
 import Tasks from "./Tasks";
 

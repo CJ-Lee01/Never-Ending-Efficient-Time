@@ -1,13 +1,11 @@
 import {
   useDisclosure,
-  Button,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
   Box,
   FormControl,
   FormLabel,
@@ -17,6 +15,7 @@ import {
   VStack,
   chakra,
   Link,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FC } from "react";
@@ -58,12 +57,14 @@ const ViewTaskModal: FC<ViewTaskModalProps> = ({}) => {
                     size="md"
                     placeholder="Type Here"
                     borderColor="#E0E1E7"
+                    isReadOnly
+                    value="Title here"
                   />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Deadline</FormLabel>
                   <InputGroup borderColor="#E0E1E7">
-                    <Input type="date" size="md" />
+                    <Input type="date" size="md" isReadOnly />
                   </InputGroup>
                 </FormControl>
                 <FormControl>
@@ -71,6 +72,8 @@ const ViewTaskModal: FC<ViewTaskModalProps> = ({}) => {
                   <Textarea
                     borderColor="gray.300"
                     placeholder="Write your task description here"
+                    isReadOnly
+                    value="Description here"
                   />
                 </FormControl>
               </VStack>
