@@ -1,3 +1,4 @@
+import { TasksInformation } from "@/lib/types";
 import {
   useDisclosure,
   Button,
@@ -16,13 +17,51 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
-interface AddTaskModalProps {}
+interface AddTaskModalProps { }
 
-const AddTaskModal: FC<AddTaskModalProps> = ({}) => {
+const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [taskInfo, updateTaskInfo] = useState<TasksInformation>({
+    canvas_id: -1,
+    title: "No title",
+    description: "No Description",
+    deadline: "",
+    is_complete: false,
+  })
+
+  const updateTitle = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    updateTaskInfo((prevTask) => {
+      return {
+        ...prevTask,
+        title: event.target.value
+      }
+    });
+  }
+
+  const updateDescription = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    event.preventDefault();
+    updateTaskInfo((prevTask) => {
+      return {
+        ...prevTask,
+        description: event.target.value
+      }
+    });
+  }
+
+  const updateDeadline = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    updateTaskInfo((prevTask) => {
+      return {
+        ...prevTask,
+        deadline: event.target.value
+      }
+    });
+  }
 
   return (
     <>
@@ -57,13 +96,14 @@ const AddTaskModal: FC<AddTaskModalProps> = ({}) => {
                     type="text"
                     size="md"
                     placeholder="Type Here"
-                    borderColor="#E0E1E7"
+                    borderColor="gray.300"
+                    onChange={updateTitle}
                   />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Deadline</FormLabel>
-                  <InputGroup borderColor="#E0E1E7">
-                    <Input type="date" size="md" />
+                  <InputGroup borderColor="gray.300">
+                    <Input type="date" size="md" onChange={updateDeadline} />
                   </InputGroup>
                 </FormControl>
                 <FormControl>
@@ -71,6 +111,7 @@ const AddTaskModal: FC<AddTaskModalProps> = ({}) => {
                   <Textarea
                     borderColor="gray.300"
                     placeholder="Write your task description here"
+                    onChange={updateDescription}
                   />
                 </FormControl>
               </VStack>
