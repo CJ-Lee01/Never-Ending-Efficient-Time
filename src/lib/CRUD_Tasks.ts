@@ -3,10 +3,13 @@ import { TasksInformation } from "./types";
 
 export async function addTask(task: TasksInformation) {
   const supabase = supabaseUser();
-
+  const user_id = (await supabase.auth.getSession()).data.session?.user.id
   const { data, error } = await supabase
     .from('todos')
-    .insert(task)
+    .insert({
+      ...task,
+      user_id: user_id
+    })
     .select();
 
   return { data, error };

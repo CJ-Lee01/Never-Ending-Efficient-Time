@@ -1,3 +1,5 @@
+import { addTask } from "@/lib/CRUD_Tasks";
+import { supabaseUser } from "@/lib/initSupabase";
 import { TasksInformation } from "@/lib/types";
 import {
   useDisclosure,
@@ -17,13 +19,14 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
 interface AddTaskModalProps { }
 
 const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const supabase = supabaseUser();
 
   const [taskInfo, updateTaskInfo] = useState<TasksInformation>({
     canvas_id: -1,
@@ -63,6 +66,14 @@ const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
     });
   }
 
+  const submitTasksHandler = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const { data, error } = await addTask(taskInfo)
+    error && alert(error.message);
+    console.log(error)
+    console.log(data)
+  }
+
   return (
     <>
       <Button
@@ -84,6 +95,7 @@ const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
         isCentered
       >
         <ModalOverlay />
+        <form onSubmit={submitTasksHandler}>
         <ModalContent>
           <ModalHeader>Add New Task</ModalHeader>
           <ModalCloseButton />
@@ -125,12 +137,14 @@ const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
               color="white"
               _hover={{ bg: "blue.600" }}
               mr={3}
+              type="submit"
             >
               Save
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
+        </form>
       </Modal>
     </>
   );

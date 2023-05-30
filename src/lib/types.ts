@@ -31,6 +31,7 @@ export interface featureDescription {
 
 export interface TasksInformation {
     id?: number,
+    user_id?: string
     canvas_id: number,
     title: string,
     description: string,
