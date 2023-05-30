@@ -7,7 +7,7 @@ import { supabaseUser } from "@/lib/initSupabase";
 import SignOutButton from "@/components/AuthUI/SignOutButton";
 import ToDoSummary from "@/components/Dashboard/ToDoSummary";
 import Annoucements from "@/components/Dashboard/Annoucements";
-import { Flex, Stack } from "@chakra-ui/react";
+import { Button, Flex, Stack } from "@chakra-ui/react";
 
 export default function dashboard() {
 
