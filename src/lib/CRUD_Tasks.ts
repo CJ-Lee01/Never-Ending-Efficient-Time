@@ -1,5 +1,7 @@
+import { Dispatch, SetStateAction } from "react";
 import { supabaseUser } from "./initSupabase";
 import { TasksInformation } from "./types";
+import { PostgrestError } from "@supabase/supabase-js";
 
 export async function addTask(task: TasksInformation) {
   const supabase = supabaseUser();
@@ -38,12 +40,17 @@ export async function editTask(task: TasksInformation) {
   return { data, error };
 }
 
-export async function getTasks() {
+export async function getTasks(setState: Dispatch<SetStateAction<
+  {
+    data: any,
+    error: null | PostgrestError,
+  }
+>>) {
   const supabase = supabaseUser();
   const { data, error } = await supabase
     .from('todos')
     .select()
 
-  return { data, error }
+  setState({ data, error })
 
 }

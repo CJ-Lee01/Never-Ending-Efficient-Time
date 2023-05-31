@@ -26,7 +26,8 @@ interface AddTaskModalProps { }
 
 const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const supabase = supabaseUser();
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  
 
   const [taskInfo, updateTaskInfo] = useState<TasksInformation>({
     canvas_id: -1,
@@ -69,9 +70,8 @@ const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
   const submitTasksHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { data, error } = await addTask(taskInfo)
-    error && alert(error.message);
-    console.log(error)
-    console.log(data)
+    error ? alert(error.message) : setSaveSuccess(true);
+    onClose();
   }
 
   return (

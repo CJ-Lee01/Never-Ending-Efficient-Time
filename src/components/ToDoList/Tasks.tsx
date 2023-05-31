@@ -1,3 +1,5 @@
+"use client"
+
 import {
   VStack,
   Grid,
@@ -8,17 +10,37 @@ import {
   Divider,
   Link,
 } from "@chakra-ui/react";
-import { FC, Fragment } from "react";
+import { FC, Fragment, createContext, useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import EditTaskModal from "./EditTaskModal";
 import DeleteTaskModal from "./DeleteTaskModal";
 import ViewTaskModal from "./ViewTaskModal";
+import { TasksInformation } from "@/lib/types";
+import { getTasks } from "@/lib/CRUD_Tasks";
+import { PostgrestError } from "@supabase/supabase-js";
 
-interface TasksProps {}
+interface TasksProps { }
 
-const Tasks: FC<TasksProps> = ({}) => {
+const TaskInfoContext = createContext<TasksInformation>({
+  canvas_id: -1,
+  title: "",
+  description: "",
+  is_complete: false,
+  deadline: "",
+})
+
+const Tasks: FC<TasksProps> = ({ }) => {
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
+  const [taskList, setTaskList] = useState<{
+    data: TasksInformation[] | null,
+    error: PostgrestError | null
+  }>({
+    data: null,
+    error: null
+  });
+
+  getTasks(setTaskList);
 
   return (
     <VStack
@@ -28,7 +50,7 @@ const Tasks: FC<TasksProps> = ({}) => {
       overflow="hidden"
       spacing={0}
     >
-      {items.map((item, index) => (
+      {taskList.data?.map((item, index) => (
         <Fragment key={index}>
           <Grid
             templateRows={{ base: "auto auto", md: "auto" }}
@@ -54,10 +76,12 @@ const Tasks: FC<TasksProps> = ({}) => {
               justifySelf="flex-end"
               alignItems="center"
             >
-              <ViewTaskModal />
-              <Checkbox colorScheme="green" />
-              <EditTaskModal />
-              <DeleteTaskModal />
+              <TaskInfoContext.Provider value={item}>
+                <ViewTaskModal />
+                <Checkbox colorScheme="green" />
+                <EditTaskModal />
+                <DeleteTaskModal />
+              </TaskInfoContext.Provider>
             </Stack>
           </Grid>
           {items.length - 1 !== index && <Divider m={0} />}
