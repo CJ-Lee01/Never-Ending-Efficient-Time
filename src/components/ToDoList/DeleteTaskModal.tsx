@@ -9,12 +9,15 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { FiTrash2 } from "react-icons/fi";
+import { TaskInfoContext } from "./Tasks";
+import { removeTask } from "@/lib/CRUD_Tasks";
 
 interface DeleteTaskModalProps {}
 
 const DeleteTaskModal: FC<DeleteTaskModalProps> = ({}) => {
+  const task = useContext(TaskInfoContext)
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -47,6 +50,7 @@ const DeleteTaskModal: FC<DeleteTaskModalProps> = ({}) => {
               color="white"
               _hover={{ bg: "red.600" }}
               mr={3}
+              onClick={async () => await removeTask(task) && onClose()}
             >
               Delete
             </Button>

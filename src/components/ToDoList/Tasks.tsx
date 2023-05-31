@@ -21,7 +21,7 @@ import { PostgrestError } from "@supabase/supabase-js";
 
 interface TasksProps { }
 
-const TaskInfoContext = createContext<TasksInformation>({
+export const TaskInfoContext = createContext<TasksInformation>({
   canvas_id: -1,
   title: "",
   description: "",
@@ -51,7 +51,7 @@ const Tasks: FC<TasksProps> = ({ }) => {
       spacing={0}
     >
       {taskList.data?.map((item, index) => (
-        <Fragment key={index}>
+        <Fragment key={item.id}>
           <Grid
             templateRows={{ base: "auto auto", md: "auto" }}
             w="100%"
