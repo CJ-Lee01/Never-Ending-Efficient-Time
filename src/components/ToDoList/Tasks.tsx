@@ -8,9 +8,8 @@ import {
   useColorModeValue,
   Checkbox,
   Divider,
-  Link,
 } from "@chakra-ui/react";
-import { FC, Fragment, createContext, useState } from "react";
+import { FC, Fragment, createContext, useEffect, useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import EditTaskModal from "./EditTaskModal";
 import DeleteTaskModal from "./DeleteTaskModal";
@@ -18,16 +17,11 @@ import ViewTaskModal from "./ViewTaskModal";
 import { TasksInformation } from "@/lib/types";
 import { getTasks } from "@/lib/CRUD_Tasks";
 import { PostgrestError } from "@supabase/supabase-js";
+import defaultTask from "./DefaultTask";
 
 interface TasksProps { }
 
-export const TaskInfoContext = createContext<TasksInformation>({
-  canvas_id: -1,
-  title: "",
-  description: "",
-  is_complete: false,
-  deadline: "",
-})
+export const TaskInfoContext = createContext<TasksInformation>(defaultTask);
 
 const Tasks: FC<TasksProps> = ({ }) => {
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
@@ -40,7 +34,9 @@ const Tasks: FC<TasksProps> = ({ }) => {
     error: null
   });
 
-  getTasks(setTaskList);
+  useEffect(() => {
+    getTasks(setTaskList);
+  }, [])
 
   return (
     <VStack

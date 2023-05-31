@@ -32,7 +32,7 @@ export async function editTask(task: TasksInformation) {
   const supabase = supabaseUser();
 
   const { data, error } = await supabase
-    .from('todo')
+    .from('todos')
     .update(task)
     .eq('id', task.id)
     .select();

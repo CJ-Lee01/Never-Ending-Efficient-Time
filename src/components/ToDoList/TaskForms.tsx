@@ -1,16 +1,6 @@
-import { addTask } from "@/lib/CRUD_Tasks";
-import { supabaseUser } from "@/lib/initSupabase";
 import { TasksInformation } from "@/lib/types";
 import {
-  useDisclosure,
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
   ModalBody,
-  ModalFooter,
   Box,
   FormControl,
   FormLabel,
@@ -20,9 +10,15 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
 
-const TaskFormComponemt: FC<Dispatch<SetStateAction<TasksInformation>>> = (setFormInfo: Dispatch<SetStateAction<TasksInformation>>) => {
+const TaskFormComponemt = (
+  { setFormInfo,
+    taskToChange }
+    : {
+      setFormInfo: Dispatch<SetStateAction<TasksInformation>>,
+      taskToChange: TasksInformation
+    }
+) => {
 
   const updateTitle = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -37,6 +33,7 @@ const TaskFormComponemt: FC<Dispatch<SetStateAction<TasksInformation>>> = (setFo
   const updateDescription = (event: ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
     setFormInfo((prevTask) => {
+      console.log(prevTask)
       return {
         ...prevTask,
         description: event.target.value
@@ -47,6 +44,7 @@ const TaskFormComponemt: FC<Dispatch<SetStateAction<TasksInformation>>> = (setFo
   const updateDeadline = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     setFormInfo((prevTask) => {
+      console.log(prevTask)
       return {
         ...prevTask,
         deadline: event.target.value
@@ -65,7 +63,7 @@ const TaskFormComponemt: FC<Dispatch<SetStateAction<TasksInformation>>> = (setFo
               <Input
                 type="text"
                 size="md"
-                placeholder="Type Here"
+                placeholder={taskToChange?.title ?? "Type Here"}
                 borderColor="gray.300"
                 onChange={updateTitle}
               />
@@ -80,7 +78,7 @@ const TaskFormComponemt: FC<Dispatch<SetStateAction<TasksInformation>>> = (setFo
               <FormLabel>Description</FormLabel>
               <Textarea
                 borderColor="gray.300"
-                placeholder="Write your task description here"
+                placeholder={taskToChange?.description ?? "Write your task description here"}
                 onChange={updateDescription}
               />
             </FormControl>
