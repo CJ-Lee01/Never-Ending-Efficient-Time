@@ -44,7 +44,6 @@ const TaskFormComponemt = (
   const updateDeadline = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     setFormInfo((prevTask) => {
-      console.log(prevTask)
       return {
         ...prevTask,
         deadline: event.target.value

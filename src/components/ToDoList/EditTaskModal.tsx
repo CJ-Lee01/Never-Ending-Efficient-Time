@@ -23,8 +23,6 @@ const EditTaskModal: FC<EditTaskModalProps> = ({}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [taskInfo, setTaskInfo] = useState(task)
   const [saveSuccess, setSaveSuccess] = useState(false);
-  console.log(task)
-
 
   const submitTasksHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
