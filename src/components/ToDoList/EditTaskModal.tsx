@@ -16,12 +16,14 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { FiEdit } from "react-icons/fi";
+import { TaskInfoContext } from "./Tasks";
 
 interface EditTaskModalProps {}
 
 const EditTaskModal: FC<EditTaskModalProps> = ({}) => {
+  const task = useContext(TaskInfoContext)
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
