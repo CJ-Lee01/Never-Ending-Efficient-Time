@@ -9,19 +9,13 @@ import {
   ModalContent,
   ModalHeader,
   ModalCloseButton,
-  ModalBody,
   ModalFooter,
-  Box,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  Textarea,
-  VStack,
 } from "@chakra-ui/react";
 import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { TaskInfoContext } from "./Tasks";
+import TaskFormComponemt from "./TaskForms";
+import defaultTask from "./DefaultTask";
 
 interface AddTaskModalProps { }
 
@@ -102,37 +96,7 @@ const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
         <ModalContent>
           <ModalHeader>Add New Task</ModalHeader>
           <ModalCloseButton />
-          <ModalBody pb={6}>
-            <Box m={4}>
-              <VStack spacing={5}>
-                <FormControl>
-                  <FormLabel>Task Title</FormLabel>
-                  <Input
-                    type="text"
-                    size="md"
-                    placeholder="Type Here"
-                    borderColor="gray.300"
-                    onChange={updateTitle}
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Deadline</FormLabel>
-                  <InputGroup borderColor="gray.300">
-                    <Input type="date" size="md" onChange={updateDeadline} />
-                  </InputGroup>
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Description</FormLabel>
-                  <Textarea
-                    borderColor="gray.300"
-                    placeholder="Write your task description here"
-                    onChange={updateDescription}
-                  />
-                </FormControl>
-              </VStack>
-            </Box>
-          </ModalBody>
-
+          <TaskFormComponemt setFormInfo={updateTaskInfo} taskToChange={defaultTask}/>
           <ModalFooter>
             <Button
               variant="solid"

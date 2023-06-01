@@ -70,7 +70,7 @@ const TaskFormComponemt = (
             <FormControl>
               <FormLabel>Deadline</FormLabel>
               <InputGroup borderColor="gray.300">
-                <Input type="date" size="md" onChange={updateDeadline} />
+                <Input type="datetime-local" size="md" onChange={updateDeadline} />
               </InputGroup>
             </FormControl>
             <FormControl>
