@@ -14,11 +14,17 @@ import { FiTrash2 } from "react-icons/fi";
 import { TaskInfoContext } from "./Tasks";
 import { removeTask } from "@/lib/CRUD_Tasks";
 
-interface DeleteTaskModalProps {}
+interface DeleteTaskModalProps { }
 
-const DeleteTaskModal: FC<DeleteTaskModalProps> = ({}) => {
-  const task = useContext(TaskInfoContext)
+const DeleteTaskModal: FC<DeleteTaskModalProps> = ({ }) => {
+  const { task, pageUpdater } = useContext(TaskInfoContext)
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const deleteHandler = async () => {
+    await removeTask(task);
+    pageUpdater();
+    onClose();
+  }
 
   return (
     <>
@@ -50,7 +56,7 @@ const DeleteTaskModal: FC<DeleteTaskModalProps> = ({}) => {
               color="white"
               _hover={{ bg: "red.600" }}
               mr={3}
-              onClick={async () => await removeTask(task) && onClose()}
+              onClick={deleteHandler}
             >
               Delete
             </Button>

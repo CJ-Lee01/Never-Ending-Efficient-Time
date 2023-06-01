@@ -19,15 +19,17 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { ChangeEvent, FC, FormEvent, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
+import { TaskInfoContext } from "./Tasks";
 
 interface AddTaskModalProps { }
 
 const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [saveSuccess, setSaveSuccess] = useState(false);
-  
+  const {task, pageUpdater} = useContext(TaskInfoContext)
+
 
   const [taskInfo, updateTaskInfo] = useState<TasksInformation>({
     canvas_id: -1,
@@ -71,6 +73,7 @@ const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
     event.preventDefault();
     const { data, error } = await addTask(taskInfo)
     error ? alert(error.message) : setSaveSuccess(true);
+    pageUpdater();
     onClose();
   }
 
