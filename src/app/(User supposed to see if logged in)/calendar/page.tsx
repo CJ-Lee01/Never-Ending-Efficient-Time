@@ -1,5 +1,5 @@
 "use client";
-import CalendarGrid from "@/components/Calendar/CalendarGrid";
+import CalendarGrid from "@/components/Calendar/calendarGrid";
 import { Button, Grid, GridItem, Stack, Image } from "@chakra-ui/react";
 
 export default function CalendarPage() {

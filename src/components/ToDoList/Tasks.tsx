@@ -10,7 +10,6 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { Dispatch, FC, Fragment, SetStateAction, createContext, useEffect, useState } from "react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
 import EditTaskModal from "./EditTaskModal";
 import DeleteTaskModal from "./DeleteTaskModal";
 import ViewTaskModal from "./ViewTaskModal";
@@ -89,7 +88,7 @@ const Tasks: FC<TasksProps> = ({ }) => {
               >
                 <TaskInfoContext.Provider value={{ task: item, pageUpdater: pageUpdater }}>
                   <ViewTaskModal />
-                  <Checkbox colorScheme="green" />
+                  <Checkbox colorScheme="green" onClick={() => {}}/>
                   <EditTaskModal />
                   <DeleteTaskModal />
                 </TaskInfoContext.Provider>
