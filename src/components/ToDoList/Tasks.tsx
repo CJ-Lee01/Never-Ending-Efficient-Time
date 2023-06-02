@@ -9,12 +9,12 @@ import {
   Checkbox,
   Divider,
 } from "@chakra-ui/react";
-import { Dispatch, FC, Fragment, SetStateAction, createContext, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, FC, Fragment, SetStateAction, createContext, useEffect, useState } from "react";
 import EditTaskModal from "./EditTaskModal";
 import DeleteTaskModal from "./DeleteTaskModal";
 import ViewTaskModal from "./ViewTaskModal";
 import { TasksInformation } from "@/lib/types";
-import { getTasks } from "@/lib/CRUD_Tasks";
+import { editTask, getTasks } from "@/lib/CRUD_Tasks";
 import { PostgrestError } from "@supabase/supabase-js";
 import defaultTask from "./DefaultTask";
 import AddTaskModal from "./AddTaskModal";
@@ -45,6 +45,14 @@ const Tasks: FC<TasksProps> = ({ }) => {
   useEffect(() => {
     getTasks(setTaskList);
   }, [dummy])
+
+  const checkHandler = (item: TasksInformation) => (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    editTask({
+      ...item,
+      is_complete: !item.is_complete
+    })
+  }
 
   return (
     <>
@@ -88,7 +96,7 @@ const Tasks: FC<TasksProps> = ({ }) => {
               >
                 <TaskInfoContext.Provider value={{ task: item, pageUpdater: pageUpdater }}>
                   <ViewTaskModal />
-                  <Checkbox colorScheme="green" onClick={() => {}}/>
+                  <Checkbox colorScheme="green" defaultChecked={item.is_complete} onChange={checkHandler(item)}/>
                   <EditTaskModal />
                   <DeleteTaskModal />
                 </TaskInfoContext.Provider>
