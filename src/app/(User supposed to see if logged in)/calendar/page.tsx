@@ -1,32 +1,55 @@
 "use client";
 import CalendarGrid from "@/components/Calendar/CalendarGrid";
-import { Button, Grid, GridItem, Stack, Image } from "@chakra-ui/react";
+import EventsList from "@/components/Calendar/EventsList";
+import {
+  Grid,
+  GridItem,
+  Stack,
+  Image,
+  FormControl,
+  FormLabel,
+  Divider,
+  useColorModeValue,
+  Textarea,
+} from "@chakra-ui/react";
 
 export default function CalendarPage() {
   return (
-    <Stack>
-      <Grid
-        templateAreas={`"calendar button"
-                      "calendar NUSmods"
-                      "calendar events"`}
-        gridTemplateRows={"1fr 2fr 2fr"}
-        gridTemplateColumns={"5fr 1fr"}
-        gap={6}
-        p={16}
-      >
-        <GridItem area={"calendar"}>
-          <CalendarGrid />
-        </GridItem>
-        <GridItem area={"button"} p={6}>
-          <Button bg="orange.300">Switch View</Button>
-        </GridItem>
-        <GridItem bg="green.300" area={"NUSmods"} borderRadius={15}>
-          <Image src="/images/NUSmods.png" alt="" />
-        </GridItem>
-        <GridItem bg="blue.300" area={"events"} borderRadius={15} p={6}>
-          Events List
-        </GridItem>
-      </Grid>
-    </Stack>
+    <Grid
+      gridTemplateRows={"1fr"}
+      gridTemplateColumns={{ base: "1fr", md: "1fr", xl: "6fr 2fr" }}
+      gap={6}
+      p={16}
+    >
+      <GridItem>
+        <CalendarGrid />
+      </GridItem>
+
+      <GridItem>
+        <Stack align={"center"}>
+          <Stack
+            borderRadius={15}
+            borderColor={useColorModeValue("blackAlpha.300", "whiteAlpha.500")}
+            borderWidth={1}
+            p={3}
+            mb={4}
+          >
+            <Stack px={{ base: 28, xl: 12 }} pb={10}>
+              <Image src="/images/NUSmods.png" alt="" />
+              <FormControl justifyContent="center">
+                <FormLabel>Enter your NUSmods timetable link:</FormLabel>
+                <Textarea size="lg" resize="none"></Textarea>
+              </FormControl>
+            </Stack>
+          </Stack>
+          <Divider
+            borderColor={useColorModeValue("orange.300", "green.300")}
+            borderWidth={1}
+          />
+
+          <EventsList />
+        </Stack>
+      </GridItem>
+    </Grid>
   );
 }
