@@ -18,12 +18,15 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { FC, useContext } from "react";
+import { TaskInfoContext } from "./Tasks";
 
 interface ViewTaskModalProps {}
 
 const ViewTaskModal: FC<ViewTaskModalProps> = ({}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {task, pageUpdater} = useContext(TaskInfoContext)
+
 
   return (
     <>
@@ -55,25 +58,25 @@ const ViewTaskModal: FC<ViewTaskModalProps> = ({}) => {
                   <Input
                     type="text"
                     size="md"
-                    placeholder="Type Here"
+                    placeholder={task.title}
                     borderColor="#E0E1E7"
                     isReadOnly
-                    value="Title here"
+                    value={task.title}
                   />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Deadline</FormLabel>
                   <InputGroup borderColor="#E0E1E7">
-                    <Input type="date" size="md" isReadOnly />
+                    <Input type="datetime-local" size="md" isReadOnly value={task.deadline}/>
                   </InputGroup>
                 </FormControl>
                 <FormControl>
                   <FormLabel>Description</FormLabel>
                   <Textarea
                     borderColor="gray.300"
-                    placeholder="Write your task description here"
+                    placeholder={task.description}
                     isReadOnly
-                    value="Description here"
+                    value={task.description}
                   />
                 </FormControl>
               </VStack>

@@ -12,7 +12,6 @@ const ToDoList: FC<ToDoListProps> = ({}) => {
         <chakra.h1 fontSize="5xl" fontWeight="bold" textAlign="center" pt={16}>
           To-Do List
         </chakra.h1>
-        <AddTaskModal />
       </Stack>
       <Tasks />
     </Container>
