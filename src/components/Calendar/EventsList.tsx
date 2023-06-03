@@ -11,11 +11,11 @@ import { FC, Fragment, useContext } from "react";
 import DeleteEventModal from "./DeleteEventModal";
 import EditEventModal from "./EditEventModal";
 
-import { EventInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
+import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
 interface EventsListProps {}
 
 const EventsList: FC<EventsListProps> = ({}) => {
-  const {events, pageUpdater} = useContext(EventInfoContext);
+  const {events, pageUpdater} = useContext(EventListInfoContext);
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
 

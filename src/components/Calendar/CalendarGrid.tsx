@@ -1,11 +1,14 @@
 import { Grid, Stack, Image } from "@chakra-ui/react";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
 
-const CalendarGrid: FC = ({}) => {
+const CalendarGrid: FC = ({ }) => {
+  const { events, pageUpdater } = useContext(EventListInfoContext);
+
   return (
     <div className="calendar-container">
       <FullCalendar
@@ -19,7 +22,13 @@ const CalendarGrid: FC = ({}) => {
         editable={true}
         selectable={true}
         selectMirror={true}
-        initialEvents={[{ title: "nice event", start: new Date() }]}
+        initialEvents={events.map(item => {
+          return {
+            title: item.event_name,
+            start: item.start_time,
+            end: item.end_time,
+          }
+        })}
       />
     </div>
   );
