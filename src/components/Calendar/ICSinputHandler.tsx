@@ -1,5 +1,6 @@
 import { Stack, FormControl, FormLabel, Image } from "@chakra-ui/react"
 import { useState, ChangeEvent } from "react";
+import ICAL from "@/lib/ical";
 
 export const ICSinputHandler = () => {
   const [fileNUSMods, setFile] = useState<File | null>();
@@ -12,6 +13,9 @@ export const ICSinputHandler = () => {
   const submitFileHandler = async () => {
     const fileString: string = await fileNUSMods?.text() ?? '';
     const iCalendarData: string = "BEGIN:VCALENDAR" + fileString + "END:VCALENDAR";
+    const jCalData = await ICAL.parse(iCalendarData);
+    console.log(jCalData);
+
   }
 
   return <Stack px={{ base: 28, xl: 12 }} pb={10}>
@@ -19,7 +23,7 @@ export const ICSinputHandler = () => {
     <FormControl justifyContent="center">
       <FormLabel>Enter your NUSmods timetable link:</FormLabel>
       <input type="file" accept=".ics" onChange={fileChangeHandler} />
-      <input type="button" onClick={submitFileHandler}>submit</input>
+      <input type="button" onClick={submitFileHandler} value="submit" />
     </FormControl>
   </Stack>
 };
