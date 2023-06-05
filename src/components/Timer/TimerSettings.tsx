@@ -1,5 +1,4 @@
 import {
-  Flex,
   Tab,
   TabList,
   TabPanel,
@@ -11,7 +10,9 @@ import { FC } from "react";
 import StopwatchTab from "./StopwatchTab";
 import TimerTab from "./TimerTab";
 
-const TimerSettings: FC = ({}) => {
+interface TimerSettingsProps {}
+
+const TimerSettings: FC<TimerSettingsProps> = ({}) => {
   return (
     <Tabs
       isFitted

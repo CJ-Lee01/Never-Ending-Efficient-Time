@@ -5,11 +5,27 @@ import {
   Flex,
   chakra,
   useColorModeValue,
-  Button,
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { FC, useContext } from "react";
+import TimeToggleButtons from "./TimeToggleButtons";
+import { TimerDataContext } from "@/app/(User supposed to see if logged in)/timer/page";
+import {
+  calculateHours,
+  calculateMinutes,
+  calculateSeconds,
+} from "@/lib/timerFunctions";
 
-const Clock: FC = ({}) => {
+interface ClockProps {
+  counterSeconds: number;
+}
+
+const Clock: FC<ClockProps> = ({ counterSeconds }) => {
+  const hr = calculateHours(counterSeconds);
+  const min = calculateMinutes(counterSeconds);
+  const sec = calculateSeconds(counterSeconds);
+
+  const { timerData } = useContext(TimerDataContext);
+
   return (
     <Stack direction={"column"}>
       <chakra.h1
@@ -17,7 +33,7 @@ const Clock: FC = ({}) => {
         fontWeight="bold"
         textAlign="left"
       >
-        Pomodoro Timer
+        {timerData.title}
       </chakra.h1>
       <Stack direction={"row"} py={6}>
         <Flex
@@ -45,42 +61,23 @@ const Clock: FC = ({}) => {
           padding={6}
         >
           <Text align={"center"} variant={"timeText"}>
-            00
+            {hr < 10 ? "0" + hr : hr}
           </Text>
           <Text align={"center"} variant={"timeText"}>
             :
           </Text>
           <Text align={"center"} variant={"timeText"}>
-            10
+            {min < 10 ? "0" + min : min}
           </Text>
           <Text align={"center"} variant={"timeText"}>
             :
           </Text>
           <Text align={"center"} variant={"timeText"}>
-            30
+            {sec < 10 ? "0" + sec : sec}
           </Text>
         </Grid>
       </Flex>
-      <Stack align={"center"} spacing={5} pt={8}>
-        <Stack
-          direction={{ base: "column", md: "row" }}
-          spacing={4}
-          justifyContent={"right"}
-        >
-          <Button bg={"green.400"} color={"white"} width={"300px"}>
-            Start
-          </Button>
-          <Button width={"300px"}>Stop</Button>
-        </Stack>
-        <Button
-          bg={"red.500"}
-          color={"white"}
-          width={"300px"}
-          justifyContent={"center"}
-        >
-          Reset
-        </Button>
-      </Stack>
+      <TimeToggleButtons></TimeToggleButtons>
     </Stack>
   );
 };
