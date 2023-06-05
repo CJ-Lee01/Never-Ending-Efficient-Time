@@ -21,6 +21,7 @@ const TimerSettings: FC<TimerSettingsProps> = ({}) => {
       borderWidth={2}
       borderRadius={10}
       borderColor={useColorModeValue("blackAlpha.600", "whiteAlpha.600")}
+      width={{ xl: "35%" }}
     >
       <TabList mb="1em">
         <Tab>Stopwatch</Tab>

@@ -1,109 +1,72 @@
-import { FC, Fragment, useContext } from "react";
-import {
-  chakra,
-  VStack,
-  Text,
-  Divider,
-  Button,
-  Checkbox,
-  Grid,
-  Stack,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { FC, useContext } from "react";
 import { TimerDataContext } from "@/app/(User supposed to see if logged in)/timer/page";
 import { TimerDataType } from "@/lib/types";
-import DeleteTaskModal from "../ToDoList/DeleteTaskModal";
-import EditTaskModal from "../ToDoList/EditTaskModal";
-import { TaskInfoContext } from "../ToDoList/Tasks";
-import ViewTaskModal from "../ToDoList/ViewTaskModal";
-import {
-  calculateHours,
-  calculateMinutes,
-  calculateSeconds,
-} from "@/lib/timerFunctions";
+import Timers from "./Timers";
 
 interface TimerTabProps {}
 
 const TimerTab: FC<TimerTabProps> = ({}) => {
-  const bgColorScheme = useColorModeValue("gray.100", "gray.700");
-  const textColor = useColorModeValue("gray.600", "gray.300");
   const {
     isStopwatchStart,
     setStopwatchStart,
     setTimerStart,
     isTimerStart,
     setCounterSeconds,
+    counterIntervals,
+    setCounterIntervals,
     timerData,
     setTimerData,
+    isIntervalComplete,
+    setIntervalComplete,
+    setIntervalTitle,
   } = useContext(TimerDataContext);
 
-  const handleTimerStart = (timerTitle: string, totalSeconds: number) => {
+  const handleTimerStart = (timer: TimerDataType) => {
     if (!isStopwatchStart) {
-      setTimerData({ title: timerTitle, totalSeconds: totalSeconds });
+      setIntervalComplete(false);
+      setTimerData(timer);
       setTimerStart(true);
-      setCounterSeconds(totalSeconds);
+      setCounterSeconds(timer.totalSeconds);
+      setCounterIntervals(1);
+      setIntervalTitle(timer.intervalName ?? "-");
     } else {
       alert("Please Stop the Stopwatch First!");
     }
   };
+
+  const handleContinueInterval = () => {
+    if (isIntervalComplete) {
+      return;
+    }
+
+    if (counterIntervals % 2 == 0 && timerData.totalSecondsTwo != null) {
+      setCounterSeconds(timerData.totalSecondsTwo);
+      setTimerStart(true);
+      setIntervalTitle(timerData.intervalNameTwo ?? "-");
+    } else {
+      setCounterSeconds(timerData.totalSeconds);
+      setTimerStart(true);
+      setIntervalTitle(timerData.intervalName ?? "-");
+    }
+  };
+
   return (
-    <VStack
-      border="1px solid"
-      borderColor="gray.400"
-      rounded="md"
-      overflow="hidden"
-      spacing={0}
-    >
-      {TimerList.map((timer, index) => (
-        <Fragment key={timer.title}>
-          <Grid
-            templateRows={{ base: "auto auto", md: "auto" }}
-            w="100%"
-            templateColumns={{ base: "5fr 2fr", md: "5fr 2fr" }}
-            p={{ base: 2, sm: 4 }}
-            gap={3}
-            alignItems="center"
-            _hover={{ bg: bgColorScheme }}
-          >
-            <Stack>
-              <chakra.h3 fontWeight="bold" fontSize="lg">
-                {timer.title}
-              </chakra.h3>
-              <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                2 Cycles, {calculateHours(timer.totalSeconds)} :{" "}
-                {calculateMinutes(timer.totalSeconds)} :{" "}
-                {calculateSeconds(timer.totalSeconds)}
-              </chakra.p>
-            </Stack>
-            <Stack
-              spacing={{ base: 5, md: 4 }}
-              direction="row"
-              fontSize={{ base: "sm", sm: "md" }}
-              justifySelf="flex-end"
-              alignItems="center"
-            >
-              <Button
-                bg={"green.400"}
-                color={"white"}
-                onClick={() =>
-                  handleTimerStart(timer.title, timer.totalSeconds)
-                }
-              >
-                Start
-              </Button>
-            </Stack>
-          </Grid>
-          {TimerList.length - 1 !== index && <Divider m={0} />}
-        </Fragment>
-      ))}
-    </VStack>
+    <Timers
+      TimerList={TimerList}
+      handleTimerStart={handleTimerStart}
+      handleContinueInterval={handleContinueInterval}
+    />
   );
 };
 
 const TimerList: TimerDataType[] = [
   {
     title: "Pomodoro Timer",
-    totalSeconds: 36210,
+    intervals: 4,
+    totalSeconds: 10,
+    totalSecondsTwo: 20,
+    intervalName: "Pomodoro",
+    intervalNameTwo: "Break",
   },
 ];
 

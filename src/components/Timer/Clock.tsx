@@ -17,9 +17,15 @@ import {
 
 interface ClockProps {
   counterSeconds: number;
+  counterIntervals: number;
+  intervalTitle: string;
 }
 
-const Clock: FC<ClockProps> = ({ counterSeconds }) => {
+const Clock: FC<ClockProps> = ({
+  counterSeconds,
+  counterIntervals,
+  intervalTitle,
+}) => {
   const hr = calculateHours(counterSeconds);
   const min = calculateMinutes(counterSeconds);
   const sec = calculateSeconds(counterSeconds);
@@ -42,10 +48,10 @@ const Clock: FC<ClockProps> = ({ counterSeconds }) => {
           borderRadius={10}
           padding={2}
         >
-          1/4
+          {counterIntervals}/{timerData.intervals}
         </Flex>
         <chakra.h3 fontSize="3xl" textAlign="center" pl={6}>
-          Short break
+          {intervalTitle}
         </chakra.h3>
       </Stack>
       <Flex

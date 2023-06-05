@@ -41,5 +41,9 @@ export interface TasksInformation {
 
 export interface TimerDataType {
   title: string;
+  intervals: number;
   totalSeconds: number;
+  totalSecondsTwo?: number;
+  intervalName?: string;
+  intervalNameTwo?: string;
 }

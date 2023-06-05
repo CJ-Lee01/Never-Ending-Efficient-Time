@@ -1,6 +1,8 @@
 import { FC, useContext } from "react";
-import { Button, Stack } from "@chakra-ui/react";
+import { Button, Stack, Spacer } from "@chakra-ui/react";
 import { TimerDataContext } from "@/app/(User supposed to see if logged in)/timer/page";
+import { TimerDataType } from "@/lib/types";
+import Laps from "./Laps";
 
 interface StopwatchTabProps {}
 
@@ -20,7 +22,12 @@ const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
       return;
     }
     if (!isStopwatchStart) {
-      setTimerData({ title: "Stopwatch", totalSeconds: 0 });
+      setTimerData({
+        title: "Stopwatch",
+        intervals: 1,
+        totalSeconds: 0,
+        intervalName: "-",
+      });
       setCounterSeconds(0);
       setStopwatchStart(true);
     } else {
@@ -29,7 +36,10 @@ const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
   };
 
   return (
-    <Stack>
+    <Stack direction="column">
+      <Laps LapList={LapList} />
+      <Spacer></Spacer>
+
       <Button bg={"green.400"} color={"white"} onClick={handleStopwatchStart}>
         Start
       </Button>
@@ -39,5 +49,13 @@ const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
     </Stack>
   );
 };
+
+const LapList: TimerDataType[] = [
+  {
+    title: "Pomodoro Timer",
+    intervals: 4,
+    totalSeconds: 36210,
+  },
+];
 
 export default StopwatchTab;

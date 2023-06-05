@@ -7,8 +7,10 @@ import { useState, useEffect, useContext, createContext } from "react";
 import { TimerDataType } from "@/lib/types";
 
 const dummyTime: TimerDataType = {
-  title: "Default Timer",
-  totalSeconds: 36210,
+  title: "No Timer Selected",
+  intervals: 0,
+  totalSeconds: 0,
+  intervalName: "-",
 };
 
 export const TimerDataContext = createContext<{
@@ -19,6 +21,11 @@ export const TimerDataContext = createContext<{
   setCounterSeconds: (seconds: number) => void;
   timerData: TimerDataType;
   setTimerData: (timerData: TimerDataType) => void;
+  counterIntervals: number;
+  setCounterIntervals: (intervals: number) => void;
+  isIntervalComplete: boolean;
+  setIntervalComplete: (bool: boolean) => void;
+  setIntervalTitle: (str: string) => void;
 }>({
   isStopwatchStart: false,
   setStopwatchStart: () => {},
@@ -27,6 +34,11 @@ export const TimerDataContext = createContext<{
   setCounterSeconds: () => {},
   timerData: dummyTime,
   setTimerData: () => {},
+  counterIntervals: 0,
+  setCounterIntervals: () => {},
+  isIntervalComplete: false,
+  setIntervalComplete: () => {},
+  setIntervalTitle: () => {},
 });
 
 export default function TimerPage() {
@@ -36,6 +48,9 @@ export default function TimerPage() {
   const [counterSeconds, setCounterSeconds] = useState<number>(
     timerData.totalSeconds
   );
+  const [counterIntervals, setCounterIntervals] = useState<number>(0);
+  const [isIntervalComplete, setIntervalComplete] = useState<boolean>(true);
+  const [intervalTitle, setIntervalTitle] = useState<string>("-");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,10 +66,16 @@ export default function TimerPage() {
     if (isTimerStart && counterSeconds == 0) {
       setTimerStart(false);
       alert("Time's up!");
+      if (counterIntervals < timerData.intervals) {
+        setCounterIntervals(counterIntervals + 1);
+        setIntervalTitle("Press Next to continue");
+      } else {
+        setIntervalComplete(true);
+      }
     }
 
     return () => clearInterval(interval);
-  }, [isStopwatchStart, isTimerStart, counterSeconds]);
+  }, [isStopwatchStart, isTimerStart, counterSeconds, counterIntervals]);
 
   return (
     <TimerDataContext.Provider
@@ -66,16 +87,25 @@ export default function TimerPage() {
         setCounterSeconds: setCounterSeconds,
         timerData: timerData,
         setTimerData: setTimerData,
+        counterIntervals: counterIntervals,
+        setCounterIntervals: setCounterIntervals,
+        isIntervalComplete: isIntervalComplete,
+        setIntervalComplete: setIntervalComplete,
+        setIntervalTitle: setIntervalTitle,
       }}
     >
       <Stack
         justify={"center"}
         spacing={{ base: 20, xl: 36 }}
         py={{ base: 20, md: 28 }}
-        px={{ base: 5, xl: 10 }}
+        px={{ base: 5, xl: 8 }}
         direction={{ base: "column", xl: "row" }}
       >
-        <Clock counterSeconds={counterSeconds} />
+        <Clock
+          counterSeconds={counterSeconds}
+          counterIntervals={counterIntervals}
+          intervalTitle={intervalTitle}
+        />
         <TimerSettings />
       </Stack>
     </TimerDataContext.Provider>
