@@ -39,7 +39,7 @@ function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], er
     });
     moduleDataList.push({moduleCode: moduleName, classes: classArray})
   })
-  return { data: , error: null }
+  return { data: moduleDataList, error: null }
 }
 
 function parserToEvent(classes: moduleTimetableInformation[], error: string | null): {
