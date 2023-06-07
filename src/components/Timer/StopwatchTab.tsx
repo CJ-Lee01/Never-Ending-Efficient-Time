@@ -1,7 +1,7 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useState } from "react";
 import { Button, Stack, Spacer } from "@chakra-ui/react";
 import { TimerDataContext } from "@/app/(User supposed to see if logged in)/timer/page";
-import { TimerDataType } from "@/lib/types";
+import { TimerDataType, LapDataType } from "@/lib/types";
 import Laps from "./Laps";
 
 interface StopwatchTabProps {}
@@ -10,17 +10,17 @@ const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
   const {
     isStopwatchStart,
     setStopwatchStart,
+    counterSeconds,
     setCounterSeconds,
+    setCounterIntervals,
     isTimerStart,
     timerData,
     setTimerData,
   } = useContext(TimerDataContext);
 
+  const [LapsList, setLapsList] = useState(LapList);
+
   const handleStopwatchStart = () => {
-    if (isTimerStart) {
-      alert("Timer is running!");
-      return;
-    }
     if (!isStopwatchStart) {
       setTimerData({
         title: "Stopwatch",
@@ -28,34 +28,44 @@ const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
         totalSeconds: 0,
         intervalName: "-",
       });
+      setCounterIntervals(1);
       setCounterSeconds(0);
       setStopwatchStart(true);
-    } else {
-      alert("Stopwatch is running!");
+      LapList = [];
+      setLapsList((prev) => []);
     }
+  };
+
+  const handleLapClick = () => {
+    LapList.push({ totalSeconds: counterSeconds });
+    setLapsList((prev) => LapList);
   };
 
   return (
     <Stack direction="column">
-      <Laps LapList={LapList} />
+      <Laps LapsList={LapsList} />
       <Spacer></Spacer>
 
-      <Button bg={"green.400"} color={"white"} onClick={handleStopwatchStart}>
+      <Button
+        bg={"green.400"}
+        color={"white"}
+        onClick={handleStopwatchStart}
+        isDisabled={isStopwatchStart || isTimerStart ? true : false}
+      >
         Start
       </Button>
-      <Button bg="orange.300" color="white">
+      <Button
+        bg="orange.300"
+        color="white"
+        isDisabled={isTimerStart ? true : false}
+        onClick={handleLapClick}
+      >
         Lap
       </Button>
     </Stack>
   );
 };
 
-const LapList: TimerDataType[] = [
-  {
-    title: "Pomodoro Timer",
-    intervals: 4,
-    totalSeconds: 36210,
-  },
-];
+let LapList: LapDataType[] = [];
 
 export default StopwatchTab;

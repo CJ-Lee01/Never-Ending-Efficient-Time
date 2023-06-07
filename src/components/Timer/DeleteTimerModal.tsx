@@ -1,3 +1,5 @@
+import { removeTimer } from "@/lib/CRUD_Timers";
+import { TimerDataType } from "@/lib/types";
 import {
   useDisclosure,
   Button,
@@ -12,10 +14,18 @@ import {
 import { FC, useContext } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
-interface DeleteTimerModalProps {}
+interface DeleteTimerModalProps {
+  timer: TimerDataType;
+}
 
-const DeleteTimerModal: FC<DeleteTimerModalProps> = ({}) => {
+const DeleteTimerModal: FC<DeleteTimerModalProps> = ({ timer }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleDelete = async () => {
+    const error = await removeTimer(timer);
+    onClose();
+  };
+
   return (
     <>
       <FiTrash2
@@ -46,6 +56,7 @@ const DeleteTimerModal: FC<DeleteTimerModalProps> = ({}) => {
               color="white"
               _hover={{ bg: "red.600" }}
               mr={3}
+              onClick={handleDelete}
             >
               Delete
             </Button>

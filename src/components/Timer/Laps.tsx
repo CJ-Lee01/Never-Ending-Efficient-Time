@@ -11,18 +11,16 @@ import {
   Divider,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { FC, Fragment } from "react";
-import DeleteLapModal from "./DeleteLapModal";
-import { TimerDataType } from "@/lib/types";
+import { FC, Fragment, useEffect, useState } from "react";
+import { TimerDataType, LapDataType } from "@/lib/types";
 
 interface LapsProps {
-  LapList: TimerDataType[];
+  LapsList: LapDataType[];
 }
 
-const Laps: FC<LapsProps> = ({ LapList }) => {
+const Laps: FC<LapsProps> = ({ LapsList }) => {
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
-
   return (
     <VStack
       border="1px solid"
@@ -32,8 +30,8 @@ const Laps: FC<LapsProps> = ({ LapList }) => {
       maxHeight="550px"
       spacing={0}
     >
-      {LapList.map((lap, index) => (
-        <Fragment key={lap.title}>
+      {LapsList.map((lap, index) => (
+        <Fragment key={index}>
           <Grid
             templateRows={{ base: "auto auto", md: "auto" }}
             w="100%"
@@ -44,25 +42,16 @@ const Laps: FC<LapsProps> = ({ LapList }) => {
           >
             <Stack>
               <chakra.h3 fontWeight="bold" fontSize="lg">
-                {lap.title}
+                Lap
               </chakra.h3>
               <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                2 Cycles, {calculateHours(lap.totalSeconds)} :{" "}
+                {calculateHours(lap.totalSeconds)} :{" "}
                 {calculateMinutes(lap.totalSeconds)} :{" "}
                 {calculateSeconds(lap.totalSeconds)}
               </chakra.p>
             </Stack>
-            <Stack
-              spacing={{ base: 5, sm: 4 }}
-              direction="row"
-              fontSize={{ base: "sm", sm: "md" }}
-              justifySelf="flex-end"
-              alignItems="center"
-            >
-              <DeleteLapModal />
-            </Stack>
           </Grid>
-          {LapList.length - 1 !== index && <Divider m={0} />}
+          {LapsList.length - 1 !== index && <Divider m={0} />}
         </Fragment>
       ))}
     </VStack>

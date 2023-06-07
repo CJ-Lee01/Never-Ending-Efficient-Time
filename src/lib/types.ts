@@ -40,10 +40,16 @@ export interface TasksInformation {
 }
 
 export interface TimerDataType {
+  id?: number;
+  user_id?: string;
   title: string;
   intervals: number;
   totalSeconds: number;
   totalSecondsTwo?: number;
   intervalName?: string;
   intervalNameTwo?: string;
+}
+
+export interface LapDataType {
+  totalSeconds: number;
 }

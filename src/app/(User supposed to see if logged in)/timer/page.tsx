@@ -3,21 +3,18 @@
 import { Stack } from "@chakra-ui/react";
 import Clock from "@/components/Timer/Clock";
 import TimerSettings from "@/components/Timer/TimerSettings";
-import { useState, useEffect, useContext, createContext } from "react";
+import { useState, useEffect, createContext } from "react";
 import { TimerDataType } from "@/lib/types";
+import { dummyTimer } from "@/components/Timer/DummyTimer";
 
-const dummyTime: TimerDataType = {
-  title: "No Timer Selected",
-  intervals: 0,
-  totalSeconds: 0,
-  intervalName: "-",
-};
+const dummyTime = dummyTimer;
 
 export const TimerDataContext = createContext<{
   isStopwatchStart: boolean;
   setStopwatchStart: (isStopwatchStart: boolean) => void;
   setTimerStart: (isTimerStart: boolean) => void;
   isTimerStart: boolean;
+  counterSeconds: number;
   setCounterSeconds: (seconds: number) => void;
   timerData: TimerDataType;
   setTimerData: (timerData: TimerDataType) => void;
@@ -31,6 +28,7 @@ export const TimerDataContext = createContext<{
   setStopwatchStart: () => {},
   setTimerStart: () => {},
   isTimerStart: false,
+  counterSeconds: 0,
   setCounterSeconds: () => {},
   timerData: dummyTime,
   setTimerData: () => {},
@@ -84,6 +82,7 @@ export default function TimerPage() {
         setStopwatchStart: setStopwatchStart,
         setTimerStart: setTimerStart,
         isTimerStart: isTimerStart,
+        counterSeconds: counterSeconds,
         setCounterSeconds: setCounterSeconds,
         timerData: timerData,
         setTimerData: setTimerData,

@@ -34,14 +34,18 @@ const Timers: FC<TimersProps> = ({
 }) => {
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
-  const { isIntervalComplete } = useContext(TimerDataContext);
+  const { isIntervalComplete, isStopwatchStart, isTimerStart } =
+    useContext(TimerDataContext);
   return (
     <Stack direction={"column"}>
       <Button
         onClick={() => handleContinueInterval()}
-        // bg={useColorModeValue("orange.300", "green.400")}
         bg={useColorModeValue("orange.300", "orange.400")}
-        isDisabled={isIntervalComplete ? true : false}
+        isDisabled={
+          isIntervalComplete || (isTimerStart && !isIntervalComplete)
+            ? true
+            : false
+        }
       >
         Next Interval
       </Button>
@@ -54,7 +58,7 @@ const Timers: FC<TimersProps> = ({
         spacing={0}
       >
         {TimerList.map((timer, index) => (
-          <Fragment key={timer.title}>
+          <Fragment key={timer.id}>
             <Grid
               templateRows={{ base: "auto auto", md: "auto" }}
               w="100%"
@@ -68,9 +72,8 @@ const Timers: FC<TimersProps> = ({
                   {timer.title}
                 </chakra.h3>
                 <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                  2 Cycles, {calculateHours(timer.totalSeconds)} :{" "}
-                  {calculateMinutes(timer.totalSeconds)} :{" "}
-                  {calculateSeconds(timer.totalSeconds)}
+                  {timer.intervals}{" "}
+                  {timer.intervals == 1 ? "Interval" : "Intervals"}
                 </chakra.p>
               </Stack>
               <Stack
@@ -84,12 +87,14 @@ const Timers: FC<TimersProps> = ({
                   bg={"green.400"}
                   color={"white"}
                   onClick={() => handleTimerStart(timer)}
-                  isDisabled={!isIntervalComplete ? true : false}
+                  isDisabled={
+                    !isIntervalComplete || isStopwatchStart ? true : false
+                  }
                 >
                   Start
                 </Button>
-                <EditTimerModal />
-                <DeleteTimerModal />
+                <EditTimerModal timer={timer} />
+                <DeleteTimerModal timer={timer} />
               </Stack>
             </Grid>
             {TimerList.length - 1 !== index && <Divider m={0} />}

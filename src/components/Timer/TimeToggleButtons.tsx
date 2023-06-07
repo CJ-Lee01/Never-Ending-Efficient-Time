@@ -18,6 +18,7 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
     setCounterSeconds,
     setCounterIntervals,
     setIntervalComplete,
+    setIntervalTitle,
     timerData,
     setTimerData,
   } = useContext(TimerDataContext);
@@ -48,6 +49,7 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
     setCounterSeconds(0);
     setCounterIntervals(0);
     setIntervalComplete(true);
+    setIntervalTitle("-");
     setTimerData({
       title: "No Timer Selected",
       intervals: 0,

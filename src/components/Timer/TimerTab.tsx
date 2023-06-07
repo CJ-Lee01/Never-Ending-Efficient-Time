@@ -1,11 +1,25 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect, useState, createContext } from "react";
 import { TimerDataContext } from "@/app/(User supposed to see if logged in)/timer/page";
 import { TimerDataType } from "@/lib/types";
 import Timers from "./Timers";
+import { getTimers } from "@/lib/CRUD_Timers";
+import { PostgrestError } from "@supabase/supabase-js";
 
 interface TimerTabProps {}
 
 const TimerTab: FC<TimerTabProps> = ({}) => {
+  const [timerList, setTimerList] = useState<{
+    data: TimerDataType[] | null;
+    error: PostgrestError | null;
+  }>({
+    data: null,
+    error: null,
+  });
+
+  useEffect(() => {
+    getTimers(setTimerList);
+  }, [timerList]);
+
   const {
     isStopwatchStart,
     setStopwatchStart,
@@ -52,22 +66,11 @@ const TimerTab: FC<TimerTabProps> = ({}) => {
 
   return (
     <Timers
-      TimerList={TimerList}
+      TimerList={timerList.data ?? []}
       handleTimerStart={handleTimerStart}
       handleContinueInterval={handleContinueInterval}
     />
   );
 };
-
-const TimerList: TimerDataType[] = [
-  {
-    title: "Pomodoro Timer",
-    intervals: 4,
-    totalSeconds: 10,
-    totalSecondsTwo: 20,
-    intervalName: "Pomodoro",
-    intervalNameTwo: "Break",
-  },
-];
 
 export default TimerTab;
