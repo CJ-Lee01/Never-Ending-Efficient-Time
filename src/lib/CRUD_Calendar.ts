@@ -16,6 +16,19 @@ export async function addEvent(event: eventInformation) {
 
   return { data, error };
 }
+export async function addBulkEvent(eventList: eventInformation[]) {
+  const supabase = supabaseUser();
+  const user_id = (await supabase.auth.getSession()).data.session?.user.id
+  const { data, error } = await supabase
+    .from('event')
+    .insert(eventList.map(event => {return {
+      ...event,
+      user_id: user_id
+    }}))
+    .select();
+
+  return { data, error };
+}
 
 export async function removeEvent(event: eventInformation) {
   const supabase = supabaseUser();
