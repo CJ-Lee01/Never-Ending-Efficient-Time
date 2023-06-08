@@ -26,4 +26,13 @@ export const theme = extendTheme({
     }),
   },
   config,
+  components: {
+    Text: {
+      variants: {
+        timeText: {
+          fontSize: { base: "7xl", md: "9xl" },
+        },
+      },
+    },
+  },
 });
