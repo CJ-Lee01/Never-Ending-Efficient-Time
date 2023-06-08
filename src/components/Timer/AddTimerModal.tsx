@@ -1,4 +1,4 @@
-import { addTimer, getTimers } from "@/lib/CRUD_Timers";
+import { addTimer } from "@/lib/CRUD_Timers";
 import { TimerDataType } from "@/lib/types";
 import {
   useDisclosure,
@@ -15,7 +15,6 @@ import {
   Input,
   InputGroup,
   ModalBody,
-  Textarea,
   VStack,
   Stack,
   NumberDecrementStepper,
@@ -23,11 +22,8 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  Checkbox,
-  Flex,
 } from "@chakra-ui/react";
-import { test } from "node:test";
-import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import AddTimerForm from "./AddTimerForm";
 import { calculateTotalSeconds } from "@/lib/timerFunctions";

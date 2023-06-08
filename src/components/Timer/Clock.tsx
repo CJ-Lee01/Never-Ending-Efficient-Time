@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { FC, useContext } from "react";
 import TimeToggleButtons from "./TimeToggleButtons";
-import { TimerDataContext } from "@/app/(User supposed to see if logged in)/timer/page";
+import { TimerDataContext } from "./TimerDataContextProvider";
 import {
   calculateHours,
   calculateMinutes,

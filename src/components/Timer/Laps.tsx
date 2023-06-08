@@ -11,8 +11,8 @@ import {
   Divider,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { FC, Fragment, useEffect, useState } from "react";
-import { TimerDataType, LapDataType } from "@/lib/types";
+import { FC, Fragment } from "react";
+import { LapDataType } from "@/lib/types";
 
 interface LapsProps {
   LapsList: LapDataType[];

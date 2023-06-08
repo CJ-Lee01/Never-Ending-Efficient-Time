@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useState, createContext } from "react";
-import { TimerDataContext } from "@/app/(User supposed to see if logged in)/timer/page";
+import { TimerDataContext } from "./TimerDataContextProvider";
 import { TimerDataType } from "@/lib/types";
 import Timers from "./Timers";
 import { getTimers } from "@/lib/CRUD_Timers";
@@ -16,15 +16,14 @@ const TimerTab: FC<TimerTabProps> = ({}) => {
     error: null,
   });
 
+  // Triggers when timerList changes.
   useEffect(() => {
     getTimers(setTimerList);
   }, [timerList]);
 
   const {
     isStopwatchStart,
-    setStopwatchStart,
     setTimerStart,
-    isTimerStart,
     setCounterSeconds,
     counterIntervals,
     setCounterIntervals,

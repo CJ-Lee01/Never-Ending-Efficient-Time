@@ -11,7 +11,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
 interface DeleteTimerModalProps {

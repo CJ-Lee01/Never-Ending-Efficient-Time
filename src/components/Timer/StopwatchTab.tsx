@@ -1,7 +1,7 @@
 import { FC, useContext, useState } from "react";
 import { Button, Stack, Spacer } from "@chakra-ui/react";
-import { TimerDataContext } from "@/app/(User supposed to see if logged in)/timer/page";
-import { TimerDataType, LapDataType } from "@/lib/types";
+import { TimerDataContext } from "./TimerDataContextProvider";
+import { LapDataType } from "@/lib/types";
 import Laps from "./Laps";
 
 interface StopwatchTabProps {}
@@ -14,7 +14,6 @@ const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
     setCounterSeconds,
     setCounterIntervals,
     isTimerStart,
-    timerData,
     setTimerData,
   } = useContext(TimerDataContext);
 

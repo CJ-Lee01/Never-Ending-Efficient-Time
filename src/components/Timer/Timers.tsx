@@ -1,9 +1,4 @@
 import {
-  calculateHours,
-  calculateMinutes,
-  calculateSeconds,
-} from "@/lib/timerFunctions";
-import {
   Stack,
   VStack,
   Grid,
@@ -19,7 +14,7 @@ import AddTimerModal from "./AddTimerModal";
 import DeleteTimerModal from "./DeleteTimerModal";
 import EditTimerModal from "./EditTimerModal";
 import { TimerDataType } from "@/lib/types";
-import { TimerDataContext } from "@/app/(User supposed to see if logged in)/timer/page";
+import { TimerDataContext } from "./TimerDataContextProvider";
 
 interface TimersProps {
   TimerList: TimerDataType[];

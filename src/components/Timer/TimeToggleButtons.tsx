@@ -1,6 +1,6 @@
 import { Stack, Button } from "@chakra-ui/react";
 import { FC, useContext, useState } from "react";
-import { TimerDataContext } from "@/app/(User supposed to see if logged in)/timer/page";
+import { TimerDataContext } from "./TimerDataContextProvider";
 
 interface TimeToggleButtonsProps {}
 
@@ -19,10 +19,10 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
     setCounterIntervals,
     setIntervalComplete,
     setIntervalTitle,
-    timerData,
     setTimerData,
   } = useContext(TimerDataContext);
 
+  // Implements the Pause and Resume functionality for the button
   const handleClockStop = () => {
     if (isStopwatchStart) {
       setResumeState("stopwatch");
@@ -42,6 +42,7 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
     }
   };
 
+  // Implements the Reset functionality for the Time
   const handleClockReset = () => {
     setResumeState(null);
     setStopwatchStart(false);

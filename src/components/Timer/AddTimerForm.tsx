@@ -1,16 +1,10 @@
 import {
-  Box,
-  ModalBody,
-  VStack,
   FormControl,
   FormLabel,
   Input,
   InputGroup,
   NumberInput,
   NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   Stack,
 } from "@chakra-ui/react";
 import { FC } from "react";

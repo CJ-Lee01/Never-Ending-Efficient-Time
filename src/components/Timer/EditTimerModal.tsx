@@ -29,7 +29,7 @@ import {
   Stack,
   VStack,
 } from "@chakra-ui/react";
-import { FC, FormEvent, SetStateAction, useContext, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import EditTimerForm from "./EditTimerForm";
 
