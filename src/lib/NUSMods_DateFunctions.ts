@@ -23,7 +23,7 @@ function daysSinceStart(num: number, dayOfWeek: string): number {
 export function convertWeeksToDateArray(weeks: any, startDate: Date, semester: number, day: string): Date[] {
   const offset = semester == 2 ? -1 : 0; //as sem 2 starts with week 1 but sem 1 starts with week 0.
   //I hate doing this but i need to set weeks to any. Otherwise typescript will complain and idk how to fix it.
-  //Type checking is done in the functions.
+  //Type checking is done in the functions and function returns empty array if it fails the checks.
   const isWeekRangeBool = isWeekRange(weeks);
   const isNumberArrayBool = isNumberArray(weeks)
   if (!(day in dayValues)) {
@@ -35,8 +35,8 @@ export function convertWeeksToDateArray(weeks: any, startDate: Date, semester: n
   if (isNumberArrayBool) {
     return weeks.map((num: number) => addDate(startDate, daysSinceStart(num + offset, day)));
   }
-  const newStartDate = addDate(new Date(weeks.start), dayValues.get(day) ?? 0);
-  const newEndDate = addDate(new Date(weeks.end), dayValues.get(day) ?? 0);
+  const newStartDate = new Date(weeks.start);
+  const newEndDate = new Date(weeks.end);
   if (weeks.weeks) {
     return weeks.weeks.map((num: number) => addDate(startDate, daysSinceStart(num - 1, day)));
   }
@@ -47,4 +47,11 @@ export function convertWeeksToDateArray(weeks: any, startDate: Date, semester: n
   }
   return dateList;
 
+}
+
+export function convertTimeStringToTimeObject(timeString: string): {hour: number, minute: number} {
+  const number = parseInt(timeString);
+  const hour = Math.floor(number / 100);
+  const minute = number % 100;
+  return {hour: hour, minute: minute};
 }
