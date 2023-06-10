@@ -41,14 +41,16 @@ function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], er
   }
 
   const parameters = address.searchParams;
+  const semesterNum = parseInt(pathName[2][pathName[2].length - 1])
   const moduleDataList: moduleTimetableInformation[] = [];
-
+  let parserError = '';
   parameters.forEach((classes: string, moduleName: string) => {
     //sample classes: "LEC:01,TUT:01,REC:01,LAB:04"
     const classArray = classes.split(",").map((classInfo: string) => {
       //sample classInfo: "LEC:01"
       const temp = classInfo.split(":");
       if (temp.length != 2) {
+        parserError += `unknown class info: ${temp}. \n`;
         return {
           type: `unknown class info: ${temp}`, slot: INVALID_SLOT
         };
@@ -58,11 +60,11 @@ function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], er
           type: lessonType.get(temp[0]) ?? "", slot: temp[1]
         };
       }
+      parserError += `unknown class type: ${temp[0]} with slot ${temp[1]}. \n`
       return {
         type: `unknown class type: ${temp[0]}`, slot: INVALID_SLOT
       };
     });
-    const semesterNum = parseInt(pathName[2][pathName[2].length - 1])
     moduleDataList.push({
       semester: semesterNum,
       moduleCode: moduleName,
@@ -70,20 +72,25 @@ function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], er
     })
 
   })
+  if (parserError) {
+    return { data: [], error: `parsing error: ${parserError}` }
+  }
   return { data: moduleDataList, error: null }
 }
 
-function parserToEvent(classes: moduleTimetableInformation[], error: string | null): {
+function eventParser({ data, error }: { data: moduleTimetableInformation[], error: string | null }, acadYear: number[]): {
   events: eventInformation[], error: string | null
 } {
   if (error) {
-    return { events: [], error: error }
+    return { events: [], error: error };
   }
-  let eventList: eventInformation[] = [];
-  for (const moduleClassesInfo in classes) {
-    const dummy = moduleClassesInfo.length //to edit.
-  }
-  return { events: [], error: null }
+  const eventList: eventInformation[] = [];
+  data.forEach(moduleClassInfo => addClassesToList(moduleClassInfo, acadYear, eventList));
+  return {events: eventList, error: null};
+}
+
+async function addClassesToList(moduleClassInfo: moduleTimetableInformation, acadYear: number[], inputList: eventInformation[]): Promise<void> {
+  inputList.concat(await getModuleInformation(moduleClassInfo, acadYear));
 }
 
 async function getModuleInformation(moduleClassInfo: moduleTimetableInformation, acadYear: number[]): Promise<eventInformation[]> {
