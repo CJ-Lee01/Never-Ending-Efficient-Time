@@ -29,6 +29,21 @@ export type WeekRange = {
   weeks?: number[];
 };
 
+//own function
+export function isWeekRange(object: any) {
+  return object.hasOwnProperty('start')
+    && object.hasOwnProperty('end')
+    && typeof object.start == 'string'
+    && typeof object.end == 'string'
+    && (typeof object.weeks == 'undefined' || isNumberArray(object))
+    && (typeof object.weekInterval == 'undefined' || typeof object.weekInterval == 'number');
+}
+//own function
+export function isNumberArray(object: any) {
+  return Array.isArray(object)
+    && (object.length == 0 || typeof object[0] == 'number'); //if object is an empty array, it is trivial. otherwise needs to be num.
+}
+
 export type Weeks = number[] | WeekRange;
 
 // Recursive tree of module codes and boolean operators for the prereq tree
