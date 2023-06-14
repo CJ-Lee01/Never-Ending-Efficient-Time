@@ -26,7 +26,8 @@ export function convertWeeksToDateArray(weeks: any, startDate: Date, semester: n
   //Type checking is done in the functions and function returns empty array if it fails the checks.
   const isWeekRangeBool = isWeekRange(weeks);
   const isNumberArrayBool = isNumberArray(weeks)
-  if (!(day in dayValues)) {
+  if (dayValues.get(day) == undefined) {
+    alert(`invalid day ${day}`)
     return [];
   }
   if (!isNumberArrayBool && !isWeekRangeBool) {

@@ -1,12 +1,15 @@
+'use client'
+
 import { Module } from "./NUSMod_ModuleTypes";
-import { eventInformation } from "./types";
-import { containsObject } from "./GenericHelper";
+import { eventInformation } from "../types";
+import { containsObject } from "../GenericHelper";
 import { convertTimeStringToTimeObject, convertWeeksToDateArray } from "./NUSMods_DateFunctions";
+import getStartDate, { academicYearInfo } from "./AcademicCalendar";
 
 interface moduleTimetableInformation {
-  semester: number,
-  moduleCode: string,
-  classes: { type: string, slot: string }[]
+  semester: number;
+  moduleCode: string;
+  classes: { type: string, slot: string }[];
 }
 
 const lessonType: Map<string, string> = new Map([
@@ -50,19 +53,19 @@ function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], er
       //sample classInfo: "LEC:01"
       const temp = classInfo.split(":");
       if (temp.length != 2) {
-        parserError += `unknown class info: ${temp}. \n`;
+        parserError += `unknown class info: ${temp} for module ${moduleName}. \n`;
         return {
           type: `unknown class info: ${temp}`, slot: INVALID_SLOT
         };
       }
-      if (temp[0] in lessonType) {
+      if (lessonType.get(temp[0])) {
         return {
           type: lessonType.get(temp[0]) ?? "", slot: temp[1]
         };
       }
-      parserError += `unknown class type: ${temp[0]} with slot ${temp[1]}. \n`
+      parserError += `unknown class type: ${temp[0]} with slot ${temp[1]} for module ${moduleName}. \n`
       return {
-        type: `unknown class type: ${temp[0]}`, slot: INVALID_SLOT
+        type: `unknown class type: ${temp[0]} for module ${moduleName}`, slot: INVALID_SLOT
       };
     });
     moduleDataList.push({
@@ -78,36 +81,43 @@ function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], er
   return { data: moduleDataList, error: null }
 }
 
-function eventParser({ data, error }: { data: moduleTimetableInformation[], error: string | null }, acadYear: number[]): {
+async function eventParser({ data, error }: { data: moduleTimetableInformation[], error: string | null }, acadYear: academicYearInfo): Promise<{
   events: eventInformation[], error: string | null
-} {
+}> {
   if (error) {
     return { events: [], error: error };
   }
   const eventList: eventInformation[] = [];
-  data.forEach(moduleClassInfo => addClassesToList(moduleClassInfo, acadYear, eventList));
-  return {events: eventList, error: null};
+  const promiseArr: Promise<void>[] = [];
+  data.forEach(timetableInfo => promiseArr.push(addClassesToList(timetableInfo, acadYear, eventList)));
+  await Promise.all(promiseArr)
+  console.log(eventList)
+  return { events: eventList, error: null };
 }
 
-async function addClassesToList(moduleClassInfo: moduleTimetableInformation, acadYear: number[], inputList: eventInformation[]): Promise<void> {
-  inputList.concat(await getModuleInformation(moduleClassInfo, acadYear));
-}
-
-async function getModuleInformation(moduleClassInfo: moduleTimetableInformation, acadYear: number[]): Promise<eventInformation[]> {
-  //moduleCode is in all CAPS.
-  //acadYear is in the format of a pair e.g. [2019, 2020]
-  const semStartDate = new Date(); //placeholder.
-  const acadYearString = `${acadYear[0]}-${acadYear[1]}`;
-  const response = await fetch(`${NUSMODS_API}/${acadYearString}/modules/${moduleClassInfo.moduleCode}`);
-  if (response.status == 404) {
-    return [];
+async function addClassesToList(moduleClassInfo: moduleTimetableInformation, acadYear: academicYearInfo, inputList: eventInformation[]): Promise<void> {
+  const modTimetableList = await getModuleInformation(moduleClassInfo, acadYear)
+  console.log(modTimetableList)
+  for (const item of modTimetableList) {
+    inputList.push(item)
   }
-  const modData: Module = JSON.parse(await response.json());
+}
+
+async function getModuleInformation(moduleClassInfo: moduleTimetableInformation, acadYear: academicYearInfo): Promise<eventInformation[]> {
+  //moduleCode is in all CAPS.
+  //technically we can do a check to see if module is valid for possible performance improvements but there is no need for now.
+  //acadYear is in the format of a pair e.g. [2019, 2020]
+  const semStartDate = getStartDate(acadYear, moduleClassInfo.semester)
+  const acadYearString = `${acadYear.year1}-${acadYear.year2}`;
+  const response = await fetch(`${NUSMODS_API}/${acadYearString}/modules/${moduleClassInfo.moduleCode}.json`);
+  const modData: Module = await response.json();
   const modTitle = `${moduleClassInfo.moduleCode} ${modData["title"]}`
   const classData = modData['semesterData']
-    .find((elem: { [x: string]: any; }) => elem['semester'] == moduleClassInfo.semester)
+    .find((elem: { [x: string]: any; }) => {
+      return elem['semester'] == moduleClassInfo.semester
+    })
     ?.timetable.filter((elem: { [x: string]: any; }) => {
-      containsObject({ type: elem.lessonType, slot: elem.classNo }, moduleClassInfo.classes)
+      return moduleClassInfo.classes.find(lesson => lesson.slot == elem['classNo'] && lesson.type == elem['lessonType'])
     })
     .flatMap(elem => convertWeeksToDateArray(elem.weeks, semStartDate, moduleClassInfo.semester, elem.day)
       .map(date => {
@@ -125,9 +135,15 @@ async function getModuleInformation(moduleClassInfo: moduleTimetableInformation,
           start_time: startDateTime.toISOString(),
           end_time: endDateTime.toISOString(),
         }
-      })) ?? []
-
-  return classData;
+      }))
+  return classData ?? [];
 }
 
-export default NUSModsURLparser;
+export default async function NUSModsURLToEventList(url: string, acadYear: academicYearInfo): Promise<{ events: eventInformation[], error: string | null }> {
+  const moduleClassInfo = NUSModsURLparser(url);
+  if (moduleClassInfo.error) {
+    return { events: [], error: moduleClassInfo.error };
+  }
+  const eventList = eventParser(moduleClassInfo, acadYear);
+  return eventList
+}

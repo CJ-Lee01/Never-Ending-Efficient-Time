@@ -2,6 +2,7 @@
 import CalendarGrid from "@/components/Calendar/CalendarGrid";
 import EventsList from "@/components/Calendar/EventsList";
 import { ICSinputHandler } from "@/components/Calendar/ICSinputHandler";
+import { URLinputHandler } from "@/components/Calendar/URLinputHandler";
 import { defaultEvent, getEvent } from "@/lib/CRUD_Calendar";
 import { eventInformation } from "@/lib/types";
 import {
@@ -67,7 +68,7 @@ export default function CalendarPage() {
               p={3}
               mb={4}
             >
-              <ICSinputHandler />
+              <URLinputHandler />
             </Stack>
             <Divider
               borderColor={useColorModeValue("orange.300", "green.300")}
