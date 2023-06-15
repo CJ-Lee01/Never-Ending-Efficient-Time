@@ -1,5 +1,5 @@
 import { FC, useContext, useState } from "react";
-import { Button, Stack, Spacer } from "@chakra-ui/react";
+import { Button, Stack, Spacer, useColorModeValue } from "@chakra-ui/react";
 import { TimerDataContext } from "./TimerDataContextProvider";
 import { LapDataType } from "@/lib/types";
 import Laps from "./Laps";
@@ -56,7 +56,11 @@ const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
       <Button
         bg="orange.300"
         color="white"
-        isDisabled={isTimerStart ? true : false}
+        isDisabled={isTimerStart || !isStopwatchStart ? true : false}
+        _focus={{
+          outline: "none",
+          bg: useColorModeValue("orange.300", "orange.400"),
+        }}
         onClick={handleLapClick}
       >
         Lap

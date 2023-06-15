@@ -22,11 +22,13 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  Tooltip,
 } from "@chakra-ui/react";
 import { FC, FormEvent, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import AddTimerForm from "./AddTimerForm";
 import { calculateTotalSeconds } from "@/lib/timerFunctions";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 interface AddTimerModalProps {}
 
@@ -114,7 +116,15 @@ const AddTimerModal: FC<AddTimerModalProps> = ({}) => {
                     />
                   </FormControl>
                   <FormControl>
-                    <FormLabel>Number of Intervals</FormLabel>
+                    <FormLabel>
+                      Number of Intervals{" "}
+                      <Tooltip
+                        label="The Intervals will cycle between the two given Intervals"
+                        fontSize="sm"
+                      >
+                        <InfoOutlineIcon />
+                      </Tooltip>
+                    </FormLabel>
                     <InputGroup borderColor="gray.300">
                       <NumberInput
                         defaultValue={1}

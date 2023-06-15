@@ -41,6 +41,7 @@ const Timers: FC<TimersProps> = ({
             ? true
             : false
         }
+        _focus={{ bg: useColorModeValue("orange.300", "orange.400") }}
       >
         Next Interval
       </Button>
