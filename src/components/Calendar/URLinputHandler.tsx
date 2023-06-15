@@ -1,12 +1,19 @@
+import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
 import { addBulkEvent } from "@/lib/CRUD_Calendar";
-import { academicYearInfo, currentAcademicYear } from "@/lib/NUSMods/AcademicCalendar";
+import { academicYearInfo, currentAcademicYear, getacademicYearList } from "@/lib/NUSMods/AcademicCalendar";
 import NUSModsURLToEventList from "@/lib/NUSMods/NUSModsURLparser";
-import { Stack, FormControl, FormLabel, Image } from "@chakra-ui/react"
-import { useState, ChangeEvent } from "react";
+import { Stack, FormControl, FormLabel, Image, Input, Select } from "@chakra-ui/react"
+import { useState, ChangeEvent, useContext } from "react";
 
 export const URLinputHandler = () => {
   const [urlString, setUrlString] = useState<string>('');
-  const [acadYear, setAcadYear] = useState<academicYearInfo>(currentAcademicYear());
+  const [acadYear, setAcadYear] = useState<string>(currentAcademicYear());
+  const { events, pageUpdater } = useContext(EventListInfoContext);
+
+  const academicYearChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+    event.preventDefault();
+    setAcadYear(event.target.value);
+  };
 
   const URLChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -16,24 +23,26 @@ export const URLinputHandler = () => {
   const submitURLHandler = async () => {
     const eventsParseInfo = await NUSModsURLToEventList(urlString, acadYear)
     if (eventsParseInfo.error) {
-      alert(eventsParseInfo.error)
-      return
+      alert(eventsParseInfo.error);
+      return;
     }
-    console.log(eventsParseInfo.events)
-    const {data, error} = await addBulkEvent(eventsParseInfo.events);
+    const { data, error } = await addBulkEvent(eventsParseInfo.events);
     if (error) {
-      alert(error)
-      return
+      alert(error);
+      return;
     }
-    alert('success!')
+    pageUpdater();
   }
 
   return <Stack px={{ base: 28, xl: 12 }} pb={10}>
     <Image src="../../../images/NUSmods.png" alt="" />
     <FormControl justifyContent="center">
       <FormLabel>Enter your NUSmods timetable link:</FormLabel>
-      <input type="url" required onChange={URLChangeHandler} />
-      <input type="button" onClick={submitURLHandler} value="submit" />
+      <Input type="url" required onChange={URLChangeHandler} placeholder="NUSMods timetable link"/>
+      <Select placeholder="Select Academic Year" onChange={academicYearChangeHandler}>
+        {getacademicYearList().map(year => <option value={year}>{year}</option>)}
+      </Select>
+      <Input type="button" onClick={submitURLHandler} value="Submit" />
     </FormControl>
   </Stack>
 };

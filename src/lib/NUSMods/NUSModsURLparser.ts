@@ -2,9 +2,8 @@
 
 import { Module } from "./NUSMod_ModuleTypes";
 import { eventInformation } from "../types";
-import { containsObject } from "../GenericHelper";
 import { convertTimeStringToTimeObject, convertWeeksToDateArray } from "./NUSMods_DateFunctions";
-import getStartDate, { academicYearInfo } from "./AcademicCalendar";
+import { getStartDate, academicYearInfo, convertAcadYearStringToArray } from "./AcademicCalendar";
 
 interface moduleTimetableInformation {
   semester: number;
@@ -22,13 +21,18 @@ const lessonType: Map<string, string> = new Map([
 const NUSMODS_API = "https://api.nusmods.com/v2";
 
 const NOT_NUSMODS_ERROR = "The URL you provided is not an NUSMods URL.";
-const NOT_CORRECT_PATHNAME = "The URL you provided is not a sharing NUSMods URL";
+const NOT_CORRECT_PATHNAME = "The URL you provided is not a sharing NUSMods URL.";
+const INVALID_URL = "The URL you provided is not a valid URL."
 const INVALID_SLOT = "-1";
 
 function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], error: string | null } {
-  //example URL
-  const example = "https://nusmods.com/timetable/sem-2/share?ALS1010=LEC:2&CS2030S=LAB:14H,REC:20,LEC:1&CS2040S=TUT:06,REC:15,LEC:1&DTK1234=TUT:E36&GEA1000=TUT:D23&IS1128=LEC:1&MA2001=TUT:17,LEC:2"
-  const address = new URL(example);
+  //example URL: "https://nusmods.com/timetable/sem-2/share?ALS1010=LEC:2&CS2030S=LAB:14H,REC:20,LEC:1&CS2040S=TUT:06,REC:15,LEC:1&DTK1234=TUT:E36&GEA1000=TUT:D23&IS1128=LEC:1&MA2001=TUT:17,LEC:2"
+  let address: URL | null = null;
+  try {
+    address = new URL(url) //the constructor checks if the URL is valid. If not, it throws an error.
+  } catch (error) {
+    return { data: [], error: INVALID_URL }
+  }
   if (address.hostname != "nusmods.com") {
     return { data: [], error: NOT_NUSMODS_ERROR };
   }
@@ -53,6 +57,7 @@ function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], er
       //sample classInfo: "LEC:01"
       const temp = classInfo.split(":");
       if (temp.length != 2) {
+        //I know the operation is inefficient. Optimizations can be done later.
         parserError += `unknown class info: ${temp} for module ${moduleName}. \n`;
         return {
           type: `unknown class info: ${temp}`, slot: INVALID_SLOT
@@ -139,11 +144,12 @@ async function getModuleInformation(moduleClassInfo: moduleTimetableInformation,
   return classData ?? [];
 }
 
-export default async function NUSModsURLToEventList(url: string, acadYear: academicYearInfo): Promise<{ events: eventInformation[], error: string | null }> {
+export default async function NUSModsURLToEventList(url: string, acadYearString: string): Promise<{ events: eventInformation[], error: string | null }> {
   const moduleClassInfo = NUSModsURLparser(url);
-  if (moduleClassInfo.error) {
-    return { events: [], error: moduleClassInfo.error };
+  const acadYear = convertAcadYearStringToArray(acadYearString)
+  if (moduleClassInfo.error || acadYear.error || !acadYear.result) {
+    return { events: [], error: moduleClassInfo.error + acadYear.error };
   }
-  const eventList = eventParser(moduleClassInfo, acadYear);
+  const eventList = eventParser(moduleClassInfo, acadYear.result);
   return eventList
 }

@@ -1,9 +1,12 @@
 import { Stack, FormControl, FormLabel, Image } from "@chakra-ui/react"
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useContext } from "react";
 import ICAL from "@/lib/ical";
+import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
 
 export const ICSinputHandler = () => {
   const [fileNUSMods, setFile] = useState<File | null>();
+  const {events, pageUpdater} = useContext(EventListInfoContext);
+
 
   const fileChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();

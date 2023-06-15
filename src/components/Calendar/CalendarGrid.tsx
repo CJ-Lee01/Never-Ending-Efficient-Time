@@ -8,7 +8,7 @@ import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/
 
 const CalendarGrid: FC = ({ }) => {
   const { events, pageUpdater } = useContext(EventListInfoContext);
-
+  console.log(events)
   return (
     <div className="calendar-container">
       <FullCalendar
@@ -22,7 +22,7 @@ const CalendarGrid: FC = ({ }) => {
         editable={true}
         selectable={true}
         selectMirror={true}
-        initialEvents={events.map(item => {
+        events={events.map(item => {
           return {
             title: item.event_name,
             start: item.start_time,

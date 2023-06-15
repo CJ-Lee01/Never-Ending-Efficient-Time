@@ -9,7 +9,7 @@ export interface academicYearInfo {
   year2: number;
 }
 
-const academicCalendar = new Map([
+const academicCalendar = new Map<string, academicCalendarMapInfo>([
   ["2014/2015", [
     { "start": [2014, 8, 11] },
     { "start": [2015, 1, 12] }
@@ -75,13 +75,40 @@ const academicCalendar = new Map([
   ]
 ])
 
+export const getacademicYearList: () => string[] = () => {
+  const arr: string[] = [];
+  const acadCalIterator = academicCalendar.keys();
+  for (let year = acadCalIterator.next().value; year != undefined; year = acadCalIterator.next().value) {
+    arr.push(year)
+  }
+  arr.sort();
+  return arr;
+}
+
 const defaultStart = { start: [0, 0, 0] };
 
-export default function getStartDate(acadYear: academicYearInfo, semester: number) {
+export function getStartDate(acadYear: academicYearInfo, semester: number) {
   const yearInfo = academicCalendar.get(`${acadYear.year1}/${acadYear.year2}`);
-  const dateStart = (yearInfo ? yearInfo[semester] : defaultStart) ?? defaultStart;
+  const dateStart = (yearInfo ? yearInfo[semester - 1] : defaultStart) ?? defaultStart;
   const dateArray = dateStart.start;
   return new Date(dateArray[0], dateArray[1], dateArray[2]);
 }
 
-export const currentAcademicYear: () => academicYearInfo = () => { return { year1: 2022, year2: 2023 } };
+export function convertAcadYearStringToArray(acadYearString: string): { result: academicYearInfo | null, error: string } {
+  const arr = acadYearString.split('/').map(x => parseInt(x));
+  if (arr.length != 2) {
+    return { result: null, error: "Invalid Year" };
+  }
+  for (const num of arr) {
+    if (Number.isNaN(num)) {
+      return { result: null, error: "Invalid Year" };
+    }
+  }
+  return {
+    result: { year1: arr[0], year2: arr[1] },
+    error: ""
+  };
+
+}
+
+export const currentAcademicYear: () => string = () => "2022/2023";
