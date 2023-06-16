@@ -4,7 +4,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
+import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 
 const CalendarGrid: FC = ({ }) => {
   const { events, pageUpdater } = useContext(EventListInfoContext);

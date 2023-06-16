@@ -2,22 +2,18 @@
 import CalendarGrid from "@/components/Calendar/CalendarGrid";
 import EventsList from "@/components/Calendar/EventsList";
 import { URLinputHandler } from "@/components/Calendar/URLinputHandler";
-import { defaultEvent, getEvent } from "@/lib/CRUD_Calendar";
+import { getEvent } from "@/lib/CRUD_Calendar";
 import { eventInformation } from "@/lib/types";
 import {
   Grid,
   GridItem,
   Stack,
-  Image,
-  FormControl,
-  FormLabel,
   Divider,
   useColorModeValue,
-  Textarea,
-  Input,
 } from "@chakra-ui/react";
 import { PostgrestError } from "@supabase/supabase-js";
-import { ChangeEvent, ChangeEventHandler, createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 
 function compareDatetimes(eventA: eventInformation, eventB: eventInformation) {
   return eventA.start_time < eventB.start_time
@@ -27,15 +23,7 @@ function compareDatetimes(eventA: eventInformation, eventB: eventInformation) {
       : 0
 }
 
-export const EventListInfoContext = createContext<
-  {
-    events: eventInformation[],
-    pageUpdater: () => void,
-  }
->({
-  events: [],
-  pageUpdater: () => { },
-});
+
 
 export default function CalendarPage() {
   const [eventList, setEventList] = useState<{

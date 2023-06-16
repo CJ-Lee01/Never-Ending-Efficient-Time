@@ -11,7 +11,7 @@ import { FC, Fragment, useContext } from "react";
 import DeleteEventModal from "./DeleteEventModal";
 import EditEventModal from "./EditEventModal";
 
-import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
+import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 interface EventsListProps {}
 
 const EventsList: FC<EventsListProps> = ({}) => {

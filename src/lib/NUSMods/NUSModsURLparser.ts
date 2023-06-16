@@ -1,6 +1,6 @@
 'use client'
 
-import { Module } from "./NUSMod_ModuleTypes";
+import { Module, SemesterData } from "./NUSMod_ModuleTypes";
 import { eventInformation } from "../types";
 import { convertTimeStringToTimeObject, convertWeeksToDateArray } from "./NUSMods_DateFunctions";
 import { getStartDate, academicYearInfo, convertAcadYearStringToArray } from "./AcademicCalendar";
@@ -118,10 +118,10 @@ async function getModuleInformation(moduleClassInfo: moduleTimetableInformation,
   const modData: Module = await response.json();
   const modTitle = `${moduleClassInfo.moduleCode} ${modData["title"]}`
   const classData = modData['semesterData']
-    .find((elem: { [x: string]: any; }) => {
+    .find((elem: SemesterData) => {
       return elem['semester'] == moduleClassInfo.semester
     })
-    ?.timetable.filter((elem: { [x: string]: any; }) => {
+    ?.timetable.filter((elem) => {
       return moduleClassInfo.classes.find(lesson => lesson.slot == elem['classNo'] && lesson.type == elem['lessonType'])
     })
     .flatMap(elem => convertWeeksToDateArray(elem.weeks, semStartDate, moduleClassInfo.semester, elem.day)

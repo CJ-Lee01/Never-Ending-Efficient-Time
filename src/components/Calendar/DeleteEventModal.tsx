@@ -1,4 +1,4 @@
-import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
+import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 import { removeEvent } from "@/lib/CRUD_Calendar";
 import { eventInformation } from "@/lib/types";
 import {
@@ -21,6 +21,7 @@ const DeleteEventModal = ({eventInfo}: {eventInfo: eventInformation}) => {
 
   const deleteEventHandler = async () => {
     await removeEvent(eventInfo);
+    onClose();
     pageUpdater();
   }
 

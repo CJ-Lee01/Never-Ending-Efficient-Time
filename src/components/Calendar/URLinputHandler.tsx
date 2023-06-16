@@ -1,11 +1,11 @@
-import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
+import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 import { addBulkEvent } from "@/lib/CRUD_Calendar";
 import { academicYearInfo, currentAcademicYear, getacademicYearList } from "@/lib/NUSMods/AcademicCalendar";
 import NUSModsURLToEventList from "@/lib/NUSMods/NUSModsURLparser";
 import { Stack, FormControl, FormLabel, Image, Input, Select } from "@chakra-ui/react"
-import { useState, ChangeEvent, useContext } from "react";
+import { useState, ChangeEvent, useContext, FC } from "react";
 
-export const URLinputHandler = () => {
+export const URLinputHandler: FC = ({}) => {
   const [urlString, setUrlString] = useState<string>('');
   const [acadYear, setAcadYear] = useState<string>(currentAcademicYear());
   const { events, pageUpdater } = useContext(EventListInfoContext);
@@ -40,7 +40,7 @@ export const URLinputHandler = () => {
       <FormLabel>Enter your NUSmods timetable link:</FormLabel>
       <Input type="url" required onChange={URLChangeHandler} placeholder="NUSMods timetable link"/>
       <Select placeholder="Select Academic Year" onChange={academicYearChangeHandler}>
-        {getacademicYearList().map(year => <option value={year}>{year}</option>)}
+        {getacademicYearList().map(year => <option key={year} value={year}>{year}</option>)}
       </Select>
       <Input type="button" onClick={submitURLHandler} value="Submit" />
     </FormControl>

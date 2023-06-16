@@ -1,4 +1,4 @@
-import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
+import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 import { eventInformation } from "@/lib/types";
 import {
   useDisclosure,
@@ -105,18 +105,29 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
                       placeholder="Type Here"
                       borderColor="#E0E1E7"
                       onChange={titleChangeHandler}
+                      value={eventInfo.event_name}
                     />
                   </FormControl>
                   <FormControl>
                     <FormLabel>Start Date/Time</FormLabel>
                     <InputGroup borderColor="#E0E1E7">
-                      <Input type="datetime-local" size="md" onChange={startChangeHandler} />
+                      <Input
+                        type="datetime-local"
+                        size="md"
+                        onChange={startChangeHandler}
+                        value={eventInfo.start_time}
+                      />
                     </InputGroup>
                   </FormControl>
                   <FormControl>
                     <FormLabel>End Date/Time</FormLabel>
                     <InputGroup borderColor="#E0E1E7">
-                      <Input type="datetime-local" size="md" onChange={endChangeHandler} />
+                      <Input
+                        type="datetime-local"
+                        size="md"
+                        onChange={endChangeHandler}
+                        value={eventInfo.end_time}
+                      />
                     </InputGroup>
                   </FormControl>
                   <FormControl>
@@ -125,6 +136,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
                       borderColor="gray.300"
                       placeholder="Write your task description here"
                       onChange={descriptionChangeHandler}
+                      value={eventInfo.event_description}
                     />
                   </FormControl>
                 </VStack>
