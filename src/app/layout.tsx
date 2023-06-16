@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <head></head>
       <body className={inter.className}>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} /> Buggy with NextJS*/}
         <ChakraProvider theme={theme}>
           <Navbar />
           {children}

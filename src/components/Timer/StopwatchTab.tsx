@@ -1,8 +1,15 @@
 import { FC, useContext, useState } from "react";
-import { Button, Stack, Spacer, useColorModeValue } from "@chakra-ui/react";
+import {
+  Button,
+  Stack,
+  Spacer,
+  useColorModeValue,
+  Tooltip,
+} from "@chakra-ui/react";
 import { TimerDataContext } from "./TimerDataContextProvider";
 import { LapDataType } from "@/lib/types";
 import Laps from "./Laps";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 interface StopwatchTabProps {}
 
@@ -54,14 +61,24 @@ const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
         Start
       </Button>
       <Button
-        bg="orange.300"
+        bg="orange.400"
         color="white"
         isDisabled={isTimerStart || !isStopwatchStart ? true : false}
-        _focus={{
-          outline: "none",
-          bg: useColorModeValue("orange.300", "orange.400"),
-        }}
+        // _focus={{
+        //   outline: "none",
+        //   bg: useColorModeValue("orange.300", "orange.400"),
+        // }}
+        _hover={{ bg: "orange.300" }}
         onClick={handleLapClick}
+        leftIcon={
+          <Tooltip
+            label="Laps will reset when a new Stopwatch is run"
+            fontSize="sm"
+            paddingRight={16}
+          >
+            <InfoOutlineIcon />
+          </Tooltip>
+        }
       >
         Lap
       </Button>

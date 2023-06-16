@@ -1,9 +1,12 @@
+"use client";
+
 import { TimerDataType } from "@/lib/types";
 import { FC, createContext, useEffect, useState } from "react";
 import { dummyTimer } from "./DummyTimer";
 import { Stack } from "@chakra-ui/react";
 import Clock from "./Clock";
 import TimerSettings from "./TimerSettings";
+import TimeUpModal from "./TimeUpModal";
 
 // Context to share with the rest of the Components
 export const TimerDataContext = createContext<{
@@ -51,6 +54,7 @@ const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({}) => {
   const [counterIntervals, setCounterIntervals] = useState<number>(0);
   const [isIntervalComplete, setIntervalComplete] = useState<boolean>(true);
   const [intervalTitle, setIntervalTitle] = useState<string>("-");
+  const [isTimeUp, setIsTimeUp] = useState<boolean>(false);
 
   //Implementing the Clock Functionality to decrease and increase the time
   useEffect(() => {
@@ -66,10 +70,11 @@ const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({}) => {
 
     if (isTimerStart && counterSeconds == 0) {
       setTimerStart(false);
-      alert("Time's up!");
+
+      setIsTimeUp(true);
       if (counterIntervals < timerData.intervals) {
         setCounterIntervals(counterIntervals + 1);
-        setIntervalTitle("Press Next to continue");
+        // setIntervalTitle("Press Next to continue");
       } else {
         setIntervalComplete(true);
       }
@@ -97,6 +102,12 @@ const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({}) => {
         intervalTitle: intervalTitle,
       }}
     >
+      <TimeUpModal
+        isTimeUp={isTimeUp}
+        setIsTimeUp={setIsTimeUp}
+        intervalTitle={intervalTitle}
+        isIntervalComplete={isIntervalComplete}
+      ></TimeUpModal>
       <Stack
         justify={"center"}
         spacing={{ base: 20, xl: 36 }}
