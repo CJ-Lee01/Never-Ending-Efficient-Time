@@ -1,3 +1,5 @@
+import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
+import { eventInformation } from "@/lib/types";
 import {
   useDisclosure,
   Button,
@@ -16,11 +18,53 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { ChangeEvent, ChangeEventHandler, FC, useContext, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 
-const EditEventModal: FC = ({}) => {
+const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { events, pageUpdater } = useContext(EventListInfoContext);
+  const [calendarEvent, editEvent] = useState<eventInformation>(eventInfo);
+
+  const titleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    editEvent(x => {
+      return {
+        ...x,
+        eventName: event.target.value
+      }
+    })
+  }
+
+  const descriptionChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    editEvent(x => {
+      return {
+        ...x,
+        event_description: event.target.value
+      }
+    })
+  }
+
+  const startChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    editEvent(x => {
+      return {
+        ...x,
+        start_time: event.target.value
+      }
+    })
+  }
+
+  const endChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    editEvent(x => {
+      return {
+        ...x,
+        end_time: event.target.value
+      }
+    })
+  }
 
   return (
     <>
@@ -51,12 +95,13 @@ const EditEventModal: FC = ({}) => {
                     size="md"
                     placeholder="Type Here"
                     borderColor="#E0E1E7"
+                    onChange={titleChangeHandler}
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel>Deadline</FormLabel>
+                  <FormLabel>Start Date/Time</FormLabel>
                   <InputGroup borderColor="#E0E1E7">
-                    <Input type="date" size="md" />
+                    <Input type="datetime" size="md" />
                   </InputGroup>
                 </FormControl>
                 <FormControl>

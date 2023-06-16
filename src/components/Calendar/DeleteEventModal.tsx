@@ -1,3 +1,6 @@
+import { EventListInfoContext } from "@/app/(User supposed to see if logged in)/calendar/page";
+import { removeEvent } from "@/lib/CRUD_Calendar";
+import { eventInformation } from "@/lib/types";
 import {
   useDisclosure,
   Button,
@@ -9,11 +12,17 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
-const DeleteEventModal: FC = ({}) => {
+const DeleteEventModal = ({eventInfo}: {eventInfo: eventInformation}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { events, pageUpdater } = useContext(EventListInfoContext);
+
+  const deleteEventHandler = async () => {
+    await removeEvent(eventInfo);
+    pageUpdater();
+  }
 
   return (
     <>
@@ -45,6 +54,7 @@ const DeleteEventModal: FC = ({}) => {
               color="white"
               _hover={{ bg: "red.600" }}
               mr={3}
+              onClick={deleteEventHandler}
             >
               Delete
             </Button>

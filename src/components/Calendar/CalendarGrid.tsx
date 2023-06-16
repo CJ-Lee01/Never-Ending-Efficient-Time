@@ -19,7 +19,7 @@ const CalendarGrid: FC = ({ }) => {
           right: "dayGridMonth,timeGridWeek",
         }}
         nowIndicator={true}
-        editable={true}
+        editable={false}
         selectable={true}
         selectMirror={true}
         events={events.map(item => {

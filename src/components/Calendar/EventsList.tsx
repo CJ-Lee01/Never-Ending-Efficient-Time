@@ -63,8 +63,8 @@ const EventsList: FC<EventsListProps> = ({}) => {
                 justifySelf="flex-end"
                 alignItems="center"
               >
-                <EditEventModal />
-                <DeleteEventModal />
+                <EditEventModal eventInfo={event}/>
+                <DeleteEventModal eventInfo={event}/>
               </Stack>
             </Grid>
             {events.length - 1 !== index && <Divider m={0} />}
