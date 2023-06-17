@@ -61,14 +61,10 @@ const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
         Start
       </Button>
       <Button
-        bg="orange.400"
+        bg={useColorModeValue("orange.300", "orange.400")}
         color="white"
         isDisabled={isTimerStart || !isStopwatchStart ? true : false}
-        // _focus={{
-        //   outline: "none",
-        //   bg: useColorModeValue("orange.300", "orange.400"),
-        // }}
-        _hover={{ bg: "orange.300" }}
+        _hover={{ bg: useColorModeValue("orange.400", "orange.300") }}
         onClick={handleLapClick}
         leftIcon={
           <Tooltip

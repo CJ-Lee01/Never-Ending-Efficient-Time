@@ -17,11 +17,11 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { FC, ReactElement } from "react";
-import SignOutButton from "@/components/AuthUI/SignOutButton";
 import MobileDrawer from "./MobileDrawer";
 import { IoIosTimer, IoMdCheckboxOutline } from "react-icons/io";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { RiDashboardFill } from "react-icons/ri";
+import ProfileDropdown from "./ProfileDropdown";
 
 const AccessBar: FC = ({}) => {
   return (
@@ -39,7 +39,12 @@ const DesktopNav = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Stack direction={"row"} spacing={7} display={{ base: "none", md: "flex" }}>
+    <Stack
+      direction={"row"}
+      spacing={7}
+      display={{ base: "none", md: "flex" }}
+      alignItems={"center"}
+    >
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label} pt={2}>
           <Link href={navItem.href} color={linkColor}>
@@ -47,11 +52,11 @@ const DesktopNav = () => {
           </Link>
         </Box>
       ))}
-      <Stack direction={"row"} spacing={4}>
+      <Stack direction={"row"} spacing={4} alignItems={"center"}>
         <Button onClick={toggleColorMode}>
           {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
         </Button>
-        <SignOutButton />
+        <ProfileDropdown></ProfileDropdown>
       </Stack>
     </Stack>
   );
