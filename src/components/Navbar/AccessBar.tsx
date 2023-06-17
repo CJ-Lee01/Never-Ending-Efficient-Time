@@ -16,10 +16,14 @@ import {
   Center,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, ReactElement } from "react";
 import SignOutButton from "@/components/AuthUI/SignOutButton";
+import MobileDrawer from "./MobileDrawer";
+import { IoIosTimer, IoMdCheckboxOutline } from "react-icons/io";
+import { AiOutlineCalendar } from "react-icons/ai";
+import { RiDashboardFill } from "react-icons/ri";
 
-const AccessBar: FC = ({ }) => {
+const AccessBar: FC = ({}) => {
   return (
     <Flex alignItems={"center"}>
       <Stack direction={"row"} spacing={7}>
@@ -54,39 +58,15 @@ const DesktopNav = () => {
 };
 
 const MobileNav = () => {
-  const linkColor = useColorModeValue("gray.600", "gray.200");
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Stack direction={"row"} spacing={7} display={{ base: "flex", md: "none" }}>
+    <Stack direction={"row"} spacing={4} display={{ base: "flex", md: "none" }}>
       <Button onClick={toggleColorMode}>
         {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
       </Button>
-      <Menu>
-        <MenuButton
-          as={IconButton}
-          aria-label="Options"
-          icon={<HamburgerIcon />}
-          variant="outline"
-        />
-        <MenuList>
-          <MenuGroup>
-            {NAV_ITEMS.map((navItem) => (
-              <MenuItem
-                as={Link}
-                href={navItem.href}
-                color={linkColor}
-                key={navItem.label}>
-                {navItem.label}
-              </MenuItem>
-            ))}
-          </MenuGroup>
-          <MenuDivider />
-          <Center>
-            <SignOutButton />
-          </Center>
-        </MenuList>
-      </Menu>
+
+      <MobileDrawer NAV_ITEMS={NAV_ITEMS}></MobileDrawer>
     </Stack>
   );
 };
@@ -94,24 +74,29 @@ const MobileNav = () => {
 interface NavItem {
   label: string;
   href: string;
+  icon: ReactElement;
 }
 
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Dashboard",
     href: "/dashboard",
+    icon: <RiDashboardFill />,
   },
   {
     label: "Timer",
     href: "/timer",
+    icon: <IoIosTimer />,
   },
   {
     label: "Calendar",
     href: "/calendar",
+    icon: <AiOutlineCalendar />,
   },
   {
     label: "To-Do List",
     href: "/to-do-list",
+    icon: <IoMdCheckboxOutline />,
   },
 ];
 
