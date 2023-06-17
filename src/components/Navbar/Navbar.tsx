@@ -22,10 +22,11 @@ const Navbar: React.FC = () => {
 
   return (
     <Flex
-      bg={useColorModeValue("white", "gray.800")}
-      height="64px"
-      py="1rem"
+      bg={useColorModeValue("gray.50", "gray.700")}
+      height={16}
+      py={10}
       px={{ base: "2%", lg: "5%", xl: "10%" }}
+      boxShadow="xl"
     >
       <Logo />
       <Spacer />

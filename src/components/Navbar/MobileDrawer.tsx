@@ -10,19 +10,15 @@ import {
   Stack,
   useColorModeValue,
   DrawerFooter,
-  Avatar,
-  Box,
   HStack,
-  VStack,
-  Text,
   Spacer,
 } from "@chakra-ui/react";
 import { FC, ReactElement } from "react";
 import Logo from "./Logo";
-import { HamburgerIcon, CalendarIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 import SignOutButton from "../AuthUI/SignOutButton";
-import { FiChevronDown } from "react-icons/fi";
+import NavProfile from "./NavProfile";
 
 interface NavItem {
   label: string;
@@ -73,21 +69,8 @@ const MobileDrawer: FC<MobileDrawerProps> = ({ NAV_ITEMS }) => {
             display={"flex"}
           >
             <HStack>
-              <HStack>
-                <Avatar
-                  size={"md"}
-                  src={
-                    "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                  }
-                />
-                <VStack alignItems="flex-start" spacing="1px" ml="2">
-                  <Text fontSize="sm">Username</Text>
-                  <Text fontSize="xs" color="gray.600">
-                    User
-                  </Text>
-                </VStack>
-              </HStack>
-              <Spacer></Spacer>
+              <NavProfile />
+              <Spacer />
               <SignOutButton />
             </HStack>
           </DrawerFooter>

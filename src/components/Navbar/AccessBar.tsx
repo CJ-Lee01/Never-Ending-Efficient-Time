@@ -1,19 +1,11 @@
-import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
   Stack,
   useColorModeValue,
   Button,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  MenuDivider,
   useColorMode,
-  MenuGroup,
-  Center,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { FC, ReactElement } from "react";
@@ -46,14 +38,17 @@ const DesktopNav = () => {
       alignItems={"center"}
     >
       {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label} pt={2}>
+        <Box key={navItem.label}>
           <Link href={navItem.href} color={linkColor}>
             {navItem.label}
           </Link>
         </Box>
       ))}
       <Stack direction={"row"} spacing={4} alignItems={"center"}>
-        <Button onClick={toggleColorMode}>
+        <Button
+          onClick={toggleColorMode}
+          bg={useColorModeValue("gray.50", "gray.700")}
+        >
           {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
         </Button>
         <ProfileDropdown></ProfileDropdown>
@@ -67,7 +62,10 @@ const MobileNav = () => {
 
   return (
     <Stack direction={"row"} spacing={4} display={{ base: "flex", md: "none" }}>
-      <Button onClick={toggleColorMode}>
+      <Button
+        onClick={toggleColorMode}
+        bg={useColorModeValue("gray.50", "gray.700")}
+      >
         {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
       </Button>
 
