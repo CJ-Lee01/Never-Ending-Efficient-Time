@@ -24,10 +24,20 @@ export interface CardProps {
 }
 
 export interface featureDescription {
-  heading: string;
-  icon: string;
-  description: string;
+  heading: string,
+  icon: string,
+  description: string
 }
+
+export interface eventInformation {
+  id?: string,
+  user_id?: string,
+  event_name: string,
+  event_description: string,
+  start_time: string,
+  end_time: string,
+}
+
 
 export interface TasksInformation {
   id?: number;
