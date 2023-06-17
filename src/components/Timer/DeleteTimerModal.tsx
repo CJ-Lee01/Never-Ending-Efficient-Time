@@ -1,3 +1,5 @@
+import { removeTimer } from "@/lib/CRUD_Timers";
+import { TimerDataType } from "@/lib/types";
 import {
   useDisclosure,
   Button,
@@ -9,22 +11,20 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { FiTrash2 } from "react-icons/fi";
-import { TaskInfoContext } from "./Tasks";
-import { removeTask } from "@/lib/CRUD_Tasks";
 
-interface DeleteTaskModalProps { }
+interface DeleteTimerModalProps {
+  timer: TimerDataType;
+}
 
-const DeleteTaskModal: FC<DeleteTaskModalProps> = ({ }) => {
-  const { task, pageUpdater } = useContext(TaskInfoContext)
+const DeleteTimerModal: FC<DeleteTimerModalProps> = ({ timer }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const deleteHandler = async () => {
-    await removeTask(task);
-    pageUpdater();
+  const handleDelete = async () => {
+    const error = await removeTimer(timer);
     onClose();
-  }
+  };
 
   return (
     <>
@@ -43,10 +43,10 @@ const DeleteTaskModal: FC<DeleteTaskModalProps> = ({ }) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Delete Task</ModalHeader>
+          <ModalHeader>Delete Timer</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            Are you sure you want to delete this task?
+            Are you sure you want to delete this timer?
           </ModalBody>
 
           <ModalFooter>
@@ -56,7 +56,7 @@ const DeleteTaskModal: FC<DeleteTaskModalProps> = ({ }) => {
               color="white"
               _hover={{ bg: "red.600" }}
               mr={3}
-              onClick={deleteHandler}
+              onClick={handleDelete}
             >
               Delete
             </Button>
@@ -68,4 +68,4 @@ const DeleteTaskModal: FC<DeleteTaskModalProps> = ({ }) => {
   );
 };
 
-export default DeleteTaskModal;
+export default DeleteTimerModal;

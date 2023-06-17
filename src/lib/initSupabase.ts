@@ -6,3 +6,15 @@ export const supabaseUser = () => createClient(
 );
 
 export const ROOT_URL = "http://localhost:3000";
+
+export function getAnyFromServer(table: string) {
+  return async () => {
+    const supabase = supabaseUser();
+
+    const { data, error } = await supabase
+      .from(table)
+      .select();
+
+    return { data, error };
+  }
+}
