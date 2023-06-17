@@ -7,13 +7,15 @@ import {
   chakra,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { FC, Fragment } from "react";
+import { FC, Fragment, useContext } from "react";
 import DeleteEventModal from "./DeleteEventModal";
 import EditEventModal from "./EditEventModal";
 
+import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 interface EventsListProps {}
 
 const EventsList: FC<EventsListProps> = ({}) => {
+  const {events, pageUpdater} = useContext(EventListInfoContext);
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
 
@@ -45,10 +47,13 @@ const EventsList: FC<EventsListProps> = ({}) => {
             >
               <Stack>
                 <chakra.h3 fontWeight="bold" fontSize="lg">
-                  {event.title}
+                  {event.event_name}
                 </chakra.h3>
                 <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                  Date: {event.date}
+                  Start Date/Time: {event.start_time}
+                </chakra.p>
+                <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
+                  End Date/Time: {event.end_time}
                 </chakra.p>
               </Stack>
               <Stack
@@ -58,8 +63,8 @@ const EventsList: FC<EventsListProps> = ({}) => {
                 justifySelf="flex-end"
                 alignItems="center"
               >
-                <EditEventModal />
-                <DeleteEventModal />
+                <EditEventModal eventInfo={event}/>
+                <DeleteEventModal eventInfo={event}/>
               </Stack>
             </Grid>
             {events.length - 1 !== index && <Divider m={0} />}
@@ -75,39 +80,5 @@ interface EventAttributes {
   date: string;
 }
 
-const events: EventAttributes[] = [
-  {
-    title: "Task 1",
-    date: "21 Jan 2022",
-  },
-  {
-    title: "Create professional Web Application with Nextjs and ChakraUI",
-    date: "20 Jun 2021",
-  },
-  {
-    title: `Get Good Grades for University`,
-    date: "31 Sept 2022",
-  },
-  {
-    title: `Get Good Grades for University`,
-    date: "31 Sept 2022",
-  },
-  {
-    title: `Get Good Grades for University`,
-    date: "31 Sept 2022",
-  },
-  {
-    title: `Get Good Grades for University`,
-    date: "31 Sept 2022",
-  },
-  {
-    title: `Get Good Grades for University`,
-    date: "31 Sept 2022",
-  },
-  {
-    title: `Get Good Grades for University`,
-    date: "31 Sept 2022",
-  },
-];
 
 export default EventsList;

@@ -1,3 +1,5 @@
+import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
+import { eventInformation } from "@/lib/types";
 import {
   useDisclosure,
   Button,
@@ -16,11 +18,61 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { ChangeEvent, ChangeEventHandler, FC, FormEvent, useContext, useState } from "react";
 import { FiEdit } from "react-icons/fi";
+import { editEvent } from "@/lib/CRUD_Calendar";
 
-const EditEventModal: FC = ({}) => {
+const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { events, pageUpdater } = useContext(EventListInfoContext);
+  const [calendarEvent, setEvent] = useState<eventInformation>(eventInfo);
+
+  const titleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setEvent(x => {
+      return {
+        ...x,
+        eventName: event.target.value
+      }
+    })
+  }
+
+  const descriptionChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    event.preventDefault();
+    setEvent(x => {
+      return {
+        ...x,
+        event_description: event.target.value
+      }
+    })
+  }
+
+  const startChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setEvent(x => {
+      return {
+        ...x,
+        start_time: event.target.value
+      }
+    })
+  }
+
+  const endChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setEvent(x => {
+      return {
+        ...x,
+        end_time: event.target.value
+      }
+    })
+  }
+
+  const submitEditHandler = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    await editEvent(calendarEvent)
+    pageUpdater();
+    onClose();
+  }
 
   return (
     <>
@@ -38,51 +90,74 @@ const EditEventModal: FC = ({}) => {
         isCentered
       >
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Edit Event</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <Box m={4}>
-              <VStack spacing={5}>
-                <FormControl>
-                  <FormLabel>Event Title</FormLabel>
-                  <Input
-                    type="text"
-                    size="md"
-                    placeholder="Type Here"
-                    borderColor="#E0E1E7"
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Deadline</FormLabel>
-                  <InputGroup borderColor="#E0E1E7">
-                    <Input type="date" size="md" />
-                  </InputGroup>
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Description</FormLabel>
-                  <Textarea
-                    borderColor="gray.300"
-                    placeholder="Write your task description here"
-                  />
-                </FormControl>
-              </VStack>
-            </Box>
-          </ModalBody>
+        <form onSubmit={submitEditHandler}>
+          <ModalContent>
+            <ModalHeader>Edit Event</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <Box m={4}>
+                <VStack spacing={5}>
+                  <FormControl>
+                    <FormLabel>Event Title</FormLabel>
+                    <Input
+                      type="text"
+                      size="md"
+                      placeholder="Type Here"
+                      borderColor="#E0E1E7"
+                      onChange={titleChangeHandler}
+                      value={eventInfo.event_name}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Start Date/Time</FormLabel>
+                    <InputGroup borderColor="#E0E1E7">
+                      <Input
+                        type="datetime-local"
+                        size="md"
+                        onChange={startChangeHandler}
+                        value={eventInfo.start_time}
+                      />
+                    </InputGroup>
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>End Date/Time</FormLabel>
+                    <InputGroup borderColor="#E0E1E7">
+                      <Input
+                        type="datetime-local"
+                        size="md"
+                        onChange={endChangeHandler}
+                        value={eventInfo.end_time}
+                      />
+                    </InputGroup>
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Description</FormLabel>
+                    <Textarea
+                      borderColor="gray.300"
+                      placeholder="Write your task description here"
+                      onChange={descriptionChangeHandler}
+                      value={eventInfo.event_description}
+                    />
+                  </FormControl>
+                </VStack>
+              </Box>
+            </ModalBody>
 
-          <ModalFooter>
-            <Button
-              variant="solid"
-              bg="#0D74FF"
-              color="white"
-              _hover={{ bg: "blue.600" }}
-              mr={3}
-            >
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
+            <ModalFooter>
+              <Button
+                variant="solid"
+                bg="#0D74FF"
+                color="white"
+                _hover={{ bg: "blue.600" }}
+                mr={3}
+                type="submit"
+              >
+                Save
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+            </ModalFooter>
+          </ModalContent>
+        </form>
       </Modal>
     </>
   );
