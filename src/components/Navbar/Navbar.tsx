@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
 
   return (
     <Flex
-      bg={useColorModeValue("gray.50", "gray.700")}
+      bg={useColorModeValue("navbarColor.light", "navbarColor.dark")}
       height={16}
       py={10}
       px={{ base: "2%", lg: "5%", xl: "10%" }}

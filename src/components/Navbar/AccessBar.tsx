@@ -47,7 +47,7 @@ const DesktopNav = () => {
       <Stack direction={"row"} spacing={4} alignItems={"center"}>
         <Button
           onClick={toggleColorMode}
-          bg={useColorModeValue("gray.50", "gray.700")}
+          bg={useColorModeValue("navbarColor.light", "navbarColor.dark")}
         >
           {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
         </Button>
@@ -64,7 +64,7 @@ const MobileNav = () => {
     <Stack direction={"row"} spacing={4} display={{ base: "flex", md: "none" }}>
       <Button
         onClick={toggleColorMode}
-        bg={useColorModeValue("gray.50", "gray.700")}
+        bg={useColorModeValue("navbarColor.light", "navbarColor.dark")}
       >
         {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
       </Button>
