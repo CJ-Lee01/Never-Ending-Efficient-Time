@@ -25,6 +25,7 @@ import { editTask, getTasks } from "@/lib/CRUD_Tasks";
 import { PostgrestError } from "@supabase/supabase-js";
 import defaultTask from "./DefaultTask";
 import AddTaskModal from "./AddTaskModal";
+import formatDateString from "@/lib/dateFunctions";
 
 interface TasksProps {}
 
@@ -94,7 +95,7 @@ const Tasks: FC<TasksProps> = ({}) => {
                   {item.title}
                 </chakra.h3>
                 <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                  Deadline: {item.deadline}
+                  Deadline: {formatDateString(item.deadline)}
                 </chakra.p>
               </Stack>
               <Stack
