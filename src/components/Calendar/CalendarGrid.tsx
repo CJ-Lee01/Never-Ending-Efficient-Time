@@ -24,8 +24,8 @@ const CalendarGrid: FC = ({ }) => {
         events={events.map(item => {
           return {
             title: item.event_name,
-            start: item.start_time.toISOString(),
-            end: item.end_time.toISOString(),
+            start: item.start_time,
+            end: item.end_time,
             
           }
         })}
