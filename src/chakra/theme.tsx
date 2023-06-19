@@ -11,8 +11,9 @@ const config: ThemeConfig = {
 
 export const theme = extendTheme({
   colors: {
-    brand: {
-      100: "#ff3c00",
+    navbarColor: {
+      light: "#F7FAFC",
+      dark: "#2D3748",
     },
   },
   fonts: {

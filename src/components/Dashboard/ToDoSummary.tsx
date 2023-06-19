@@ -38,7 +38,7 @@ const ToDoSummary = () => {
     <Container maxW="5xl" p={{ base: 5, md: 10 }}>
       <Flex justify="center" mb={3}>
         <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
-          To-Do List
+          Tasks Summary
         </chakra.h3>
       </Flex>
       <VStack

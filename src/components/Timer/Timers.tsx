@@ -36,11 +36,13 @@ const Timers: FC<TimersProps> = ({
       <Button
         onClick={() => handleContinueInterval()}
         bg={useColorModeValue("orange.300", "orange.400")}
+        _hover={{ bg: useColorModeValue("orange.400", "orange.300") }}
         isDisabled={
           isIntervalComplete || (isTimerStart && !isIntervalComplete)
             ? true
             : false
         }
+        _focus={{ bg: useColorModeValue("orange.300", "orange.400") }}
       >
         Next Interval
       </Button>
