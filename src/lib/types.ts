@@ -34,8 +34,8 @@ export interface eventInformation {
   user_id?: string;
   event_name: string;
   event_description: string;
-  start_time: string;
-  end_time: string;
+  start_time: Date;
+  end_time: Date;
 }
 
 export interface TasksInformation {

@@ -96,13 +96,11 @@ async function eventParser({ data, error }: { data: moduleTimetableInformation[]
   const promiseArr: Promise<void>[] = [];
   data.forEach(timetableInfo => promiseArr.push(addClassesToList(timetableInfo, acadYear, eventList)));
   await Promise.all(promiseArr)
-  console.log(eventList)
   return { events: eventList, error: null };
 }
 
 async function addClassesToList(moduleClassInfo: moduleTimetableInformation, acadYear: academicYearInfo, inputList: eventInformation[]): Promise<void> {
   const modTimetableList = await getModuleInformation(moduleClassInfo, acadYear)
-  console.log(modTimetableList)
   for (const item of modTimetableList) {
     inputList.push(item)
   }
@@ -137,8 +135,8 @@ async function getModuleInformation(moduleClassInfo: moduleTimetableInformation,
         return {
           event_name: `${modTitle}: ${elem.lessonType}`,
           event_description: `${elem.lessonType} at ${elem.venue}`,
-          start_time: startDateTime.toISOString(),
-          end_time: endDateTime.toISOString(),
+          start_time: startDateTime,
+          end_time: endDateTime,
         }
       }))
   return classData ?? [];

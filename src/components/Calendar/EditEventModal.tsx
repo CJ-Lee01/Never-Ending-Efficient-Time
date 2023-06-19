@@ -52,7 +52,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
     setEvent(x => {
       return {
         ...x,
-        start_time: event.target.value
+        start_time: new Date(event.target.value)
       }
     })
   }
@@ -62,7 +62,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
     setEvent(x => {
       return {
         ...x,
-        end_time: event.target.value
+        end_time: new Date(event.target.value)
       }
     })
   }
@@ -115,7 +115,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
                         type="datetime-local"
                         size="md"
                         onChange={startChangeHandler}
-                        value={eventInfo.start_time}
+                        value={eventInfo.start_time.toLocaleString()}
                       />
                     </InputGroup>
                   </FormControl>
@@ -126,7 +126,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
                         type="datetime-local"
                         size="md"
                         onChange={endChangeHandler}
-                        value={eventInfo.end_time}
+                        value={eventInfo.end_time.toLocaleString()}
                       />
                     </InputGroup>
                   </FormControl>

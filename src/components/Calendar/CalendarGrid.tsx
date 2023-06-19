@@ -8,7 +8,6 @@ import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 
 const CalendarGrid: FC = ({ }) => {
   const { events, pageUpdater } = useContext(EventListInfoContext);
-  console.log(events)
   return (
     <div className="calendar-container">
       <FullCalendar
@@ -25,10 +24,12 @@ const CalendarGrid: FC = ({ }) => {
         events={events.map(item => {
           return {
             title: item.event_name,
-            start: item.start_time,
-            end: item.end_time,
+            start: item.start_time.toISOString(),
+            end: item.end_time.toISOString(),
+            
           }
         })}
+        timeZone="local"
       />
     </div>
   );
