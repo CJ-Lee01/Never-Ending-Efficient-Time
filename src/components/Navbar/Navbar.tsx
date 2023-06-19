@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
         setLogin(false);
       }
     });
-  }, [isLoggedIn]);
+  }, [supabase.auth]);
 
   return (
     <Flex

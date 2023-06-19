@@ -25,6 +25,7 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
   isIntervalComplete,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  
 
   useEffect(() => {
     if (isTimeUp) {
@@ -35,6 +36,11 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
     }
   }, [isTimeUp]);
 
+  //for Time's Up! being the modal header, usng the ' normally gives 
+  //Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+  //And therefore to fix it, refer to
+  //https://github.com/mateusfg7/portifolio/commit/a89379a5b3fcaea2dd035fd60a0dbbe9490050d7
+
   return (
     <Modal
       closeOnOverlayClick={true}
@@ -44,7 +50,7 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Time's Up!</ModalHeader>
+        <ModalHeader>Time&apos;s Up!</ModalHeader> 
         <ModalCloseButton />
         <ModalBody pb={6} fontSize={18}>
           <Text>

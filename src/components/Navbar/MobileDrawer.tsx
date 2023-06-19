@@ -32,6 +32,7 @@ interface MobileDrawerProps {
 
 const MobileDrawer: FC<MobileDrawerProps> = ({ NAV_ITEMS }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const bgColour = useColorModeValue("white", "grey.500");
 
   return (
     <>
@@ -54,7 +55,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({ NAV_ITEMS }) => {
                   as={Link}
                   href={navItem.href}
                   key={navItem.label}
-                  bg={useColorModeValue("white", "grey.500")}
+                  bg={bgColour}
                   leftIcon={navItem.icon}
                   justifyContent={"left"}
                 >
