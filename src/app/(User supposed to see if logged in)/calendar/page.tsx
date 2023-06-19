@@ -1,5 +1,5 @@
 "use client";
-import CalendarGrid from "@/components/Calendar/calendarGrid";
+import CalendarGrid from "@/components/Calendar/CalendarGrid";
 import EventsList from "@/components/Calendar/EventsList";
 import { URLinputHandler } from "@/components/Calendar/URLinputHandler";
 import { getEvent } from "@/lib/CRUD_Calendar";

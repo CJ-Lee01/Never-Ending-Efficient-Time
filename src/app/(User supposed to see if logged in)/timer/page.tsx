@@ -1,5 +1,3 @@
-"use client";
-
 import TimerDataContextProvider from "@/components/Timer/TimerDataContextProvider";
 
 export default function TimerPage() {

@@ -26,7 +26,7 @@ export default function LayoutForNonUser({
       }
       setCompleteFetch(false)
     });
-  }, [isLoggedIn]);
+  }, [supabase.auth]);
 
   return haventFetch ? <>Fetching data....</>
     : isLoggedIn ? <AlreadySignedIn />
