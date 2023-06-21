@@ -6,7 +6,7 @@ import { Flex, Stack, Heading } from "@chakra-ui/react";
 
 export default function dashboard() {
   return (
-    <Flex>
+    <Flex minH={"100vh"}>
       <Stack direction="column">
         <Heading textAlign={"left"} p={10}>
           Welcome, Username
