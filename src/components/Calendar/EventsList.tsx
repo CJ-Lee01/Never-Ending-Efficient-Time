@@ -50,10 +50,10 @@ const EventsList: FC<EventsListProps> = ({}) => {
                   {event.event_name}
                 </chakra.h3>
                 <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                  Start Date/Time: {event.start_time}
+                  Start Date/Time: {event.start_time.toLocaleString()}
                 </chakra.p>
                 <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                  End Date/Time: {event.end_time}
+                  End Date/Time: {event.end_time.toLocaleString()}
                 </chakra.p>
               </Stack>
               <Stack

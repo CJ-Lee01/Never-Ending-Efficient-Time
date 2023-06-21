@@ -15,16 +15,6 @@ import { PostgrestError } from "@supabase/supabase-js";
 import { createContext, useEffect, useState } from "react";
 import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 
-function compareDatetimes(eventA: eventInformation, eventB: eventInformation) {
-  return eventA.start_time < eventB.start_time
-    ? -1
-    : eventA.start_time > eventB.start_time
-      ? 1
-      : 0
-}
-
-
-
 export default function CalendarPage() {
   const [eventList, setEventList] = useState<{
     data: eventInformation[] | null,
@@ -44,7 +34,7 @@ export default function CalendarPage() {
 
 
   return (
-    <EventListInfoContext.Provider value={{ events: eventList.data?.sort(compareDatetimes) ?? [], pageUpdater: pageUpdater }}>
+    <EventListInfoContext.Provider value={{ events: eventList.data ?? [], pageUpdater: pageUpdater }}>
       <Grid
         gridTemplateRows={"1fr"}
         gridTemplateColumns={{ base: "1fr", md: "1fr", xl: "6fr 2fr" }}
