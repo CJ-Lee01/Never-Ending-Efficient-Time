@@ -29,7 +29,7 @@ const Timers: FC<TimersProps> = ({
 }) => {
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
-  const { isIntervalComplete, isStopwatchStart, isTimerStart } =
+  const { isIntervalComplete, isStopwatchStart, isTimerStart, isPaused } =
     useContext(TimerDataContext);
   return (
     <Stack direction={"column"}>
@@ -38,9 +38,7 @@ const Timers: FC<TimersProps> = ({
         bg={useColorModeValue("orange.300", "orange.400")}
         _hover={{ bg: useColorModeValue("orange.400", "orange.300") }}
         isDisabled={
-          isIntervalComplete || (isTimerStart && !isIntervalComplete)
-            ? true
-            : false
+          isIntervalComplete || isTimerStart || isPaused ? true : false
         }
         _focus={{ bg: useColorModeValue("orange.300", "orange.400") }}
       >

@@ -11,7 +11,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-
 interface ItemAttributes {
   title: string;
   created_at: string;
@@ -27,13 +26,12 @@ const items: ItemAttributes[] = [
     created_at: "20 Jun 2021",
   },
   {
-    title: `Find out what's new in our Web Application hehe`,
+    title: `Find out what's new in our Web Application!`,
     created_at: "31 Sept 2022",
   },
 ];
 
 const Annoucements = () => {
-
   const bgColorScheme = useColorModeValue("gray.200", "gray.700");
   const otherStuffPlsExplainRichie = useColorModeValue("gray.600", "gray.300");
 
@@ -41,7 +39,7 @@ const Annoucements = () => {
     <Container maxW="5xl" p={{ base: 5, md: 10 }}>
       <Flex justify="left" mb={3}>
         <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
-          Annoucements
+          Annoucements (WIP)
         </chakra.h3>
       </Flex>
       <VStack
