@@ -8,7 +8,7 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
   const [resumeState, setResumeState] = useState<"stopwatch" | "timer" | null>(
     null
   );
-  const [isPaused, setIsPaused] = useState<Boolean>(false);
+  // const [isPaused, setIsPaused] = useState<Boolean>(false);
 
   const {
     isStopwatchStart,
@@ -20,6 +20,8 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
     setIntervalComplete,
     setIntervalTitle,
     setTimerData,
+    isPaused,
+    setIsPaused,
   } = useContext(TimerDataContext);
 
   useEffect(() => {
@@ -63,6 +65,7 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
       intervals: 0,
       totalSeconds: 0,
     });
+    setIsPaused(false);
   };
 
   return (

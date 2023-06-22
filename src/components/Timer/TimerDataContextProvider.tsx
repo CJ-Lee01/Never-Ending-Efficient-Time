@@ -24,6 +24,8 @@ export const TimerDataContext = createContext<{
   setIntervalComplete: React.Dispatch<React.SetStateAction<boolean>>;
   setIntervalTitle: React.Dispatch<React.SetStateAction<string>>;
   intervalTitle: string;
+  isPaused: boolean;
+  setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   isStopwatchStart: false,
   setStopwatchStart: () => {},
@@ -39,6 +41,8 @@ export const TimerDataContext = createContext<{
   setIntervalComplete: () => {},
   setIntervalTitle: () => {},
   intervalTitle: "",
+  isPaused: false,
+  setIsPaused: () => {},
 });
 
 interface TimerDataContextProviderProps {}
@@ -55,6 +59,7 @@ const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({}) => {
   const [isIntervalComplete, setIntervalComplete] = useState<boolean>(true);
   const [intervalTitle, setIntervalTitle] = useState<string>("-");
   const [isTimeUp, setIsTimeUp] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   //Implementing the Clock Functionality to decrease and increase the time
   useEffect(() => {
@@ -100,6 +105,8 @@ const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({}) => {
         setIntervalComplete: setIntervalComplete,
         setIntervalTitle: setIntervalTitle,
         intervalTitle: intervalTitle,
+        isPaused: isPaused,
+        setIsPaused: setIsPaused,
       }}
     >
       <TimeUpModal
