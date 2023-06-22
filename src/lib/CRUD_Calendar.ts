@@ -37,7 +37,10 @@ export async function addEvent(event: eventInformation) {
   const user_id = (await supabase.auth.getSession()).data.session?.user.id
   const { data, error } = await supabase
     .from('event')
-    .insert(convertToDatabaseFormat(event))
+    .insert({
+      ...convertToDatabaseFormat(event),
+      user_id: user_id
+    })
     .select();
 
   return { data, error };

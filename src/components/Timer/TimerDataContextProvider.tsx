@@ -26,24 +26,24 @@ export const TimerDataContext = createContext<{
   intervalTitle: string;
 }>({
   isStopwatchStart: false,
-  setStopwatchStart: () => {},
-  setTimerStart: () => {},
+  setStopwatchStart: () => { },
+  setTimerStart: () => { },
   isTimerStart: false,
   counterSeconds: 0,
-  setCounterSeconds: () => {},
+  setCounterSeconds: () => { },
   timerData: dummyTimer,
-  setTimerData: () => {},
+  setTimerData: () => { },
   counterIntervals: 0,
-  setCounterIntervals: () => {},
+  setCounterIntervals: () => { },
   isIntervalComplete: false,
-  setIntervalComplete: () => {},
-  setIntervalTitle: () => {},
+  setIntervalComplete: () => { },
+  setIntervalTitle: () => { },
   intervalTitle: "",
 });
 
-interface TimerDataContextProviderProps {}
+interface TimerDataContextProviderProps { }
 
-const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({}) => {
+const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({ }) => {
   // Declaring the States for the Context
   const [isStopwatchStart, setStopwatchStart] = useState<boolean>(false);
   const [isTimerStart, setTimerStart] = useState<boolean>(false);

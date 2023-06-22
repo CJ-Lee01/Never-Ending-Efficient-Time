@@ -14,6 +14,7 @@ import {
 import { PostgrestError } from "@supabase/supabase-js";
 import { createContext, useEffect, useState } from "react";
 import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
+import AddEventButton from "@/components/Calendar/AddEventButton";
 
 export default function CalendarPage() {
   const [eventList, setEventList] = useState<{
