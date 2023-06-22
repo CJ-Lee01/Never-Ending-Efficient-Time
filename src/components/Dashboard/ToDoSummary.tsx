@@ -13,7 +13,7 @@ import { PostgrestError } from "@supabase/supabase-js";
 import { getTasks } from "@/lib/CRUD_Tasks";
 
 // Returns an Array of 3 items (number of Tasks, Completed tasks, incomplete tasks)
-function getTasksSummary(tasks: TasksInformation[] | null) {
+function getTasksSummary(tasks: TasksInformation[] | null): number[] {
   let completedCounter = 0;
   let incompleteCounter = 0;
 
@@ -32,6 +32,15 @@ function getTasksSummary(tasks: TasksInformation[] | null) {
   return [len, completedCounter, incompleteCounter];
 }
 
+// Calculates the value for the CircularProgress
+function calculateTaskPercentage(taskSummaryArray: number[]): number {
+  const len = taskSummaryArray[0];
+  const completedCounter = taskSummaryArray[1];
+
+  const percentage = (completedCounter / len) * 100;
+  return percentage;
+}
+
 const ToDoSummary = () => {
   const [taskList, setTaskList] = useState<{
     data: TasksInformation[] | null;
@@ -46,6 +55,7 @@ const ToDoSummary = () => {
   }, []);
 
   const taskSummaryArray = getTasksSummary(taskList.data);
+  const percentage = calculateTaskPercentage(taskSummaryArray);
 
   return (
     <Container maxW="5xl" p={{ base: 2, md: 10 }}>
@@ -64,7 +74,7 @@ const ToDoSummary = () => {
         justify={"center"}
       >
         <CircularProgress
-          value={80}
+          value={percentage}
           size={72}
           color="green.400"
           trackColor="gray.300"
