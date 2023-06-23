@@ -62,3 +62,13 @@ export interface TimerDataType {
 export interface LapDataType {
   totalSeconds: number;
 }
+
+export interface AnnouncementData {
+  id?: number;
+  user_id?: string;
+  course_name: string;
+  title: string;
+  description: string;
+  is_read: boolean
+  announced_at: Date
+}
