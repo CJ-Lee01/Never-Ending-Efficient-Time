@@ -11,6 +11,7 @@ import { FC } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import SignOutButton from "@/components/AuthUI/SignOutButton";
 import NavProfile from "./NavProfile";
+import CanvasSyncButton from "./CanvasSyncButton";
 
 interface ProfileDropdownProps {}
 
@@ -29,6 +30,7 @@ const ProfileDropdown: FC<ProfileDropdownProps> = ({}) => {
         <MenuList>
           <Center>
             <SignOutButton />
+            <CanvasSyncButton></CanvasSyncButton>
           </Center>
         </MenuList>
       </Menu>
