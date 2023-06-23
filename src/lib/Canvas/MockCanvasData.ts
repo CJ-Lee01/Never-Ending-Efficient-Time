@@ -47,3 +47,5 @@ const assignments: TasksInformation[] = [
     deadline: (new Date(2023, 6, 24)).toISOString()
   }
 ]
+
+export {announcements, assignments}

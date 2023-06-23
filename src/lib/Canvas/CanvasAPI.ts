@@ -1,9 +1,11 @@
 import { announcements, assignments } from "./MockCanvasData"
 
-function getAnnouncements(canvasToken: string) {
+function getCanvasAnnouncements(canvasToken: string) {
   return announcements;
 } 
 
-function getAssignments(canvasToken: string) {
+function getCanvasAssignments(canvasToken: string) {
   return assignments;
 }
+
+export {getCanvasAnnouncements, getCanvasAssignments}
