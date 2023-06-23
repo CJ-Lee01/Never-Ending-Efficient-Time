@@ -12,10 +12,11 @@ import DeleteEventModal from "./DeleteEventModal";
 import EditEventModal from "./EditEventModal";
 
 import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
-interface EventsListProps {}
+import AddEventButton from "./AddEventButton";
+interface EventsListProps { }
 
-const EventsList: FC<EventsListProps> = ({}) => {
-  const {events, pageUpdater} = useContext(EventListInfoContext);
+const EventsList: FC<EventsListProps> = ({ }) => {
+  const { events, pageUpdater } = useContext(EventListInfoContext);
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
 
@@ -26,6 +27,7 @@ const EventsList: FC<EventsListProps> = ({}) => {
           Events
         </chakra.h3>
       </Flex>
+      <AddEventButton />
       <VStack
         border="1px solid"
         borderColor="gray.400"
@@ -63,8 +65,8 @@ const EventsList: FC<EventsListProps> = ({}) => {
                 justifySelf="flex-end"
                 alignItems="center"
               >
-                <EditEventModal eventInfo={event}/>
-                <DeleteEventModal eventInfo={event}/>
+                <EditEventModal eventInfo={event} />
+                <DeleteEventModal eventInfo={event} />
               </Stack>
             </Grid>
             {events.length - 1 !== index && <Divider m={0} />}

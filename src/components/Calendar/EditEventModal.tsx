@@ -32,7 +32,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
     setEvent(x => {
       return {
         ...x,
-        eventName: event.target.value
+        event_name: event.target.value
       }
     })
   }
