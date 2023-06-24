@@ -14,6 +14,7 @@ import { getAnnouncements } from "@/lib/CRUD_Announcements";
 import { AnnouncementData } from "@/lib/types";
 import { PostgrestError } from "@supabase/supabase-js";
 import { error } from "console";
+import AnnoucementDisplayUnit from "./AnnouncementDisplayUnit";
 
 interface ItemAttributes {
   title: string;
@@ -36,8 +37,6 @@ const items: ItemAttributes[] = [
 ];
 
 const Annoucements = () => {
-  const bgColorScheme = useColorModeValue("gray.200", "gray.700");
-  const otherStuffPlsExplainRichie = useColorModeValue("gray.600", "gray.300");
   const [announcementListData, setAnnouncementList] = useState<{
     data: AnnouncementData[]; 
     error: PostgrestError | null
@@ -65,36 +64,8 @@ const Annoucements = () => {
         spacing={0}
       >
         {announcementListData.data.map((item, index) => (
-          <Fragment key={index}>
-            <Grid
-              templateRows={{ base: "auto auto", md: "auto" }}
-              w="100%"
-              templateColumns={{ base: "unset", md: "5fr 3fr" }}
-              p={{ base: 2, sm: 4 }}
-              gap={3}
-              alignItems="center"
-              _hover={{ bg: bgColorScheme }}
-            >
-              <Stack gridColumnEnd={{ base: "span 2", md: "unset" }}>
-                <chakra.h3 fontWeight="bold" fontSize="lg">
-                  {item.title}
-                </chakra.h3>
-                <chakra.p
-                  fontWeight="medium"
-                  fontSize="sm"
-                  color={otherStuffPlsExplainRichie}
-                >
-                  Announced Date: {item.announced_at.toLocaleString()}
-                </chakra.p>
-                <chakra.p
-                  fontWeight="medium"
-                  fontSize="sm"
-                  color={otherStuffPlsExplainRichie}
-                >
-                  Description: {item.description}
-                </chakra.p>
-              </Stack>
-            </Grid>
+          <Fragment key={item.id}>
+            <AnnoucementDisplayUnit announcement={item} setAnnouncements={setAnnouncementList}/>
             {items.length - 1 !== index && <Divider m={0} />}
           </Fragment>
         ))}
