@@ -75,7 +75,7 @@ const ToDoSummary = () => {
       >
         <CircularProgress
           value={percentage}
-          size={72}
+          size={64}
           color="green.400"
           trackColor="gray.300"
           thickness={12}
