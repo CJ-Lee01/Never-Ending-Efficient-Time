@@ -21,7 +21,7 @@ export async function addBulkTasks(taskList: TasksInformation[]) {
   const supabase = supabaseUser();
   const user_id = (await supabase.auth.getSession()).data.session?.user.id
   const { data, error } = await supabase
-    .from('event')
+    .from('todos')
     .insert(taskList.map(taskList => {
       return {
         ...taskList,
