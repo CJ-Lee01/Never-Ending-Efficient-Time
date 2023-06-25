@@ -9,7 +9,7 @@ import {
   Center,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { FC, Fragment, useContext } from "react";
+import { Dispatch, FC, Fragment, SetStateAction, useContext } from "react";
 import AddTimerModal from "./AddTimerModal";
 import DeleteTimerModal from "./DeleteTimerModal";
 import EditTimerModal from "./EditTimerModal";
@@ -20,12 +20,14 @@ interface TimersProps {
   TimerList: TimerDataType[];
   handleTimerStart: (timer: TimerDataType) => void;
   handleContinueInterval: () => void;
+  pageUpdater: () => void
 }
 
 const Timers: FC<TimersProps> = ({
   TimerList,
   handleTimerStart,
   handleContinueInterval,
+  pageUpdater
 }) => {
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
@@ -98,7 +100,7 @@ const Timers: FC<TimersProps> = ({
       </VStack>
       <Spacer />
       <Center>
-        <AddTimerModal />
+        <AddTimerModal pageUpdater = {pageUpdater}/>
       </Center>
     </Stack>
   );
