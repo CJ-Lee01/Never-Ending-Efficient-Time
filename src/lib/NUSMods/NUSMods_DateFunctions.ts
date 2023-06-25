@@ -21,7 +21,7 @@ function daysSinceStart(num: number, dayOfWeek: string): number {
 }
 
 export function convertWeeksToDateArray(weeks: any, startDate: Date, semester: number, day: string): Date[] {
-  const offset = semester == 2 ? -1 : 0; //as sem 2 starts with week 1 but sem 1 starts with week 0.
+  const offset = -1; //the NUSMods academic year information starts with week 1 for both sem 1 and 2.
   //I hate doing this but i need to set weeks to any. Otherwise typescript will complain and idk how to fix it.
   //Type checking is done in the functions and function returns empty array if it fails the checks.
   const isWeekRangeBool = isWeekRange(weeks);
