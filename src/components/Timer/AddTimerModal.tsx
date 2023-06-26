@@ -30,9 +30,11 @@ import AddTimerForm from "./AddTimerForm";
 import { calculateTotalSeconds } from "@/lib/timerFunctions";
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 
-interface AddTimerModalProps {}
+interface AddTimerModalProps {
+  pageUpdater: () => void
+}
 
-const AddTimerModal: FC<AddTimerModalProps> = ({}) => {
+const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
   const [timerTitle, setTimerTitle] = useState("");
   const [timerIntervals, setTimerIntervals] = useState(1);
   const [timerIntervalTitle, setTimerIntervalTitle] = useState("");
@@ -59,6 +61,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({}) => {
     };
     const { data, error } = await addTimer(newTimer);
     error ? alert(error.message) : "";
+    pageUpdater()
     onClose();
   };
 

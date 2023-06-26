@@ -16,10 +16,13 @@ const TimerTab: FC<TimerTabProps> = ({}) => {
     error: null,
   });
 
+  const [dummy, updateList] = useState<boolean>(false); //just a gimmick to ensure that the page is rerendered.
+  const pageUpdater = () => updateList(x => !x);
+
   // Triggers when timerList changes.
   useEffect(() => {
     getTimers(setTimerList);
-  }, [timerList]);
+  }, [dummy]);
 
   const {
     isStopwatchStart,
@@ -68,6 +71,7 @@ const TimerTab: FC<TimerTabProps> = ({}) => {
       TimerList={timerList.data ?? []}
       handleTimerStart={handleTimerStart}
       handleContinueInterval={handleContinueInterval}
+      pageUpdater={pageUpdater}
     />
   );
 };
