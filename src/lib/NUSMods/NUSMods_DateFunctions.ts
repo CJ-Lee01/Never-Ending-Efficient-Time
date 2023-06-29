@@ -27,7 +27,7 @@ export function convertWeeksToDateArray(weeks: any, startDate: Date, semester: n
   const isWeekRangeBool = isWeekRange(weeks);
   const isNumberArrayBool = isNumberArray(weeks)
   if (dayValues.get(day) == undefined) {
-    alert(`invalid day ${day}`)
+    //alert(`invalid day ${day}`) usually we do not have to worry abt this since it is direct from NUSMods
     return [];
   }
   if (!isNumberArrayBool && !isWeekRangeBool) {
