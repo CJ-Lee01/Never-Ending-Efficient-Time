@@ -85,7 +85,7 @@ export const getacademicYearList: () => string[] = () => {
   return arr;
 }
 
-const defaultStart = { start: [0, 0, 0] };
+const defaultStart = { start: [0, 1, 0] };
 
 export function getStartDate(acadYear: academicYearInfo, semester: number) {
   const yearInfo = academicCalendar.get(`${acadYear.year1}/${acadYear.year2}`);
