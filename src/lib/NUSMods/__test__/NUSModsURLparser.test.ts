@@ -1,6 +1,6 @@
 import { NUSModsURLparser, moduleTimetableInformation } from "../NUSModsURLparser";
 
-describe("Ensures valid input is valid", () => {
+describe("Takes valid inputs", () => {
   it("Modules with lectures and lessons are valid (Sem 1)", () => {
     const urlString = "https://nusmods.com/timetable/sem-1/share?CS2100=LEC:2,TUT:02,LAB:12,REC:1";
     const output = NUSModsURLparser(urlString);
