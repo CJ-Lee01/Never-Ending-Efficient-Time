@@ -139,7 +139,7 @@ export async function getModuleInformation(moduleClassInfo: moduleTimetableInfor
     ?.timetable.filter((elem) => {
       return moduleClassInfo.classes.find(lesson => lesson.slot == elem['classNo'] && lesson.type == elem['lessonType'])
     })
-    .flatMap(elem => convertWeeksToDateArray(elem.weeks, semStartDate, moduleClassInfo.semester, elem.day)
+    .flatMap(elem => convertWeeksToDateArray(elem.weeks, semStartDate, elem.day)
       .map(date => {
         const startTime = convertTimeStringToTimeObject(elem.startTime);
         const endTime = convertTimeStringToTimeObject(elem.endTime);
