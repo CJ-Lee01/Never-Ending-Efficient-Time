@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   VStack,
@@ -9,7 +9,14 @@ import {
   Checkbox,
   Divider,
 } from "@chakra-ui/react";
-import { ChangeEvent, Dispatch, FC, Fragment, SetStateAction, createContext, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  Fragment,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 import EditTaskModal from "./EditTaskModal";
 import DeleteTaskModal from "./DeleteTaskModal";
 import ViewTaskModal from "./ViewTaskModal";
@@ -18,45 +25,49 @@ import { editTask, getTasks } from "@/lib/CRUD_Tasks";
 import { PostgrestError } from "@supabase/supabase-js";
 import defaultTask from "./DefaultTask";
 import AddTaskModal from "./AddTaskModal";
+import formatDateString from "@/lib/dateFunctions";
 
-interface TasksProps { }
+interface TasksProps {}
 
 export const TaskInfoContext = createContext<{
-  task: TasksInformation,
-  pageUpdater: () => void
+  task: TasksInformation;
+  pageUpdater: () => void;
 }>({
   task: defaultTask,
   pageUpdater: () => {},
 });
 
-const Tasks: FC<TasksProps> = ({ }) => {
+const Tasks: FC<TasksProps> = ({}) => {
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
   const [taskList, setTaskList] = useState<{
-    data: TasksInformation[] | null,
-    error: PostgrestError | null
+    data: TasksInformation[] | null;
+    error: PostgrestError | null;
   }>({
     data: null,
-    error: null
+    error: null,
   });
   const [dummy, updateList] = useState<boolean>(false); //just a gimmick to ensure that the page is rerendered.
-  const pageUpdater = () => updateList(prevBool => !prevBool);
+  const pageUpdater = () => updateList((prevBool) => !prevBool);
 
   useEffect(() => {
     getTasks(setTaskList);
-  }, [dummy])
+  }, [dummy]);
 
-  const checkHandler = (item: TasksInformation) => (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    editTask({
-      ...item,
-      is_complete: !item.is_complete
-    })
-  }
+  const checkHandler =
+    (item: TasksInformation) => (event: ChangeEvent<HTMLInputElement>) => {
+      event.preventDefault();
+      editTask({
+        ...item,
+        is_complete: !item.is_complete,
+      });
+    };
 
   return (
     <>
-      <TaskInfoContext.Provider value={{ task: defaultTask, pageUpdater: pageUpdater }}>
+      <TaskInfoContext.Provider
+        value={{ task: defaultTask, pageUpdater: pageUpdater }}
+      >
         <Stack mb={16} align="center" spacing={16}>
           <AddTaskModal />
         </Stack>
@@ -84,7 +95,7 @@ const Tasks: FC<TasksProps> = ({ }) => {
                   {item.title}
                 </chakra.h3>
                 <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                  Deadline: {item.deadline}
+                  Deadline: {formatDateString(item.deadline)}
                 </chakra.p>
               </Stack>
               <Stack
@@ -94,42 +105,28 @@ const Tasks: FC<TasksProps> = ({ }) => {
                 justifySelf="flex-end"
                 alignItems="center"
               >
-                <TaskInfoContext.Provider value={{ task: item, pageUpdater: pageUpdater }}>
+                <TaskInfoContext.Provider
+                  value={{ task: item, pageUpdater: pageUpdater }}
+                >
                   <ViewTaskModal />
-                  <Checkbox colorScheme="green" defaultChecked={item.is_complete} onChange={checkHandler(item)}/>
+                  <Checkbox
+                    colorScheme="green"
+                    defaultChecked={item.is_complete}
+                    onChange={checkHandler(item)}
+                  />
                   <EditTaskModal />
                   <DeleteTaskModal />
                 </TaskInfoContext.Provider>
               </Stack>
             </Grid>
-            {items.length - 1 !== index && <Divider m={0} />}
+            {taskList.data != null && taskList.data.length - 1 !== index && (
+              <Divider m={0} />
+            )}
           </Fragment>
         ))}
       </VStack>
-
-
     </>
   );
 };
-
-interface ItemAttributes {
-  title: string;
-  deadline: string;
-}
-
-const items: ItemAttributes[] = [
-  {
-    title: "Task 1",
-    deadline: "21 Jan 2022",
-  },
-  {
-    title: "Create professional Web Application with Nextjs and ChakraUI",
-    deadline: "20 Jun 2021",
-  },
-  {
-    title: `Get Good Grades for University`,
-    deadline: "31 Sept 2022",
-  },
-];
 
 export default Tasks;

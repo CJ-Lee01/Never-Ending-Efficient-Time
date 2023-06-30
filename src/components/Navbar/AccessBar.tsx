@@ -1,25 +1,21 @@
-import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
   Stack,
   useColorModeValue,
   Button,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  MenuDivider,
   useColorMode,
-  MenuGroup,
-  Center,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { FC } from "react";
-import SignOutButton from "@/components/AuthUI/SignOutButton";
+import { FC, ReactElement } from "react";
+import MobileDrawer from "./MobileDrawer";
+import { IoIosTimer, IoMdCheckboxOutline } from "react-icons/io";
+import { AiOutlineCalendar } from "react-icons/ai";
+import { RiDashboardFill } from "react-icons/ri";
+import ProfileDropdown from "./ProfileDropdown";
 
-const AccessBar: FC = ({ }) => {
+const AccessBar: FC = ({}) => {
   return (
     <Flex alignItems={"center"}>
       <Stack direction={"row"} spacing={7}>
@@ -35,58 +31,45 @@ const DesktopNav = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Stack direction={"row"} spacing={7} display={{ base: "none", md: "flex" }}>
+    <Stack
+      direction={"row"}
+      spacing={7}
+      display={{ base: "none", md: "flex" }}
+      alignItems={"center"}
+    >
       {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label} pt={2}>
+        <Box key={navItem.label}>
           <Link href={navItem.href} color={linkColor}>
             {navItem.label}
           </Link>
         </Box>
       ))}
-      <Stack direction={"row"} spacing={4}>
-        <Button onClick={toggleColorMode}>
+      <Stack direction={"row"} spacing={4} alignItems={"center"}>
+        <Button
+          onClick={toggleColorMode}
+          bg={useColorModeValue("navbarColor.light", "navbarColor.dark")}
+        >
           {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
         </Button>
-        <SignOutButton />
+        <ProfileDropdown></ProfileDropdown>
       </Stack>
     </Stack>
   );
 };
 
 const MobileNav = () => {
-  const linkColor = useColorModeValue("gray.600", "gray.200");
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Stack direction={"row"} spacing={7} display={{ base: "flex", md: "none" }}>
-      <Button onClick={toggleColorMode}>
+    <Stack direction={"row"} spacing={4} display={{ base: "flex", md: "none" }}>
+      <Button
+        onClick={toggleColorMode}
+        bg={useColorModeValue("navbarColor.light", "navbarColor.dark")}
+      >
         {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
       </Button>
-      <Menu>
-        <MenuButton
-          as={IconButton}
-          aria-label="Options"
-          icon={<HamburgerIcon />}
-          variant="outline"
-        />
-        <MenuList>
-          <MenuGroup>
-            {NAV_ITEMS.map((navItem) => (
-              <MenuItem
-                as={Link}
-                href={navItem.href}
-                color={linkColor}
-                key={navItem.label}>
-                {navItem.label}
-              </MenuItem>
-            ))}
-          </MenuGroup>
-          <MenuDivider />
-          <Center>
-            <SignOutButton />
-          </Center>
-        </MenuList>
-      </Menu>
+
+      <MobileDrawer NAV_ITEMS={NAV_ITEMS}></MobileDrawer>
     </Stack>
   );
 };
@@ -94,24 +77,29 @@ const MobileNav = () => {
 interface NavItem {
   label: string;
   href: string;
+  icon: ReactElement;
 }
 
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Dashboard",
     href: "/dashboard",
+    icon: <RiDashboardFill />,
   },
   {
     label: "Timer",
     href: "/timer",
+    icon: <IoIosTimer />,
   },
   {
     label: "Calendar",
     href: "/calendar",
+    icon: <AiOutlineCalendar />,
   },
   {
     label: "To-Do List",
     href: "/to-do-list",
+    icon: <IoMdCheckboxOutline />,
   },
 ];
 

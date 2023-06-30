@@ -1,5 +1,5 @@
 import { Stack, Button } from "@chakra-ui/react";
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { TimerDataContext } from "./TimerDataContextProvider";
 
 interface TimeToggleButtonsProps {}
@@ -8,7 +8,7 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
   const [resumeState, setResumeState] = useState<"stopwatch" | "timer" | null>(
     null
   );
-  const [buttonLabel, setButtonLabel] = useState<"Pause" | "Resume">("Pause");
+  // const [isPaused, setIsPaused] = useState<Boolean>(false);
 
   const {
     isStopwatchStart,
@@ -20,25 +20,34 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
     setIntervalComplete,
     setIntervalTitle,
     setTimerData,
+    isPaused,
+    setIsPaused,
   } = useContext(TimerDataContext);
+
+  useEffect(() => {
+    if (isStopwatchStart) {
+      setResumeState("stopwatch");
+    } else if (isTimerStart) {
+      setResumeState("timer");
+    }
+  }, [isStopwatchStart, isTimerStart]);
 
   // Implements the Pause and Resume functionality for the button
   const handleClockStop = () => {
-    if (isStopwatchStart) {
-      setResumeState("stopwatch");
-      setButtonLabel("Resume");
-      setStopwatchStart(false);
-    } else if (isTimerStart) {
-      console.log(isTimerStart);
-      setResumeState("timer");
-      setButtonLabel("Resume");
-      setTimerStart(false);
+    if (isPaused) {
+      if (resumeState == "stopwatch") {
+        setStopwatchStart(true);
+        setIsPaused(false);
+      } else if (resumeState == "timer") {
+        setTimerStart(true);
+        setIsPaused(false);
+      }
     } else if (resumeState == "stopwatch") {
-      setStopwatchStart(true);
-      setButtonLabel("Pause");
+      setStopwatchStart(false);
+      setIsPaused(true);
     } else if (resumeState == "timer") {
-      setTimerStart(true);
-      setButtonLabel("Pause");
+      setTimerStart(false);
+      setIsPaused(true);
     }
   };
 
@@ -56,6 +65,7 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
       intervals: 0,
       totalSeconds: 0,
     });
+    setIsPaused(false);
   };
 
   return (
@@ -72,12 +82,10 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
           color="white"
           _hover={{ bg: "gray.500" }}
           isDisabled={
-            !isStopwatchStart && !isTimerStart && resumeState == null
-              ? true
-              : false
+            !isStopwatchStart && !isTimerStart && !isPaused ? true : false
           }
         >
-          {buttonLabel}
+          {isPaused ? "Resume" : "Pause"}
         </Button>
         <Button
           bg={"red.500"}

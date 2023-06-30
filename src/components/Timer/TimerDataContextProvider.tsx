@@ -1,9 +1,12 @@
+"use client";
+
 import { TimerDataType } from "@/lib/types";
 import { FC, createContext, useEffect, useState } from "react";
 import { dummyTimer } from "./DummyTimer";
 import { Stack } from "@chakra-ui/react";
 import Clock from "./Clock";
 import TimerSettings from "./TimerSettings";
+import TimeUpModal from "./TimeUpModal";
 
 // Context to share with the rest of the Components
 export const TimerDataContext = createContext<{
@@ -21,26 +24,30 @@ export const TimerDataContext = createContext<{
   setIntervalComplete: React.Dispatch<React.SetStateAction<boolean>>;
   setIntervalTitle: React.Dispatch<React.SetStateAction<string>>;
   intervalTitle: string;
+  isPaused: boolean;
+  setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   isStopwatchStart: false,
-  setStopwatchStart: () => {},
-  setTimerStart: () => {},
+  setStopwatchStart: () => { },
+  setTimerStart: () => { },
   isTimerStart: false,
   counterSeconds: 0,
-  setCounterSeconds: () => {},
+  setCounterSeconds: () => { },
   timerData: dummyTimer,
-  setTimerData: () => {},
+  setTimerData: () => { },
   counterIntervals: 0,
-  setCounterIntervals: () => {},
+  setCounterIntervals: () => { },
   isIntervalComplete: false,
-  setIntervalComplete: () => {},
-  setIntervalTitle: () => {},
+  setIntervalComplete: () => { },
+  setIntervalTitle: () => { },
   intervalTitle: "",
+  isPaused: false,
+  setIsPaused: () => {},
 });
 
-interface TimerDataContextProviderProps {}
+interface TimerDataContextProviderProps { }
 
-const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({}) => {
+const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({ }) => {
   // Declaring the States for the Context
   const [isStopwatchStart, setStopwatchStart] = useState<boolean>(false);
   const [isTimerStart, setTimerStart] = useState<boolean>(false);
@@ -51,6 +58,8 @@ const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({}) => {
   const [counterIntervals, setCounterIntervals] = useState<number>(0);
   const [isIntervalComplete, setIntervalComplete] = useState<boolean>(true);
   const [intervalTitle, setIntervalTitle] = useState<string>("-");
+  const [isTimeUp, setIsTimeUp] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   //Implementing the Clock Functionality to decrease and increase the time
   useEffect(() => {
@@ -66,10 +75,11 @@ const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({}) => {
 
     if (isTimerStart && counterSeconds == 0) {
       setTimerStart(false);
-      alert("Time's up!");
+
+      setIsTimeUp(true);
       if (counterIntervals < timerData.intervals) {
         setCounterIntervals(counterIntervals + 1);
-        setIntervalTitle("Press Next to continue");
+        // setIntervalTitle("Press Next to continue");
       } else {
         setIntervalComplete(true);
       }
@@ -95,8 +105,16 @@ const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({}) => {
         setIntervalComplete: setIntervalComplete,
         setIntervalTitle: setIntervalTitle,
         intervalTitle: intervalTitle,
+        isPaused: isPaused,
+        setIsPaused: setIsPaused,
       }}
     >
+      <TimeUpModal
+        isTimeUp={isTimeUp}
+        setIsTimeUp={setIsTimeUp}
+        intervalTitle={intervalTitle}
+        isIntervalComplete={isIntervalComplete}
+      ></TimeUpModal>
       <Stack
         justify={"center"}
         spacing={{ base: 20, xl: 36 }}

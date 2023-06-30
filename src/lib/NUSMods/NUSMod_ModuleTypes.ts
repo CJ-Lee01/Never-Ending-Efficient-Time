@@ -41,7 +41,10 @@ export function isWeekRange(object: any) {
 //own function
 export function isNumberArray(object: any) {
   return Array.isArray(object)
-    && (object.length == 0 || typeof object[0] == 'number'); //if object is an empty array, it is trivial. otherwise needs to be num.
+    && (object.reduce(
+      (accumulator, currentVal) => accumulator && typeof currentVal == 'number',
+      true
+    )); //checks if every element in the array is a number.
 }
 
 export type Weeks = number[] | WeekRange;

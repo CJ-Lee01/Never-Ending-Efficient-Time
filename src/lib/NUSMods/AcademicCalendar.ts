@@ -91,7 +91,7 @@ export function getStartDate(acadYear: academicYearInfo, semester: number) {
   const yearInfo = academicCalendar.get(`${acadYear.year1}/${acadYear.year2}`);
   const dateStart = (yearInfo ? yearInfo[semester - 1] : defaultStart) ?? defaultStart;
   const dateArray = dateStart.start;
-  return new Date(dateArray[0], dateArray[1], dateArray[2]);
+  return new Date(dateArray[0], dateArray[1] - 1, dateArray[2]); //-1 due to month data for js Date starting from 0 instead of 1.
 }
 
 export function convertAcadYearStringToArray(acadYearString: string): { result: academicYearInfo | null, error: string } {

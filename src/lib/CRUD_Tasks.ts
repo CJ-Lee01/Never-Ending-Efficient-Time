@@ -17,6 +17,22 @@ export async function addTask(task: TasksInformation) {
   return { data, error };
 }
 
+export async function addBulkTasks(taskList: TasksInformation[]) {
+  const supabase = supabaseUser();
+  const user_id = (await supabase.auth.getSession()).data.session?.user.id
+  const { data, error } = await supabase
+    .from('todos')
+    .insert(taskList.map(taskList => {
+      return {
+        ...taskList,
+        user_id: user_id
+      }
+    }))
+    .select();
+
+  return { data, error };
+}
+
 export async function removeTask(task: TasksInformation) {
   const supabase = supabaseUser();
 
