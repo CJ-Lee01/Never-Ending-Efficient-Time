@@ -5,7 +5,7 @@ import { eventInformation } from "../types";
 import { convertTimeStringToTimeObject, convertWeeksToDateArray } from "./NUSMods_DateFunctions";
 import { getStartDate, academicYearInfo, convertAcadYearStringToArray } from "./AcademicCalendar";
 
-interface moduleTimetableInformation {
+export interface moduleTimetableInformation {
   semester: number;
   moduleCode: string;
   classes: { type: string, slot: string }[];
@@ -16,6 +16,7 @@ const lessonType: Map<string, string> = new Map([
   ["TUT", "Tutorial"],
   ["LAB", "Laboratory"],
   ["REC", "Recitation"],
+  ["SEC", "Sectional Teaching"],
 ])
 
 const NUSMODS_API = "https://api.nusmods.com/v2";
@@ -25,7 +26,7 @@ const NOT_CORRECT_PATHNAME = "The URL you provided is not a sharing NUSMods URL.
 const INVALID_URL = "The URL you provided is not a valid URL."
 const INVALID_SLOT = "-1";
 
-function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], error: string | null } {
+export function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], error: string | null } {
   //example URL: "https://nusmods.com/timetable/sem-2/share?ALS1010=LEC:2&CS2030S=LAB:14H,REC:20,LEC:1&CS2040S=TUT:06,REC:15,LEC:1&DTK1234=TUT:E36&GEA1000=TUT:D23&IS1128=LEC:1&MA2001=TUT:17,LEC:2"
   let address: URL | null = null;
   try {
@@ -43,16 +44,24 @@ function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], er
     return { data: [], error: NOT_CORRECT_PATHNAME };
   }
 
-  if (pathName[1] != "timetable" && pathName[3] != "share") {
+  if (pathName[1] != "timetable" || pathName[3] != "share") {
     return { data: [], error: NOT_CORRECT_PATHNAME };
   }
 
   const parameters = address.searchParams;
-  const semesterNum = parseInt(pathName[2][pathName[2].length - 1])
+  const semesterNum = semesterStringParser(pathName[2])
   const moduleDataList: moduleTimetableInformation[] = [];
   let parserError = '';
   parameters.forEach((classes: string, moduleName: string) => {
     //sample classes: "LEC:01,TUT:01,REC:01,LAB:04"
+    if (!classes) {
+      moduleDataList.push({
+      semester: semesterNum,
+      moduleCode: moduleName,
+      classes: []
+    })
+      return
+    }
     const classArray = classes.split(",").map((classInfo: string) => {
       //sample classInfo: "LEC:01"
       const temp = classInfo.split(":");
@@ -86,6 +95,14 @@ function NUSModsURLparser(url: string): { data: moduleTimetableInformation[], er
   return { data: moduleDataList, error: null }
 }
 
+function semesterStringParser(semString: string): number {
+  const strArr = semString.split('-');
+  if (strArr[0] === "sem") {
+    return parseInt(strArr[1]);
+  }
+  return strArr[1].length + 2;
+}
+
 async function eventParser({ data, error }: { data: moduleTimetableInformation[], error: string | null }, acadYear: academicYearInfo): Promise<{
   events: eventInformation[], error: string | null
 }> {
@@ -106,7 +123,7 @@ async function addClassesToList(moduleClassInfo: moduleTimetableInformation, aca
   }
 }
 
-async function getModuleInformation(moduleClassInfo: moduleTimetableInformation, acadYear: academicYearInfo): Promise<eventInformation[]> {
+export async function getModuleInformation(moduleClassInfo: moduleTimetableInformation, acadYear: academicYearInfo): Promise<eventInformation[]> {
   //moduleCode is in all CAPS.
   //technically we can do a check to see if module is valid for possible performance improvements but there is no need for now.
   //acadYear is in the format of a pair e.g. [2019, 2020]
@@ -122,7 +139,7 @@ async function getModuleInformation(moduleClassInfo: moduleTimetableInformation,
     ?.timetable.filter((elem) => {
       return moduleClassInfo.classes.find(lesson => lesson.slot == elem['classNo'] && lesson.type == elem['lessonType'])
     })
-    .flatMap(elem => convertWeeksToDateArray(elem.weeks, semStartDate, moduleClassInfo.semester, elem.day)
+    .flatMap(elem => convertWeeksToDateArray(elem.weeks, semStartDate, elem.day)
       .map(date => {
         const startTime = convertTimeStringToTimeObject(elem.startTime);
         const endTime = convertTimeStringToTimeObject(elem.endTime);

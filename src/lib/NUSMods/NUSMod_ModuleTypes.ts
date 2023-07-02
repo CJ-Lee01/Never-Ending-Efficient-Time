@@ -31,11 +31,9 @@ export type WeekRange = {
 
 //own function
 export function isWeekRange(object: any) {
-  return object.hasOwnProperty('start')
-    && object.hasOwnProperty('end')
-    && typeof object.start == 'string'
+  return typeof object.start == 'string'
     && typeof object.end == 'string'
-    && (typeof object.weeks == 'undefined' || isNumberArray(object))
+    && (typeof object.weeks == 'undefined' || isNumberArray(object.weeks))
     && (typeof object.weekInterval == 'undefined' || typeof object.weekInterval == 'number');
 }
 //own function
