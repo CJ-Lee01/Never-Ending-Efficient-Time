@@ -1,5 +1,6 @@
 import { supabaseUser } from "@/lib/initSupabase";
 import { Button, useColorModeValue } from "@chakra-ui/react";
+import {FiLogOut} from "react-icons/fi";
 
 export default function SignOutButton() {
   const supabase = supabaseUser();
@@ -7,18 +8,17 @@ export default function SignOutButton() {
     const { error } = await supabase.auth.signOut();
     error && alert(error.message);
   };
+
+  const bgColour = useColorModeValue("white", "grey.500");
+
   return (
     <Button
-      onClick={signOutHandler}
-      fontSize={"sm"}
-      fontWeight={600}
-      color={"white"}
-      bg={useColorModeValue("orange.400", "green.400")}
-      _hover={{
-        bg: useColorModeValue("orange.300", "green.300"),
-      }}
-    >
-      Sign Out
-    </Button>
+    onClick={signOutHandler}
+    bg={bgColour}
+    leftIcon={<FiLogOut/>}
+    justifyContent={"left"}
+  >
+    Sign Out
+  </Button>
   );
 }

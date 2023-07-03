@@ -5,13 +5,16 @@ import {
   MenuButton,
   HStack,
   MenuList,
-  Center,
+  Stack,
+  MenuItem,
+  Divider,
 } from "@chakra-ui/react";
 import { FC } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import SignOutButton from "@/components/AuthUI/SignOutButton";
 import NavProfile from "./NavProfile";
 import CanvasSyncButton from "./CanvasSyncButton";
+import SettingsButton from './SettingsButton';
 
 interface ProfileDropdownProps {}
 
@@ -27,11 +30,15 @@ const ProfileDropdown: FC<ProfileDropdownProps> = ({}) => {
             </Box>
           </HStack>
         </MenuButton>
-        <MenuList>
-          <Center>
-            <SignOutButton />
-            <CanvasSyncButton></CanvasSyncButton>
-          </Center>
+        <MenuList as={Stack} p={2}>
+        
+          <MenuItem as={CanvasSyncButton}>
+            </MenuItem>
+          <MenuItem as={SettingsButton}>
+            </MenuItem>
+          <Divider></Divider>
+          <MenuItem as={SignOutButton}>
+          </MenuItem>
         </MenuList>
       </Menu>
     </Flex>

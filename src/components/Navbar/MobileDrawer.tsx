@@ -12,6 +12,9 @@ import {
   DrawerFooter,
   HStack,
   Spacer,
+  Divider,
+  Flex,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
 import { FC, ReactElement } from "react";
 import Logo from "./Logo";
@@ -19,6 +22,8 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 import SignOutButton from "../AuthUI/SignOutButton";
 import NavProfile from "./NavProfile";
+import SettingsButton from "./SettingsButton";
+import CanvasSyncButton from "./CanvasSyncButton";
 
 interface NavItem {
   label: string;
@@ -45,6 +50,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({ NAV_ITEMS }) => {
       <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
+        <DrawerCloseButton />
           <DrawerHeader borderBottomWidth="1px">
             <Logo />
           </DrawerHeader>
@@ -64,16 +70,14 @@ const MobileDrawer: FC<MobileDrawerProps> = ({ NAV_ITEMS }) => {
               ))}
             </Stack>
           </DrawerBody>
-          <DrawerFooter
-            borderTopWidth="1px"
-            justifyContent={"left"}
-            display={"flex"}
-          >
-            <HStack>
-              <NavProfile />
-              <Spacer />
-              <SignOutButton />
-            </HStack>
+          <DrawerFooter>
+              <Stack width='100%'>
+                <CanvasSyncButton></CanvasSyncButton>
+                <SettingsButton></SettingsButton>
+                <SignOutButton />
+                <Divider></Divider>
+                <NavProfile />
+              </Stack>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

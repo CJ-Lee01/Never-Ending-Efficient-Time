@@ -1,9 +1,10 @@
 import { addBulkAnnoucement, getAnnouncements } from "@/lib/CRUD_Announcements";
 import { addBulkTasks } from "@/lib/CRUD_Tasks";
 import { getCanvasAnnouncements, getCanvasAssignments } from "@/lib/Canvas/CanvasAPI";
-import { Button, Input, Modal, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Button, Stack, Modal, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 import { er } from "@fullcalendar/core/internal-common";
 import { ChangeEvent, useState } from "react";
+import { LiaSyncSolid } from "react-icons/lia";
 
 const CanvasSyncButton = () => {
 
@@ -28,9 +29,10 @@ const CanvasSyncButton = () => {
     window.location.reload();
     
   }
+  const bgColour = useColorModeValue("white", "grey.500");
 
   return <>
-    <Button onClick={onOpen}>Sync with Canvas</Button>
+    <Button onClick={onOpen} leftIcon={<LiaSyncSolid/>} justifyContent={"left"} bg={bgColour}>Canvas Sync</Button>
     <Modal
       closeOnOverlayClick={false}
       isOpen={isOpen}
@@ -41,7 +43,9 @@ const CanvasSyncButton = () => {
         <ModalContent>
           <ModalHeader>Sync with Canvas</ModalHeader>
           <ModalCloseButton />
-          <Input placeholder="Enter your Canvas Token here. (WIP, you may submit with empty field)"/>
+          <Stack p={4}>
+          <Textarea placeholder="Enter your Canvas Token here. (WIP, you may submit with empty field)"/>
+          </Stack>
           <ModalFooter>
             <Button
               variant="solid"

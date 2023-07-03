@@ -10,7 +10,7 @@ export default function dashboard() {
       <Heading textAlign={"left"} p={10}>
         Welcome, Username
       </Heading>
-      <Stack direction={{ base: "column", lg: "row" }}>
+      <Stack direction={{ base: "column", lg: "row" }} mb={{ base: 10, lg: 0 }}>
         <ToDoSummary />
         <Annoucements />
       </Stack>
