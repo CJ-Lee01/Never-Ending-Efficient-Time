@@ -7,7 +7,7 @@ import { Stack, Heading } from "@chakra-ui/react";
 export default function dashboard() {
   return (
     <Stack direction="column" minH={"100vh"}>
-      <Heading textAlign={"left"} p={10}>
+      <Heading textAlign={"left"} p={14}>
         Welcome, Username
       </Heading>
       <Stack direction={{ base: "column", lg: "row" }} mb={{ base: 10, lg: 0 }}>
