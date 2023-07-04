@@ -10,10 +10,7 @@ import {
   Stack,
   useColorModeValue,
   DrawerFooter,
-  HStack,
-  Spacer,
   Divider,
-  Flex,
   DrawerCloseButton,
 } from "@chakra-ui/react";
 import { FC, ReactElement } from "react";
@@ -50,7 +47,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({ NAV_ITEMS }) => {
       <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
-        <DrawerCloseButton />
+          <DrawerCloseButton />
           <DrawerHeader borderBottomWidth="1px">
             <Logo />
           </DrawerHeader>
@@ -71,13 +68,13 @@ const MobileDrawer: FC<MobileDrawerProps> = ({ NAV_ITEMS }) => {
             </Stack>
           </DrawerBody>
           <DrawerFooter>
-              <Stack width='100%'>
-                <CanvasSyncButton></CanvasSyncButton>
-                <SettingsButton></SettingsButton>
-                <SignOutButton />
-                <Divider></Divider>
-                <NavProfile />
-              </Stack>
+            <Stack width="100%">
+              <CanvasSyncButton></CanvasSyncButton>
+              <SettingsButton></SettingsButton>
+              <SignOutButton />
+              <Divider></Divider>
+              <NavProfile />
+            </Stack>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
