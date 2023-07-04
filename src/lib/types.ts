@@ -66,6 +66,7 @@ export interface LapDataType {
 export interface AnnouncementData {
   id?: number;
   user_id?: string;
+  canvas_id?: number;
   course_name: string;
   title: string;
   description: string;
