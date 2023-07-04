@@ -1,7 +1,7 @@
 import { getCanvasAnnouncements, getCanvasAssignments, getCanvasCourses } from "./CanvasAPI";
 import { AnnouncementData, TasksInformation, } from "../types";
 
-async function syncWithCanvas(
+export async function syncWithCanvas(
   canvasToken: string,
   includeConcludedCourses: boolean = false,
   includeComplete: boolean = false,

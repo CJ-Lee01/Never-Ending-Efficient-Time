@@ -1,9 +1,9 @@
 import { addBulkAnnoucement, getAnnouncements } from "@/lib/CRUD_Announcements";
 import { addBulkTasks } from "@/lib/CRUD_Tasks";
-import { getCanvasAnnouncements, getCanvasAssignments } from "@/lib/Canvas/CanvasAPI";
 import { Button, Input, Modal, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { er } from "@fullcalendar/core/internal-common";
 import { ChangeEvent, useState } from "react";
+import { syncWithCanvas } from "@/lib/Canvas/CanvasSync";
 
 const CanvasSyncButton = () => {
 
@@ -17,11 +17,16 @@ const CanvasSyncButton = () => {
 
   const syncHandler = async (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const announcementResponse = await addBulkAnnoucement(getCanvasAnnouncements(canvasToken));
+    const canvasData = await syncWithCanvas(canvasToken);
+    if (canvasData.error) {
+      alert(canvasData.error)
+      return
+    }
+    const announcementResponse = await addBulkAnnoucement(canvasData.announcements);
     if (announcementResponse.error) {
       alert(announcementResponse.error.message);
     }
-    const taskResponse = await addBulkTasks(getCanvasAssignments(canvasToken));
+    const taskResponse = await addBulkTasks(canvasData.assignments);
     if (taskResponse.error) {
       alert(taskResponse.error.message);
     }

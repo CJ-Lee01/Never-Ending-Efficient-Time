@@ -4,7 +4,7 @@ const defaultTask: TasksInformation = {
   canvas_id: -1,
   title: "No title",
   description: "No Description",
-  deadline: "",
+  deadline: new Date(),
   is_complete: false,
 }
 
