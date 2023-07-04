@@ -50,7 +50,7 @@ async function getCanvasCourses(canvasToken: string, includeConcluded: boolean =
 
 }
 
-async function getCanvasAnnouncements(canvasToken: string, courseList: CourseInfo[]): Promise<{ announcements: AnnouncementData[]; error: string | null; }> {
+async function getCanvasAnnouncements(canvasToken: string, courseList: CourseInfo[], startDate?: Date): Promise<{ announcements: AnnouncementData[]; error: string | null; }> {
   const result: { announcements: AnnouncementData[], error: string | null } = { announcements: [], error: null }
   const header = createCanvasAuthorizationHeader(canvasToken);
   const fetchArray: Promise<any>[] = courseList
@@ -66,12 +66,16 @@ async function getCanvasAnnouncements(canvasToken: string, courseList: CourseInf
         .then(announcementList => (announcementList as CanvasAPIAnnoucement[]))
         .then(announcementList => {
           announcementList.forEach(announcement => {
+            const announcedDate = new Date(announcement.posted_at ?? Date.now())
+            if (startDate && announcedDate < startDate ) {
+              return
+            }
             result.announcements.push({
               course_name: course.courseName,
               title: announcement.title,
               description: announcement.message,
               is_read: announcement.unread_count == 0,
-              announced_at: new Date(announcement.posted_at ?? "")
+              announced_at: announcedDate
             })
           })
         })
@@ -82,7 +86,7 @@ async function getCanvasAnnouncements(canvasToken: string, courseList: CourseInf
   return result;
 }
 
-async function getCanvasAssignments(canvasToken: string, courseList: CourseInfo[]): Promise<{ assignments: TasksInformation[]; error: string | null; }> {
+async function getCanvasAssignments(canvasToken: string, courseList: CourseInfo[], includeComplete: boolean = false, startDate?: Date): Promise<{ assignments: TasksInformation[]; error: string | null; }> {
   const result: { assignments: TasksInformation[], error: string | null } = { assignments: [], error: null };
   const header = createCanvasAuthorizationHeader(canvasToken);
   const fetchArray: Promise<any>[] = courseList
@@ -98,6 +102,13 @@ async function getCanvasAssignments(canvasToken: string, courseList: CourseInfo[
         .then(assignmentList => (assignmentList as CanvasAPIAssignment[]))
         .then(assignmentList => {
           assignmentList.forEach(assignment => {
+            if (!includeComplete && assignment.submission) {
+              return
+            }
+            const deadline = new Date(assignment.lock_info?.lock_at ?? "9999-12-12");
+            if (startDate && startDate > deadline) {
+              return
+            }
             result.assignments.push({
               canvas_id: assignment.id,
               title: `${course.courseName}: ${assignment.name}`,

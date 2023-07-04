@@ -1,11 +1,17 @@
-import { getCanvasAnnouncements, getCanvasAssignments, getCanvasCourses, CourseInfo } from "./CanvasAPI";
+import { getCanvasAnnouncements, getCanvasAssignments, getCanvasCourses } from "./CanvasAPI";
 import { AnnouncementData, TasksInformation, } from "../types";
 
-async function syncWithCanvas(canvasToken: string, includeConcludedCourses: boolean = false): Promise<{
-  announcements: AnnouncementData[];
-  assignments: TasksInformation[];
-  error: string | null;
-}> {
+async function syncWithCanvas(
+  canvasToken: string,
+  includeConcludedCourses: boolean = false,
+  includeComplete: boolean = false,
+  startDate?: Date
+):
+  Promise<{
+    announcements: AnnouncementData[];
+    assignments: TasksInformation[];
+    error: string | null;
+  }> {
   const data: {
     announcements: AnnouncementData[];
     assignments: TasksInformation[];
@@ -19,11 +25,11 @@ async function syncWithCanvas(canvasToken: string, includeConcludedCourses: bool
           error: data.error
         }
         : {
-          announcements: (await getCanvasAnnouncements(canvasToken, data.courses)).announcements,
-          assignments: (await getCanvasAssignments(canvasToken, data.courses)).assignments,
+          announcements: (await getCanvasAnnouncements(canvasToken, data.courses, startDate)).announcements,
+          assignments: (await getCanvasAssignments(canvasToken, data.courses, includeComplete, startDate)).assignments,
           error: null
         }
     });
-    
-    return data;
+
+  return data;
 }
