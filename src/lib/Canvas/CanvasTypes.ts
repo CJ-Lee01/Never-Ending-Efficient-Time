@@ -155,7 +155,8 @@ export interface CanvasAPICourse {
   "blueprint_restrictions_by_object_type"?: { "assignment": { "content": boolean, "points": boolean }, "wiki_page": { "content": boolean } },
   // optional: whether the course is set as a template (requires the Course
   // Templates feature)
-  "template"?: boolean
+  "template"?: boolean,
+  "concluded"?: boolean,
 }
 
 export interface CanvasAPIAnnoucement {
@@ -275,7 +276,7 @@ export interface CanvasAPIAssignment {
   // copied from https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.user_index
   // with snippets from https://github.com/instructure/canvas-lms/blob/master/app/controllers/assignments_api_controller.rb
   // this is so tough....
-  
+
   // the ID of the assignment
   "id": number,
   // the name of the assignment

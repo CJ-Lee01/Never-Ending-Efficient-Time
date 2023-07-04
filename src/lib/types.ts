@@ -45,7 +45,7 @@ export interface TasksInformation {
   title: string;
   description: string;
   is_complete: boolean;
-  deadline: string;
+  deadline: Date;
 }
 
 export interface TimerDataType {
@@ -69,6 +69,6 @@ export interface AnnouncementData {
   course_name: string;
   title: string;
   description: string;
-  is_read: boolean
-  announced_at: Date
+  is_read: boolean;
+  announced_at: Date;
 }
