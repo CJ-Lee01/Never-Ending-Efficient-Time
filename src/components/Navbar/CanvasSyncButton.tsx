@@ -29,9 +29,7 @@ const CanvasSyncButton = () => {
     const taskResponse = await addBulkTasks(canvasData.assignments);
     if (taskResponse.error) {
       alert(taskResponse.error.message);
-    }
-    window.location.reload();
-    
+    }    
   }
 
   return <>
@@ -46,7 +44,7 @@ const CanvasSyncButton = () => {
         <ModalContent>
           <ModalHeader>Sync with Canvas</ModalHeader>
           <ModalCloseButton />
-          <Input placeholder="Enter your Canvas Token here. (WIP, you may submit with empty field)"/>
+          <Input placeholder="Enter your Canvas Token here. (WIP, you may submit with empty field)" onChange={changeTokenHandler}/>
           <ModalFooter>
             <Button
               variant="solid"

@@ -1,17 +1,19 @@
 import { CanvasAPICourse, CanvasAPIAnnoucement, CanvasAPIAssignment } from "./CanvasTypes";
 import { AnnouncementData, TasksInformation } from "../types";
 import { announcements, assignments } from "./MockCanvasData"
+import { resolve } from "path";
 
-const ROOT_CANVAS_URL = "https://canvas.nus.edu.sg/api";
+const ROOT_CANVAS_URL = "https://canvas.nus.edu.sg";
 const urlCourses = () => "/api/v1/users/self/courses?include[]=concluded";
 const urlAssignments = (courseID: number) => `/api/v1/users/self/courses/${courseID}/assignments?include[]=submission`;
 const urlAnnouncement = (courseID: number) => `api/v1/courses/${courseID}/discussion_topics?only_announcements=true`;
-const createCanvasAuthorizationHeader: (canvasToken: string) => Headers = (canvasToken: string) => {
+const createCanvasAuthorizationHeader: (canvasToken: string) => { "Authorization": string } = (canvasToken: string) => {
   const header = new Headers();
   header.append("Authorization", `Bearer ${canvasToken}`);
-  return header;
+  //return header;
+  return { "Authorization": `Bearer ${canvasToken}` }
 }
-const INVALID_CANVAS_TOKEN_ERROR = "Error 401: Invalid Canvas Authentication Token given";
+export const INVALID_CANVAS_TOKEN_ERROR = "Error 401: Invalid Canvas Authentication Token given";
 
 export interface CourseInfo {
   // Should not use outside of the Canvas folder.
@@ -23,15 +25,18 @@ export interface CourseInfo {
 async function getCanvasCourses(canvasToken: string, includeConcluded: boolean = false): Promise<{ courses: CourseInfo[]; error: string | null; }> {
   const header = createCanvasAuthorizationHeader(canvasToken);
   const result: { courses: CourseInfo[], error: string | null } = { courses: [], error: null };
-  const response = await fetch(`${ROOT_CANVAS_URL}${urlCourses()}`, {
+  const response = await fetch(`${ROOT_CANVAS_URL}`, {
     method: "GET",
     headers: header
   }).then((response) => {
     //if fulfilled
-    if (response.status == 401) {
+    console.log(response)
+    console.log(response.status)
+    if (!response.ok) {
       result.error = INVALID_CANVAS_TOKEN_ERROR;
       return;
     }
+    console.log(response.json())
     response.json()
       .then(coursesList => (coursesList as CanvasAPICourse[]))
       .then(courseList => courseList
@@ -44,8 +49,11 @@ async function getCanvasCourses(canvasToken: string, includeConcluded: boolean =
           })
           : 1 //Do nothing if not valid.
         ))
-  })
-
+  },
+    response => {
+      result.error = INVALID_CANVAS_TOKEN_ERROR;
+      return;
+    });
   return result;
 
 }
@@ -55,6 +63,7 @@ async function getCanvasAnnouncements(canvasToken: string, courseList: CourseInf
   const header = createCanvasAuthorizationHeader(canvasToken);
   const fetchArray: Promise<any>[] = courseList
     .map(course => fetch(`${ROOT_CANVAS_URL}${urlAnnouncement(course.courseID)}`, {
+      mode: 'no-cors',
       method: "GET",
       headers: header
     }).then(response => {
@@ -67,7 +76,7 @@ async function getCanvasAnnouncements(canvasToken: string, courseList: CourseInf
         .then(announcementList => {
           announcementList.forEach(announcement => {
             const announcedDate = new Date(announcement.posted_at ?? Date.now())
-            if (startDate && announcedDate < startDate ) {
+            if (startDate && announcedDate < startDate) {
               return
             }
             result.announcements.push({
@@ -91,6 +100,7 @@ async function getCanvasAssignments(canvasToken: string, courseList: CourseInfo[
   const header = createCanvasAuthorizationHeader(canvasToken);
   const fetchArray: Promise<any>[] = courseList
     .map(course => fetch(`${ROOT_CANVAS_URL}${urlAssignments(course.courseID)}`, {
+      mode: 'no-cors',
       method: "GET",
       headers: header
     }).then(response => {
