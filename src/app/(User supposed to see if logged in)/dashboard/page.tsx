@@ -8,7 +8,7 @@ import { ProfileType } from "@/lib/types";
 import { PostgrestError } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 
-export default function dashboard() {
+export default function Dashboard() {
   const [ProfileData, setProfileData] = useState<{
     data: ProfileType | null;
     error: PostgrestError | null;
