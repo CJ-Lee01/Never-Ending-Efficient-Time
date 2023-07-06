@@ -20,7 +20,7 @@ import {
 import { er } from "@fullcalendar/core/internal-common";
 import { ChangeEvent, useState } from "react";
 // import { LiaSyncSolid } from "react-icons/lia";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { IoMdSync } from "react-icons/io";
 
 const CanvasSyncButton = () => {
   const [canvasToken, setCanvasToken] = useState<string>("");
@@ -51,7 +51,7 @@ const CanvasSyncButton = () => {
     <>
       <Button
         onClick={onOpen}
-        leftIcon={<MoonIcon />}
+        leftIcon={<IoMdSync />}
         justifyContent={"left"}
         bg={bgColour}
       >

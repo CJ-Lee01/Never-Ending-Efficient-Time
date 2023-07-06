@@ -25,10 +25,13 @@ const SettingsForm: FC<SettingsFormProps> = ({}) => {
     data: null,
     error: null,
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const pageUpdater = () => window.location.reload();
 
   useEffect(() => {
     getProfile(setProfileData);
-    // console.log("HERE");
+    // console.log("HERE!");
+    setIsLoading(false);
   }, []);
 
   const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,8 +50,10 @@ const SettingsForm: FC<SettingsFormProps> = ({}) => {
       const NameError = updateName(username);
     }
     if (avatarFile) {
-      const val = updateAvatar(avatarFile);
+      const val = updateAvatar(avatarFile, pageUpdater);
     }
+    // console.log("saved!");
+    setIsLoading(true);
   };
 
   return (
@@ -79,7 +84,7 @@ const SettingsForm: FC<SettingsFormProps> = ({}) => {
           >
             <Avatar
               size={{ base: "lg", md: "2xl" }}
-              // src={ProfileData.data?.avatar_url}
+              src={ProfileData.data?.avatar_url}
             />
             <Input
               type="file"
@@ -97,6 +102,7 @@ const SettingsForm: FC<SettingsFormProps> = ({}) => {
           _hover={{ bg: "blue.600" }}
           width="200px"
           onClick={handleSave}
+          isLoading={isLoading}
         >
           Save Changes
         </Button>

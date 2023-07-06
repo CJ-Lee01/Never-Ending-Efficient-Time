@@ -1,8 +1,6 @@
 import { PostgrestError } from "@supabase/supabase-js";
 import { Dispatch, SetStateAction } from "react";
 import { supabaseUser } from "./initSupabase";
-import { ProfileType } from "./types";
-import { profile } from "console";
 
 export async function getProfile(
   setState: Dispatch<
@@ -23,14 +21,17 @@ export async function getProfile(
   setState({ data, error });
 }
 
-export async function updateAvatar(avatarFile: File) {
+export async function updateAvatar(avatarFile: File, pageUpdater: () => void) {
   const supabase = supabaseUser();
   const user_id = (await supabase.auth.getSession()).data.session?.user.id;
+  const newPath = `avatars/${user_id}/${Date.now()}_avatar.png`;
+  const oldFilePath = await getOldFilePath();
+  // console.log("Old File path: " + oldFilePath);
+
   const { data, error } = await supabase.storage
     .from("avatars")
-    .upload(`avatars/${user_id}/avatar.png`, avatarFile, {
-      cacheControl: "3600",
-      upsert: true,
+    .upload(`${newPath}`, avatarFile, {
+      upsert: false,
     });
 
   if (error) {
@@ -38,10 +39,9 @@ export async function updateAvatar(avatarFile: File) {
   } else {
     const { data } = supabase.storage
       .from("avatars")
-      .getPublicUrl(`avatars/${user_id}/avatar.png`);
+      .getPublicUrl(`${newPath}`);
 
     const avatarUrl = data.publicUrl;
-    console.log(avatarUrl);
 
     const { error } = await supabase
       .from("profiles")
@@ -49,7 +49,20 @@ export async function updateAvatar(avatarFile: File) {
       .eq("id", user_id);
     if (error) {
       console.error("Error updating Avatar:", error.message);
+    } else {
+      if (oldFilePath != "") {
+        const { data, error } = await supabase.storage
+          .from("avatars")
+          .remove([oldFilePath]);
+
+        // console.log("Old File Removed: " + oldFilePath);
+
+        if (error) {
+          console.error("Error removing Avatar:", error.message);
+        }
+      }
     }
+    pageUpdater();
   }
 }
 
@@ -63,5 +76,26 @@ export async function updateName(username: string) {
 
   if (error) {
     console.error("Error updating Name:", error.message);
+  }
+}
+
+export async function getOldFilePath() {
+  const supabase = supabaseUser();
+  const user_id = (await supabase.auth.getSession()).data.session?.user.id;
+  const storageUrl = "https://ftildovxenjyztgzfvla.supabase.co/storage/v1";
+  const { data, error } = await supabase
+    .from("profiles")
+    .select()
+    .eq("id", user_id)
+    .single();
+
+  if (data?.avatar_url == null) {
+    return "";
+  } else {
+    const filePath = data.avatar_url.replaceAll(
+      `${storageUrl}/object/public/avatars/`,
+      ""
+    );
+    return filePath;
   }
 }
