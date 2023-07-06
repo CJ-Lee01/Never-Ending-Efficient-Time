@@ -69,6 +69,13 @@ export interface AnnouncementData {
   course_name: string;
   title: string;
   description: string;
-  is_read: boolean
-  announced_at: Date
+  is_read: boolean;
+  announced_at: Date;
+}
+
+export interface ProfileType {
+  id?: number;
+  created_at?: Date;
+  full_name?: string;
+  avatar_url?: string;
 }
