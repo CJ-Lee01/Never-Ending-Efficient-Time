@@ -4,7 +4,7 @@ import ToDoSummary from "@/components/Dashboard/ToDoSummary";
 import Annoucements from "@/components/Dashboard/Annoucements";
 import { Stack, Heading } from "@chakra-ui/react";
 
-export default function dashboard() {
+export default function Dashboard() {
   return (
     <Stack direction="column" minH={"100vh"}>
       <Heading textAlign={"left"} p={10}>
