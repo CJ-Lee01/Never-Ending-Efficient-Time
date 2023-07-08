@@ -15,7 +15,6 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { ChangeEvent, useState } from "react";
 // import { LiaSyncSolid } from "react-icons/lia";
 import { IoMdSync } from "react-icons/io";
 
