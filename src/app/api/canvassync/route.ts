@@ -14,7 +14,8 @@ export async function GET(request: Request) {
       { status: 401 }
     )
   }
-  const res = await syncWithCanvas(canvasKey, includeConcludedCourses, includeCompletedAssignments, startDate)
+  const canvasKeyDetails = canvasKey.split(" ");
+  const res = await syncWithCanvas(canvasKeyDetails[1], includeConcludedCourses, includeCompletedAssignments, startDate)
   if (res.error) {
     return NextResponse.json(
       { error: "Canvas token given in Authorization header is invalid" },
