@@ -73,3 +73,10 @@ export interface AnnouncementData {
   is_read: boolean;
   announced_at: Date;
 }
+
+export interface ProfileType {
+  id?: number;
+  created_at?: Date;
+  full_name?: string;
+  avatar_url?: string;
+}
