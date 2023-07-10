@@ -1,8 +1,9 @@
 import { AnnouncementData } from "@/lib/types"
-import { Grid, Stack, chakra, useColorModeValue } from "@chakra-ui/react"
+import { Box, Card, CardBody, Grid, Stack, chakra, useColorModeValue } from "@chakra-ui/react"
 import { Dispatch, FC, SetStateAction } from "react"
 import DeleteAnnouncementModal from "./DeleteAnnouncementsModal";
 import { PostgrestError } from "@supabase/supabase-js";
+import { render } from 'react-dom';
 
 const AnnoucementDisplayUnit: FC<{
   announcement: AnnouncementData,
@@ -11,7 +12,9 @@ const AnnoucementDisplayUnit: FC<{
     error: PostgrestError | null
   }>>
 }> = ({ announcement, setAnnouncements }) => {
+
   const bgColorScheme = useColorModeValue("gray.200", "gray.700");
+
   const textColor = useColorModeValue("gray.600", "gray.300");
   return <Grid
     templateRows={{ base: "auto auto", md: "auto" }}
@@ -38,7 +41,11 @@ const AnnoucementDisplayUnit: FC<{
         fontSize="sm"
         color={textColor}
       >
-        Description: {announcement.description}
+        Description: <Card>
+          <CardBody>
+            <div dangerouslySetInnerHTML={{ __html: announcement.description }} />
+          </CardBody>
+        </Card>
       </chakra.p>
     </Stack>
     <DeleteAnnouncementModal announcement={announcement} setAnnouncements={setAnnouncements} />

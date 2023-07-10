@@ -45,7 +45,7 @@ export interface TasksInformation {
   title: string;
   description: string;
   is_complete: boolean;
-  deadline: string;
+  deadline: Date;
 }
 
 export interface TimerDataType {
@@ -66,6 +66,7 @@ export interface LapDataType {
 export interface AnnouncementData {
   id?: number;
   user_id?: string;
+  canvas_id?: number;
   course_name: string;
   title: string;
   description: string;
