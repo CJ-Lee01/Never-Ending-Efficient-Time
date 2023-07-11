@@ -16,24 +16,26 @@ import { removeAnnouncement } from "@/lib/CRUD_Announcements";
 import { PostgrestError } from "@supabase/supabase-js";
 
 const DeleteAnnouncementModal: FC<{
-  announcement: AnnouncementData,
-  setAnnouncements: Dispatch<SetStateAction<{
-    data: AnnouncementData[];
-    error: PostgrestError | null
-  }>>
+  announcement: AnnouncementData;
+  setAnnouncements: Dispatch<
+    SetStateAction<{
+      data: AnnouncementData[];
+      error: PostgrestError | null;
+    }>
+  >;
 }> = ({ announcement, setAnnouncements }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const deleteHandler = async () => {
     await removeAnnouncement(announcement);
-    setAnnouncements(announcementList => {
+    setAnnouncements((announcementList) => {
       return {
         error: announcementList.error,
-        data: announcementList.data.filter(item => item != announcement)
-      }
-    })
+        data: announcementList.data.filter((item) => item != announcement),
+      };
+    });
     onClose();
-  }
+  };
 
   return (
     <>

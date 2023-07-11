@@ -27,15 +27,15 @@ const AnnoucementDisplayUnit: FC<{
   const textColor = useColorModeValue("gray.600", "gray.300");
   return (
     <Grid
-      templateRows={{ base: "auto auto", md: "auto" }}
+      templateRows={"1fr"}
       w="100%"
-      templateColumns={{ base: "unset", md: "9fr 1fr" }}
+      templateColumns={"9fr 1fr"}
       p={{ base: 2, sm: 4 }}
       gap={3}
       alignItems="center"
       _hover={{ bg: bgColorScheme }}
     >
-      <Stack gridColumnEnd={{ base: "span 2", md: "unset" }}>
+      <Stack gridColumnEnd={"unset"}>
         <chakra.h3 fontWeight="bold" fontSize="lg">
           {announcement.title}
         </chakra.h3>
@@ -53,10 +53,12 @@ const AnnoucementDisplayUnit: FC<{
           </CardBody>
         </Card>
       </Stack>
-      <DeleteAnnouncementModal
-        announcement={announcement}
-        setAnnouncements={setAnnouncements}
-      />
+      <Stack align={"center"}>
+        <DeleteAnnouncementModal
+          announcement={announcement}
+          setAnnouncements={setAnnouncements}
+        />
+      </Stack>
     </Grid>
   );
 };
