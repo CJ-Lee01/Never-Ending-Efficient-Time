@@ -46,7 +46,7 @@ const TaskFormComponemt = (
     setFormInfo((prevTask) => {
       return {
         ...prevTask,
-        deadline: event.target.value
+        deadline: new Date(event.target.value)
       }
     });
   }

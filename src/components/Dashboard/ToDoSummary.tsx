@@ -43,10 +43,10 @@ function calculateTaskPercentage(taskSummaryArray: number[]): number {
 
 const ToDoSummary = () => {
   const [taskList, setTaskList] = useState<{
-    data: TasksInformation[] | null;
+    data: TasksInformation[];
     error: PostgrestError | null;
   }>({
-    data: null,
+    data: [],
     error: null,
   });
 

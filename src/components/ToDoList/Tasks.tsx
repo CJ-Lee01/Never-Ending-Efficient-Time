@@ -41,10 +41,10 @@ const Tasks: FC<TasksProps> = ({}) => {
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
   const [taskList, setTaskList] = useState<{
-    data: TasksInformation[] | null;
+    data: TasksInformation[];
     error: PostgrestError | null;
   }>({
-    data: null,
+    data: [],
     error: null,
   });
   const [dummy, updateList] = useState<boolean>(false); //just a gimmick to ensure that the page is rerendered.
@@ -95,7 +95,7 @@ const Tasks: FC<TasksProps> = ({}) => {
                   {item.title}
                 </chakra.h3>
                 <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                  Deadline: {formatDateString(item.deadline)}
+                  Deadline: {formatDateString(item.deadline.toLocaleString())}
                 </chakra.p>
               </Stack>
               <Stack

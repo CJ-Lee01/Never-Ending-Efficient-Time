@@ -67,7 +67,7 @@ const ViewTaskModal: FC<ViewTaskModalProps> = ({}) => {
                 <FormControl>
                   <FormLabel>Deadline</FormLabel>
                   <InputGroup borderColor="#E0E1E7">
-                    <Input type="datetime-local" size="md" isReadOnly value={task.deadline}/>
+                    <Input type="datetime-local" size="md" isReadOnly value={task.deadline?.toISOString() ?? ""}/>
                   </InputGroup>
                 </FormControl>
                 <FormControl>

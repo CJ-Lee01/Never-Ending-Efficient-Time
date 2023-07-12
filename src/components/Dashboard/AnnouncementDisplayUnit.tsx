@@ -1,8 +1,9 @@
 import { AnnouncementData } from "@/lib/types"
-import { Grid, Stack, chakra, useColorModeValue } from "@chakra-ui/react"
+import { Box, Card, CardBody, Grid, Stack, chakra, useColorModeValue } from "@chakra-ui/react"
 import { Dispatch, FC, SetStateAction } from "react"
 import DeleteAnnouncementModal from "./DeleteAnnouncementsModal";
 import { PostgrestError } from "@supabase/supabase-js";
+import { render } from 'react-dom';
 
 const AnnoucementDisplayUnit: FC<{
   announcement: AnnouncementData,
@@ -11,12 +12,14 @@ const AnnoucementDisplayUnit: FC<{
     error: PostgrestError | null
   }>>
 }> = ({ announcement, setAnnouncements }) => {
+
   const bgColorScheme = useColorModeValue("gray.200", "gray.700");
-  const otherStuffPlsExplainRichie = useColorModeValue("gray.600", "gray.300");
+
+  const textColor = useColorModeValue("gray.600", "gray.300");
   return <Grid
     templateRows={{ base: "auto auto", md: "auto" }}
     w="100%"
-    templateColumns={{ base: "unset", md: "5fr 3fr" }}
+    templateColumns={{ base: "unset", md: "9fr 1fr" }}
     p={{ base: 2, sm: 4 }}
     gap={3}
     alignItems="center"
@@ -29,16 +32,20 @@ const AnnoucementDisplayUnit: FC<{
       <chakra.p
         fontWeight="medium"
         fontSize="sm"
-        color={otherStuffPlsExplainRichie}
+        color={textColor}
       >
         Announced Date: {announcement.announced_at.toLocaleString()}
       </chakra.p>
       <chakra.p
         fontWeight="medium"
         fontSize="sm"
-        color={otherStuffPlsExplainRichie}
+        color={textColor}
       >
-        Description: {announcement.description}
+        Description: <Card>
+          <CardBody>
+            <div dangerouslySetInnerHTML={{ __html: announcement.description }} />
+          </CardBody>
+        </Card>
       </chakra.p>
     </Stack>
     <DeleteAnnouncementModal announcement={announcement} setAnnouncements={setAnnouncements} />

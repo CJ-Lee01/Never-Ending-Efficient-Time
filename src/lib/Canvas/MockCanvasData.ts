@@ -30,21 +30,21 @@ const assignments: TasksInformation[] = [
     title: "Milestone 1 submission",
     description: "Submit relevant documents",
     is_complete: false,
-    deadline: (new Date(2023, 4, 29)).toISOString()
+    deadline: (new Date(2023, 4, 29))
   },
   {
     canvas_id: 2,
     title: "Milestone 2 submission",
     description: "Submit relevant documents",
     is_complete: false,
-    deadline: (new Date(2023, 5, 26)).toISOString()
+    deadline: (new Date(2023, 5, 26))
   },
   {
     canvas_id: 3,
     title: "Milestone 3 submission",
     description: "Submit relevant documents",
     is_complete: false,
-    deadline: (new Date(2023, 6, 24)).toISOString()
+    deadline: (new Date(2023, 6, 24))
   }
 ]
 
