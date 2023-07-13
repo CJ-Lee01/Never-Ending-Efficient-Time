@@ -1,10 +1,9 @@
 "use client";
+import UpdatePasswordForm from "@/components/FormsUI/ResetPassword/UpdatePasswordForm";
+import UpdatePasswordHeader from "@/components/FormsUI/ResetPassword/UpdatePasswordHeader";
 import { Flex, Stack, useColorModeValue } from "@chakra-ui/react";
 
-import ForgetPasswordHeader from "@/components/FormsUI/ResetPassword/ForgetPasswordHeader";
-import ForgetPasswordForm from "@/components/FormsUI/ResetPassword/ForgetPasswordForm";
-
-export default function ForgetPasswordPage() {
+export default function UpdatePasswordPage() {
   return (
     <Flex
       minH={"100vh"}
@@ -13,8 +12,8 @@ export default function ForgetPasswordPage() {
       bg={useColorModeValue("white", "gray.800")}
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        <ForgetPasswordHeader />
-        <ForgetPasswordForm />
+        <UpdatePasswordHeader />
+        <UpdatePasswordForm />
       </Stack>
     </Flex>
   );

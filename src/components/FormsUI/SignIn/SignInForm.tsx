@@ -1,20 +1,28 @@
 import { supabaseUser } from "@/lib/initSupabase";
-import { useColorModeValue, Stack, Checkbox, Button, Alert, AlertIcon, Box, Link } from "@chakra-ui/react";
+import {
+  useColorModeValue,
+  Stack,
+  Checkbox,
+  Button,
+  Alert,
+  AlertIcon,
+  Box,
+  Link,
+} from "@chakra-ui/react";
 import { AuthError } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
+import NextLink from "next/link";
 import { useState, FormEvent } from "react";
 import InputFormFields, { genericInputHandler } from "../InputFormFields";
 import PasswordFormField from "../PasswordFormField";
 
 export default function SignInForm() {
-
   const supabase = supabaseUser();
   const router = useRouter();
   const [enteredEmail, setEmail] = useState<string>("");
   const [enterPassword, setPassword] = useState<string>("");
   const [authError, setError] = useState<AuthError | null>();
   const [data, setData] = useState<{}>();
-
 
   const signInHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -24,8 +32,8 @@ export default function SignInForm() {
     });
     setData(data);
     setError(error);
-    data.session && router.push('/dashboard');
-  }
+    data.session && router.push("/dashboard");
+  };
   const passwordFormHandler = genericInputHandler(setPassword);
 
   const emailFormHandler = genericInputHandler(setEmail);
@@ -39,18 +47,25 @@ export default function SignInForm() {
     >
       <Stack spacing={4}>
         <form onSubmit={signInHandler}>
-          <InputFormFields type="email" changeHandler={emailFormHandler} isRequired>
+          <InputFormFields
+            type="email"
+            changeHandler={emailFormHandler}
+            isRequired
+          >
             Email address
           </InputFormFields>
           <PasswordFormField changeHandler={passwordFormHandler} />
-          <Stack spacing={10}>
+          <Stack spacing={8}>
             <Stack
               direction={{ base: "column", sm: "row" }}
               align={"start"}
-              justify={"space-between"}
+              justify={"flex-end"}
+              pt={2}
             >
-              <Checkbox>Remember me</Checkbox>
-              <Link color={"blue.400"}>Forgot password?</Link>
+              {/* <Checkbox>Remember me</Checkbox> */}
+              <Link as={NextLink} color={"blue.400"} href="/forget-password">
+                Forgot password?
+              </Link>
             </Stack>
             <Button
               bg={"blue.400"}
@@ -62,9 +77,11 @@ export default function SignInForm() {
             >
               Sign in
             </Button>
-            {authError && <Alert status='error'>
-              <AlertIcon /> {authError.message}
-            </Alert>}
+            {authError && (
+              <Alert status="error">
+                <AlertIcon /> {authError.message}
+              </Alert>
+            )}
           </Stack>
         </form>
       </Stack>
