@@ -31,7 +31,7 @@ import { calculateTotalSeconds } from "@/lib/timerFunctions";
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 interface AddTimerModalProps {
-  pageUpdater: () => void
+  pageUpdater: () => void;
 }
 
 const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
@@ -61,7 +61,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
     };
     const { data, error } = await addTimer(newTimer);
     error ? alert(error.message) : "";
-    pageUpdater()
+    pageUpdater();
     onClose();
   };
 
@@ -90,6 +90,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
         _hover={{
           bg: "purple.300",
         }}
+        data-testid="addIntervalButton"
       >
         Add New Timer
       </Button>

@@ -84,6 +84,7 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
           isDisabled={
             !isStopwatchStart && !isTimerStart && !isPaused ? true : false
           }
+          data-testid="pauseButton"
         >
           {isPaused ? "Resume" : "Pause"}
         </Button>
@@ -94,6 +95,7 @@ const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
           width={"300px"}
           justifyContent={"center"}
           onClick={handleClockReset}
+          data-testid="resetButton"
         >
           Reset
         </Button>

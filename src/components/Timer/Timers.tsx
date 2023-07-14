@@ -20,14 +20,14 @@ interface TimersProps {
   TimerList: TimerDataType[];
   handleTimerStart: (timer: TimerDataType) => void;
   handleContinueInterval: () => void;
-  pageUpdater: () => void
+  pageUpdater: () => void;
 }
 
 const Timers: FC<TimersProps> = ({
   TimerList,
   handleTimerStart,
   handleContinueInterval,
-  pageUpdater
+  pageUpdater,
 }) => {
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
@@ -43,6 +43,7 @@ const Timers: FC<TimersProps> = ({
           isIntervalComplete || isTimerStart || isPaused ? true : false
         }
         _focus={{ bg: useColorModeValue("orange.300", "orange.400") }}
+        data-testid="nextIntervalButton"
       >
         Next Interval
       </Button>
@@ -63,6 +64,7 @@ const Timers: FC<TimersProps> = ({
               p={{ base: 2, sm: 4 }}
               gap={3}
               _hover={{ bg: bgColorScheme }}
+              data-testid="timerItem"
             >
               <Stack>
                 <chakra.h3 fontWeight="bold" fontSize="lg">
@@ -100,7 +102,7 @@ const Timers: FC<TimersProps> = ({
       </VStack>
       <Spacer />
       <Center>
-        <AddTimerModal pageUpdater = {pageUpdater}/>
+        <AddTimerModal pageUpdater={pageUpdater} />
       </Center>
     </Stack>
   );

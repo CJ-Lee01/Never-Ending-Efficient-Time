@@ -57,6 +57,7 @@ const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
         color={"white"}
         onClick={handleStopwatchStart}
         isDisabled={isStopwatchStart || isTimerStart ? true : false}
+        data-testid="stopwatchStartButton"
       >
         Start
       </Button>
@@ -75,6 +76,7 @@ const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
             <InfoOutlineIcon />
           </Tooltip>
         }
+        data-testid="lapButton"
       >
         Lap
       </Button>
