@@ -9,6 +9,7 @@ export interface InputFormFieldProps {
   placeholder?: string;
   borderColor?: string;
   size?: string;
+  value?: number | string;
 }
 
 export interface UserData {
@@ -79,4 +80,17 @@ export interface ProfileType {
   created_at?: Date;
   full_name?: string;
   avatar_url?: string;
+}
+
+export interface api_canvassyncResponse {
+  announcements: AnnouncementData[];
+  assignments: TasksInformation[];
+  error: string | null
+}
+
+export interface canvasSyncQuery {
+  canvasToken: String;
+  includeCompletedAssignments?: Boolean;
+  includeConcludedCourses?: Boolean;
+  startDateInfo?: String;
 }
