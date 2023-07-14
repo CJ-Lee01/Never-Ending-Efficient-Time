@@ -9,7 +9,7 @@ import {
   Center,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Dispatch, FC, Fragment, SetStateAction, useContext } from "react";
+import { FC, Fragment, useContext } from "react";
 import AddTimerModal from "./AddTimerModal";
 import DeleteTimerModal from "./DeleteTimerModal";
 import EditTimerModal from "./EditTimerModal";
