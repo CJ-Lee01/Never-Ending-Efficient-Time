@@ -13,6 +13,7 @@ import {
   Image,
   Input,
   Select,
+  Text,
 } from "@chakra-ui/react";
 import { useState, ChangeEvent, useContext, FC } from "react";
 
@@ -25,7 +26,7 @@ export const SemClassesDeleteHandler: FC = ({ }) => {
     .filter((value, index, array) => array.indexOf(value) === index)
     .sort();
   if (acadYearList.length == 0) {
-    return <></>
+    return <Text>You have no NUSMods classes to delete.</Text>
   }
 
   const semesterChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
