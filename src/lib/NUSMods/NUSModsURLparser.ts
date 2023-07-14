@@ -3,7 +3,7 @@
 import { Module, SemesterData } from "./NUSMod_ModuleTypes";
 import { eventInformation } from "../types";
 import { convertTimeStringToTimeObject, convertWeeksToDateArray } from "./NUSMods_DateFunctions";
-import { getStartDate, academicYearInfo, convertAcadYearStringToArray } from "./AcademicCalendar";
+import { getStartDate, academicYearInfo, convertAcadYearStringToArray, semStringBuilder } from "./AcademicCalendar";
 
 export interface moduleTimetableInformation {
   semester: number;
@@ -154,6 +154,7 @@ export async function getModuleInformation(moduleClassInfo: moduleTimetableInfor
           event_description: `${elem.lessonType} at ${elem.venue}`,
           start_time: startDateTime,
           end_time: endDateTime,
+          sem_data: semStringBuilder(acadYear, moduleClassInfo.semester)
         }
       }))
   return classData ?? [];

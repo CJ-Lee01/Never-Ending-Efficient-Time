@@ -34,7 +34,7 @@ function convertToDatabaseFormat(event: eventInformation): supabaseEventInfoForm
 
 export async function addEvent(event: eventInformation) {
   const supabase = supabaseUser();
-  const user_id = (await supabase.auth.getSession()).data.session?.user.id
+  const user_id = (await supabase.auth.getSession()).data.session?.user.id;
   const { data, error } = await supabase
     .from('event')
     .insert({
@@ -47,7 +47,7 @@ export async function addEvent(event: eventInformation) {
 }
 export async function addBulkEvent(eventList: eventInformation[]) {
   const supabase = supabaseUser();
-  const user_id = (await supabase.auth.getSession()).data.session?.user.id
+  const user_id = (await supabase.auth.getSession()).data.session?.user.id;
   const { data, error } = await supabase
     .from('event')
     .insert(eventList.map(event => {
@@ -105,6 +105,17 @@ export async function getEvent(setState: Dispatch<SetStateAction<
   const eventList = (data as supabaseEventInfoFormat[])?.sort(compareDatetimes).map(event => convertToEventInformation(event));
   setState({ data: eventList, error: error });
 
+}
+
+export async function removeNUSModsCalendar(semesterData: string) {
+  const supabase = supabaseUser();
+  const user_id = (await supabase.auth.getSession()).data.session?.user.id;
+  const { error } = await supabase
+    .from('event')
+    .delete()
+    .eq('sem_data', semesterData);
+
+    return error;
 }
 
 export const defaultEvent: eventInformation = {
