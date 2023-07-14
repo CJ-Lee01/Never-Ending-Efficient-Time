@@ -36,6 +36,7 @@ export interface eventInformation {
   event_description: string;
   start_time: Date;
   end_time: Date;
+  sem_data?: string;
 }
 
 export interface TasksInformation {
