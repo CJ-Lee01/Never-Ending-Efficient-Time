@@ -12,15 +12,12 @@ interface supabaseEventInfoFormat {
   end_time: string;
 }
 
-function convertStringToDateLocal(dateString: string): Date {
-  return new Date(dateString + 'Z')
-}
 
 function convertToEventInformation(event: supabaseEventInfoFormat): eventInformation {
   return {
     ...event,
-    start_time: convertStringToDateLocal(event.start_time),
-    end_time: convertStringToDateLocal(event.end_time)
+    start_time: new Date(event.start_time),
+    end_time: new Date(event.end_time)
   }
 }
 
