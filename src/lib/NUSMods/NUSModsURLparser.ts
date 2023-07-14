@@ -56,10 +56,10 @@ export function NUSModsURLparser(url: string): { data: moduleTimetableInformatio
     //sample classes: "LEC:01,TUT:01,REC:01,LAB:04"
     if (!classes) {
       moduleDataList.push({
-      semester: semesterNum,
-      moduleCode: moduleName,
-      classes: []
-    })
+        semester: semesterNum,
+        moduleCode: moduleName,
+        classes: []
+      })
       return
     }
     const classArray = classes.split(",").map((classInfo: string) => {
@@ -136,9 +136,9 @@ export async function getModuleInformation(moduleClassInfo: moduleTimetableInfor
     .find((elem: SemesterData) => {
       return elem['semester'] == moduleClassInfo.semester
     })
-    ?.timetable.filter((elem) => {
-      return moduleClassInfo.classes.find(lesson => lesson.slot == elem['classNo'] && lesson.type == elem['lessonType'])
-    })
+  const classArray = classData?.timetable.filter((elem) => {
+    return moduleClassInfo.classes.find(lesson => lesson.slot == elem['classNo'] && lesson.type == elem['lessonType'])
+  })
     .flatMap(elem => convertWeeksToDateArray(elem.weeks, semStartDate, elem.day)
       .map(date => {
         const startTime = convertTimeStringToTimeObject(elem.startTime);
@@ -157,7 +157,18 @@ export async function getModuleInformation(moduleClassInfo: moduleTimetableInfor
           sem_data: semStringBuilder(acadYear, moduleClassInfo.semester)
         }
       }))
-  return classData ?? [];
+
+  classData?.examDate
+    ? classArray?.push({
+      event_name: `${modTitle} Finals`,
+      event_description: `${modTitle} Finals`,
+      start_time: new Date(classData.examDate),
+      end_time: new Date(
+        new Date(classData.examDate).valueOf() + (classData?.examDuration ?? 0) * 60 * 1000),
+      sem_data: semStringBuilder(acadYear, moduleClassInfo.semester)
+    })
+    : 0;
+  return classArray ?? [];
 }
 
 export default async function NUSModsURLToEventList(url: string, acadYearString: string): Promise<{ events: eventInformation[], error: string | null }> {
