@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction } from "react";
 import { supabaseUser } from "./initSupabase";
 import { AnnouncementData } from "./types";
 import { PostgrestError } from "@supabase/supabase-js";
-import { dA } from "@fullcalendar/core/internal-common";
 
 export async function addBulkAnnoucement(announcementList: AnnouncementData[]) {
   const supabase = supabaseUser();

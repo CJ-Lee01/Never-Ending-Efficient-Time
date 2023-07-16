@@ -12,8 +12,6 @@ import { FC, FormEvent, SetStateAction, useContext, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { TaskInfoContext } from "./Tasks";
 import TaskFormComponemt from "./TaskForms";
-import { TasksInformation } from "@/lib/types";
-import defaultTask from "./DefaultTask";
 import { editTask } from "@/lib/CRUD_Tasks";
 
 interface EditTaskModalProps { }

@@ -1,8 +1,5 @@
 import { CanvasAPICourse, CanvasAPIAnnoucement, CanvasAPIAssignment } from "./CanvasTypes";
 import { AnnouncementData, TasksInformation } from "../types";
-import { announcements, assignments } from "./MockCanvasData"
-import { resolve } from "path";
-import { access } from "fs";
 
 const ROOT_CANVAS_URL = "https://canvas.nus.edu.sg";
 const urlCourses = () => "/api/v1/users/self/courses?include[]=concluded";
@@ -126,7 +123,7 @@ async function getCanvasAssignments(canvasToken: string, courseList: CourseInfo[
             result.assignments.push({
               canvas_id: assignment.id,
               title: `${course.courseName}: ${assignment.name}`,
-              description: assignment.description,
+              description: assignment.description ?? "No description given",
               is_complete: assignment.submission ? true : false,
               deadline: new Date(assignment.lock_info?.lock_at ?? "9999-12-12")
             })

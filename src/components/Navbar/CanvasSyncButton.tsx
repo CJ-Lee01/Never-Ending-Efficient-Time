@@ -27,7 +27,6 @@ const CanvasSyncButton = () => {
 
   useEffect(() => {
     getLastCanvasAccess(setStartDate)
-    console.log(startDate)
   }, [])
 
   /* const changeTokenHandler = (event: ChangeEvent<HTMLInputElement>) => {

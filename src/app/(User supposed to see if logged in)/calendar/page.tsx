@@ -12,9 +12,8 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { PostgrestError } from "@supabase/supabase-js";
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
-import AddEventButton from "@/components/Calendar/AddEventButton";
 import { SemClassesDeleteHandler } from "@/components/Calendar/SemClassesDeleteHandler";
 
 export default function CalendarPage() {

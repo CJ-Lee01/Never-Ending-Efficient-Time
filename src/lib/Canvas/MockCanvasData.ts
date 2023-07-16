@@ -1,4 +1,4 @@
-import { AnnouncementData, TasksInformation, eventInformation } from "../types";
+import { AnnouncementData, TasksInformation } from "../types";
 
 const announcements: AnnouncementData[] = [
   {

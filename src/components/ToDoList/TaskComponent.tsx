@@ -4,7 +4,6 @@ import DeleteTaskModal from "./DeleteTaskModal";
 import EditTaskModal from "./EditTaskModal";
 import { TaskInfoContext } from "./Tasks";
 import ViewTaskModal from "./ViewTaskModal";
-import { TasksInformation } from "@/lib/types";
 import { editTask } from "@/lib/CRUD_Tasks";
 
 const TaskComponent: FC<{ }> = ({ }) => {

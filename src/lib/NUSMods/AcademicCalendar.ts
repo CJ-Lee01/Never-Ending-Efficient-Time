@@ -1,5 +1,3 @@
-import { stringify } from "querystring";
-
 type startDate = [number, number, number];
 
 type academicCalendarMapInfo = { "start": startDate }[]

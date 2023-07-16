@@ -2,11 +2,8 @@
 
 import {
   VStack,
-  Grid,
   Stack,
-  chakra,
   useColorModeValue,
-  Checkbox,
   Divider,
 } from "@chakra-ui/react";
 import {
@@ -17,15 +14,11 @@ import {
   useEffect,
   useState,
 } from "react";
-import EditTaskModal from "./EditTaskModal";
-import DeleteTaskModal from "./DeleteTaskModal";
-import ViewTaskModal from "./ViewTaskModal";
 import { TasksInformation } from "@/lib/types";
 import { editTask, getTasks } from "@/lib/CRUD_Tasks";
 import { PostgrestError } from "@supabase/supabase-js";
 import defaultTask from "./DefaultTask";
 import AddTaskModal from "./AddTaskModal";
-import formatDateString from "@/lib/dateFunctions";
 import TaskComponent from "./TaskComponent";
 
 interface TasksProps {}

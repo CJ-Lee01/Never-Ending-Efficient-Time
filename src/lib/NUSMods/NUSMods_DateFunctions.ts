@@ -1,4 +1,4 @@
-import { Weeks, isNumberArray, isWeekRange } from "./NUSMod_ModuleTypes";
+import { isNumberArray, isWeekRange } from "./NUSMod_ModuleTypes";
 
 const dayValues: Map<string, number> = new Map([
   ['Monday', 0],
