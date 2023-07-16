@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { FC, useEffect } from "react";
 
-let ringtone = new Audio("sounds/ringtone.mp3");
+
 interface TimeUpModalProps {
   isTimeUp: boolean;
   setIsTimeUp: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,6 +27,7 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
   isIntervalComplete,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  let ringtone = new Audio("sounds/ringtone.mp3");
 
   useEffect(() => {
     if (isTimeUp) {
