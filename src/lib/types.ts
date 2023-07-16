@@ -9,6 +9,7 @@ export interface InputFormFieldProps {
   placeholder?: string;
   borderColor?: string;
   size?: string;
+  value?: number | string;
 }
 
 export interface UserData {
@@ -36,6 +37,8 @@ export interface eventInformation {
   event_description: string;
   start_time: Date;
   end_time: Date;
+  sem_data?: string; //sem data should be in the format of "AY {year}/{year} {semester string}". 
+  //see lib/NUSMods/AcademicCalendar.ts for details
 }
 
 export interface TasksInformation {
@@ -45,7 +48,7 @@ export interface TasksInformation {
   title: string;
   description: string;
   is_complete: boolean;
-  deadline: string;
+  deadline: Date;
 }
 
 export interface TimerDataType {
@@ -66,9 +69,30 @@ export interface LapDataType {
 export interface AnnouncementData {
   id?: number;
   user_id?: string;
+  canvas_id?: number;
   course_name: string;
   title: string;
   description: string;
-  is_read: boolean
-  announced_at: Date
+  is_read: boolean;
+  announced_at: Date;
+}
+
+export interface ProfileType {
+  id?: number;
+  created_at?: Date;
+  full_name?: string;
+  avatar_url?: string;
+}
+
+export interface api_canvassyncResponse {
+  announcements: AnnouncementData[];
+  assignments: TasksInformation[];
+  error: string | null
+}
+
+export interface canvasSyncQuery {
+  canvasToken: String;
+  includeCompletedAssignments?: Boolean;
+  includeConcludedCourses?: Boolean;
+  startDateInfo?: String;
 }

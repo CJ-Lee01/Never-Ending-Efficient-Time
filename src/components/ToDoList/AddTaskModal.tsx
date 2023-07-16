@@ -1,5 +1,4 @@
 import { addTask } from "@/lib/CRUD_Tasks";
-import { supabaseUser } from "@/lib/initSupabase";
 import { TasksInformation } from "@/lib/types";
 import {
   useDisclosure,
@@ -29,7 +28,7 @@ const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
     canvas_id: -1,
     title: "No title",
     description: "No Description",
-    deadline: "",
+    deadline: new Date(),
     is_complete: false,
   })
 
@@ -58,7 +57,7 @@ const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
     updateTaskInfo((prevTask) => {
       return {
         ...prevTask,
-        deadline: event.target.value
+        deadline: new Date(event.target.value)
       }
     });
   }

@@ -31,7 +31,7 @@ import { calculateTotalSeconds } from "@/lib/timerFunctions";
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 interface AddTimerModalProps {
-  pageUpdater: () => void
+  pageUpdater: () => void;
 }
 
 const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
@@ -61,7 +61,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
     };
     const { data, error } = await addTimer(newTimer);
     error ? alert(error.message) : "";
-    pageUpdater()
+    pageUpdater();
     onClose();
   };
 
@@ -90,6 +90,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
         _hover={{
           bg: "purple.300",
         }}
+        data-testid="addTimerButton"
       >
         Add New Timer
       </Button>
@@ -116,6 +117,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
                       borderColor="gray.300"
                       isRequired={true}
                       onChange={(event) => setTimerTitle(event.target.value)}
+                      data-testid="addTimerTitle"
                     />
                   </FormControl>
                   <FormControl>
@@ -136,6 +138,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
                         inputMode="numeric"
                         isRequired={true}
                         onChange={handleIntervalChange}
+                        data-testid="addTimerIntervals"
                       >
                         <NumberInputField />
                         <NumberInputStepper>
@@ -176,6 +179,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
                 _hover={{ bg: "blue.600" }}
                 mr={3}
                 type="submit"
+                data-testid="addTimerSave"
               >
                 Save
               </Button>

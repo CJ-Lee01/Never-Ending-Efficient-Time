@@ -38,6 +38,7 @@ const Clock: FC<ClockProps> = ({
         fontSize={{ base: "4xl", md: "5xl" }}
         fontWeight="bold"
         textAlign="left"
+        data-testid="timerTitle"
       >
         {timerData.title}
       </chakra.h1>
@@ -50,7 +51,12 @@ const Clock: FC<ClockProps> = ({
         >
           {counterIntervals}/{timerData.intervals}
         </Flex>
-        <chakra.h3 fontSize="3xl" textAlign="center" pl={6}>
+        <chakra.h3
+          fontSize="3xl"
+          textAlign="center"
+          pl={6}
+          data-testid="intervalTitle"
+        >
           {intervalTitle}
         </chakra.h3>
       </Stack>
@@ -66,19 +72,19 @@ const Clock: FC<ClockProps> = ({
           gap={1}
           padding={6}
         >
-          <Text align={"center"} variant={"timeText"}>
+          <Text align={"center"} variant={"timeText"} data-testid="hourText">
             {hr < 10 ? "0" + hr : hr}
           </Text>
           <Text align={"center"} variant={"timeText"}>
             :
           </Text>
-          <Text align={"center"} variant={"timeText"}>
+          <Text align={"center"} variant={"timeText"} data-testid="minuteText">
             {min < 10 ? "0" + min : min}
           </Text>
           <Text align={"center"} variant={"timeText"}>
             :
           </Text>
-          <Text align={"center"} variant={"timeText"}>
+          <Text align={"center"} variant={"timeText"} data-testid="secondText">
             {sec < 10 ? "0" + sec : sec}
           </Text>
         </Grid>

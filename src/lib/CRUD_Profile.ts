@@ -20,3 +20,100 @@ export async function getProfile(
 
   setState({ data, error });
 }
+
+export async function updateSettings(
+  newName: string,
+  avatarFile: File | null,
+  pageUpdater: () => void
+) {
+  if (newName != "") {
+    const nameError = await updateName(newName);
+  }
+  if (avatarFile) {
+    const avatarError = await updateAvatar(avatarFile);
+  }
+  pageUpdater();
+}
+
+export async function updateAvatar(avatarFile: File) {
+  const supabase = supabaseUser();
+  const user_id = (await supabase.auth.getSession()).data.session?.user.id;
+  const newPath = `avatars/${user_id}/${Date.now()}_avatar.png`;
+  const oldFilePath = await getOldFilePath();
+  // console.log("Old File path: " + oldFilePath);
+
+  const { data, error } = await supabase.storage
+    .from("avatars")
+    .upload(`${newPath}`, avatarFile, {
+      upsert: false,
+    });
+
+  if (error) {
+    console.error("Error uploading avatar:", error.message);
+    return error;
+  } else {
+    const { data } = supabase.storage
+      .from("avatars")
+      .getPublicUrl(`${newPath}`);
+
+    const avatarUrl = data.publicUrl;
+
+    const { error } = await supabase
+      .from("profiles")
+      .update({ avatar_url: avatarUrl })
+      .eq("id", user_id);
+    if (error) {
+      console.error("Error updating Avatar:", error.message);
+      return error;
+    } else {
+      if (oldFilePath != "") {
+        const { data, error } = await supabase.storage
+          .from("avatars")
+          .remove([oldFilePath]);
+
+        // console.log("Old File Removed: " + oldFilePath);
+
+        if (error) {
+          console.error("Error removing Avatar:", error.message);
+          return error;
+        }
+      }
+    }
+  }
+  return error;
+}
+
+export async function updateName(username: string) {
+  const supabase = supabaseUser();
+  const user_id = (await supabase.auth.getSession()).data.session?.user.id;
+  const { error } = await supabase
+    .from("profiles")
+    .update({ full_name: username })
+    .eq("id", user_id);
+
+  if (error) {
+    console.error("Error updating Name:", error.message);
+  }
+  return error;
+}
+
+export async function getOldFilePath() {
+  const supabase = supabaseUser();
+  const user_id = (await supabase.auth.getSession()).data.session?.user.id;
+  const storageUrl = "https://ftildovxenjyztgzfvla.supabase.co/storage/v1";
+  const { data, error } = await supabase
+    .from("profiles")
+    .select()
+    .eq("id", user_id)
+    .single();
+
+  if (data?.avatar_url == null) {
+    return "";
+  } else {
+    const filePath = data.avatar_url.replaceAll(
+      `${storageUrl}/object/public/avatars/`,
+      ""
+    );
+    return filePath;
+  }
+}

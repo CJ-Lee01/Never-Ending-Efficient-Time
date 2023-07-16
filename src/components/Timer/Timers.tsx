@@ -9,7 +9,7 @@ import {
   Center,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Dispatch, FC, Fragment, SetStateAction, useContext } from "react";
+import { FC, Fragment, useContext } from "react";
 import AddTimerModal from "./AddTimerModal";
 import DeleteTimerModal from "./DeleteTimerModal";
 import EditTimerModal from "./EditTimerModal";
@@ -20,14 +20,14 @@ interface TimersProps {
   TimerList: TimerDataType[];
   handleTimerStart: (timer: TimerDataType) => void;
   handleContinueInterval: () => void;
-  pageUpdater: () => void
+  pageUpdater: () => void;
 }
 
 const Timers: FC<TimersProps> = ({
   TimerList,
   handleTimerStart,
   handleContinueInterval,
-  pageUpdater
+  pageUpdater,
 }) => {
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
@@ -43,6 +43,7 @@ const Timers: FC<TimersProps> = ({
           isIntervalComplete || isTimerStart || isPaused ? true : false
         }
         _focus={{ bg: useColorModeValue("orange.300", "orange.400") }}
+        data-testid="nextIntervalButton"
       >
         Next Interval
       </Button>
@@ -63,6 +64,7 @@ const Timers: FC<TimersProps> = ({
               p={{ base: 2, sm: 4 }}
               gap={3}
               _hover={{ bg: bgColorScheme }}
+              data-testid="timerItem"
             >
               <Stack>
                 <chakra.h3 fontWeight="bold" fontSize="lg">
@@ -87,11 +89,12 @@ const Timers: FC<TimersProps> = ({
                   isDisabled={
                     !isIntervalComplete || isStopwatchStart ? true : false
                   }
+                  data-testid="timerItemStartButton"
                 >
                   Start
                 </Button>
                 <EditTimerModal timer={timer} />
-                <DeleteTimerModal timer={timer} />
+                <DeleteTimerModal timer={timer} pageUpdater={pageUpdater} />
               </Stack>
             </Grid>
             {TimerList.length - 1 !== index && <Divider m={0} />}
@@ -100,7 +103,7 @@ const Timers: FC<TimersProps> = ({
       </VStack>
       <Spacer />
       <Center>
-        <AddTimerModal pageUpdater = {pageUpdater}/>
+        <AddTimerModal pageUpdater={pageUpdater} />
       </Center>
     </Stack>
   );

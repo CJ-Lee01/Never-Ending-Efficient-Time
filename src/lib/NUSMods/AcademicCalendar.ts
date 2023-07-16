@@ -1,5 +1,3 @@
-import { stringify } from "querystring";
-
 type startDate = [number, number, number];
 
 type academicCalendarMapInfo = { "start": startDate }[]
@@ -74,6 +72,21 @@ const academicCalendar = new Map<string, academicCalendarMapInfo>([
     ]
   ]
 ])
+
+const semesterString = new Map<number, string>( //The default semData string.
+  [
+    [1, "sem 1"],
+    [2, "sem 2"],
+    [3, "st 1"],
+    [4, "st 2"]
+  ]
+)
+
+export function semStringBuilder(acadYear: academicYearInfo, semNum: number) {
+  return semesterString.get(semNum)
+    ? `AY ${acadYear.year1}/${acadYear.year2} ${semesterString.get(semNum)}`
+    : ""
+}
 
 export const getacademicYearList: () => string[] = () => {
   const arr: string[] = [];
