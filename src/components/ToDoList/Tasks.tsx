@@ -95,7 +95,7 @@ const Tasks: FC<TasksProps> = ({}) => {
                   {item.title}
                 </chakra.h3>
                 <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                  Deadline: {formatDateString(item.deadline.toLocaleString())}
+                  Deadline: {item.deadline.toLocaleString()}
                 </chakra.p>
               </Stack>
               <Stack
