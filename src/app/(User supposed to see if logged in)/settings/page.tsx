@@ -6,7 +6,7 @@ export default function SettingsPage() {
   return (
     <>
       <Stack mb={48}>
-        <Heading textAlign={"left"} py={14} px={{ base: 10, lg: 48 }}>
+        <Heading textAlign={"left"} py={14} px={{ base: 10, xl: 48 }}>
           Settings
         </Heading>
         <SettingsForm></SettingsForm>

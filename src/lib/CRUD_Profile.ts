@@ -21,7 +21,21 @@ export async function getProfile(
   setState({ data, error });
 }
 
-export async function updateAvatar(avatarFile: File, pageUpdater: () => void) {
+export async function updateSettings(
+  newName: string,
+  avatarFile: File | null,
+  pageUpdater: () => void
+) {
+  if (newName != "") {
+    const nameError = await updateName(newName);
+  }
+  if (avatarFile) {
+    const avatarError = await updateAvatar(avatarFile);
+  }
+  pageUpdater();
+}
+
+export async function updateAvatar(avatarFile: File) {
   const supabase = supabaseUser();
   const user_id = (await supabase.auth.getSession()).data.session?.user.id;
   const newPath = `avatars/${user_id}/${Date.now()}_avatar.png`;
@@ -36,6 +50,7 @@ export async function updateAvatar(avatarFile: File, pageUpdater: () => void) {
 
   if (error) {
     console.error("Error uploading avatar:", error.message);
+    return error;
   } else {
     const { data } = supabase.storage
       .from("avatars")
@@ -49,6 +64,7 @@ export async function updateAvatar(avatarFile: File, pageUpdater: () => void) {
       .eq("id", user_id);
     if (error) {
       console.error("Error updating Avatar:", error.message);
+      return error;
     } else {
       if (oldFilePath != "") {
         const { data, error } = await supabase.storage
@@ -59,11 +75,12 @@ export async function updateAvatar(avatarFile: File, pageUpdater: () => void) {
 
         if (error) {
           console.error("Error removing Avatar:", error.message);
+          return error;
         }
       }
     }
-    pageUpdater();
   }
+  return error;
 }
 
 export async function updateName(username: string) {
@@ -77,6 +94,7 @@ export async function updateName(username: string) {
   if (error) {
     console.error("Error updating Name:", error.message);
   }
+  return error;
 }
 
 export async function getOldFilePath() {

@@ -1,4 +1,4 @@
-import { getProfile, updateAvatar, updateName } from "@/lib/CRUD_Profile";
+import { getProfile, updateSettings } from "@/lib/CRUD_Profile";
 import { ProfileType } from "@/lib/types";
 import {
   FormControl,
@@ -9,9 +9,24 @@ import {
   Divider,
   useColorModeValue,
   Button,
+  Text,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { PostgrestError } from "@supabase/supabase-js";
 import { ChangeEvent, FC, useEffect, useState } from "react";
+
+const isValidExtension = (fileName: string) => {
+  const arr = fileName.split(".");
+  const extension = arr[arr.length - 1];
+  const validExtensions = ["jpg", "jpeg", "png"];
+  for (let i = 0; i < validExtensions.length; i++) {
+    if (extension == validExtensions[i]) {
+      return true;
+    }
+  }
+  return false;
+};
 
 interface SettingsFormProps {}
 
@@ -26,11 +41,12 @@ const SettingsForm: FC<SettingsFormProps> = ({}) => {
     error: null,
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isInvalidFile, setIsInvalidFile] = useState<boolean>(false);
   const pageUpdater = () => window.location.reload();
 
   useEffect(() => {
     getProfile(setProfileData);
-    // console.log("HERE!");
     setIsLoading(false);
   }, []);
 
@@ -46,18 +62,19 @@ const SettingsForm: FC<SettingsFormProps> = ({}) => {
   };
 
   const handleSave = () => {
-    if (username != "" && username != ProfileData.data?.full_name) {
-      const NameError = updateName(username);
+    if (avatarFile && !isValidExtension(avatarFile.name)) {
+      setIsInvalidFile(true);
+      setIsSuccess(false);
+    } else {
+      const error = updateSettings(username, avatarFile, pageUpdater);
+      setIsLoading(true);
+      setIsInvalidFile(false);
+      setIsSuccess(true);
     }
-    if (avatarFile) {
-      const val = updateAvatar(avatarFile, pageUpdater);
-    }
-    // console.log("saved!");
-    setIsLoading(true);
   };
 
   return (
-    <Stack px={{ base: 10, lg: 48 }} direction={"column"} spacing={6}>
+    <Stack px={{ base: 10, xl: 48 }} direction={"column"} spacing={6}>
       <Divider borderColor={"grey.500"} />
       <FormControl>
         <Stack direction={"row"} align={"center"}>
@@ -86,26 +103,46 @@ const SettingsForm: FC<SettingsFormProps> = ({}) => {
               size={{ base: "lg", md: "2xl" }}
               src={ProfileData.data?.avatar_url}
             />
-            <Input
-              type="file"
-              accept="image/png, image/jpeg"
-              bg={useColorModeValue("#EDF2F7", "#1A202C")}
-              onChange={handleAvatarUpload}
-            />
+            <Stack direction={"column"}>
+              <Input
+                type="file"
+                accept="image/png, image/jpeg"
+                bg={useColorModeValue("#EDF2F7", "#1A202C")}
+                onChange={handleAvatarUpload}
+              />
+              <Text as="sub">Only jpeg or png files are allowed</Text>
+            </Stack>
           </Stack>
         </Stack>
       </FormControl>
       <Divider borderColor={"grey.500"} />
-      <Stack direction={"row"} justify={"flex-end"} py={10}>
-        <Button
-          bg={"blue.400"}
-          _hover={{ bg: "blue.600" }}
-          width="200px"
-          onClick={handleSave}
-          isLoading={isLoading}
-        >
-          Save Changes
-        </Button>
+      <Stack direction={"row"} justify={"right"} py={10}>
+        <Stack direction={"column"}>
+          <Button
+            bg={"blue.400"}
+            _hover={{ bg: "blue.600" }}
+            width="200px"
+            onClick={handleSave}
+            isLoading={isLoading}
+            isDisabled={
+              (username == "" || username == ProfileData.data?.full_name) &&
+              avatarFile == null
+            }
+          >
+            Save Changes
+          </Button>
+          {isSuccess && !isInvalidFile ? (
+            <Alert status="success">
+              <AlertIcon /> {"Updating changes..."}
+            </Alert>
+          ) : (
+            isInvalidFile && (
+              <Alert status="error">
+                <AlertIcon /> {"File is invalid!"}
+              </Alert>
+            )
+          )}
+        </Stack>
       </Stack>
     </Stack>
   );
