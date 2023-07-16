@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { supabaseUser } from "./initSupabase";
 import { AnnouncementData } from "./types";
 import { PostgrestError } from "@supabase/supabase-js";
+import { dA } from "@fullcalendar/core/internal-common";
 
 export async function addBulkAnnoucement(announcementList: AnnouncementData[]) {
   const supabase = supabaseUser();
@@ -40,7 +41,18 @@ export async function getAnnouncements(setState: Dispatch<SetStateAction<
   const { data, error } = await supabase
     .from('announcement')
     .select()
-
-  setState({ data, error })
+  const newData = (data?.map(x => {
+    return {
+      ...x,
+      announced_at: new Date(x.announced_at)
+    }
+  }) as AnnouncementData[]).sort(
+    (x, y) => x.announced_at > y.announced_at
+      ? 1
+      : x.announced_at == y.announced_at
+        ? 0
+        : -1
+  )
+  setState({ data: newData, error: error })
 
 }
