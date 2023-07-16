@@ -16,10 +16,10 @@ import { TasksInformation } from "@/lib/types";
 import defaultTask from "./DefaultTask";
 import { editTask } from "@/lib/CRUD_Tasks";
 
-interface EditTaskModalProps {}
+interface EditTaskModalProps { }
 
-const EditTaskModal: FC<EditTaskModalProps> = ({}) => {
-  const {task, pageUpdater} = useContext(TaskInfoContext)
+const EditTaskModal: FC<EditTaskModalProps> = ({ }) => {
+  const { task, pageUpdater } = useContext(TaskInfoContext)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [taskInfo, setTaskInfo] = useState(task)
   const [saveSuccess, setSaveSuccess] = useState(false); //for future use.
@@ -54,19 +54,19 @@ const EditTaskModal: FC<EditTaskModalProps> = ({}) => {
           <ModalCloseButton />
           <TaskFormComponemt setFormInfo={setTaskInfo} taskToChange={task} />
           <form onSubmit={submitTasksHandler}>
-          <ModalFooter>
-            <Button
-              variant="solid"
-              bg="#0D74FF"
-              color="white"
-              _hover={{ bg: "blue.600" }}
-              mr={3}
-              type="submit"
-            >
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
+            <ModalFooter>
+              <Button
+                variant="solid"
+                bg="#0D74FF"
+                color="white"
+                _hover={{ bg: "blue.600" }}
+                mr={3}
+                type="submit"
+              >
+                Save
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+            </ModalFooter>
           </form>
         </ModalContent>
       </Modal>

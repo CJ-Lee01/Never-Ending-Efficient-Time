@@ -85,7 +85,13 @@ export async function getTasks(setState: Dispatch<SetStateAction<
       ...task,
       deadline: convertStringToDateLocal(task.deadline)
     }
-  })
+  }).sort(
+    (x, y) => x.deadline > y.deadline
+      ? 1
+      : x.deadline == y.deadline
+        ? 0
+        : -1
+  )
   setState({ data: dataArr, error: error })
 
 }
