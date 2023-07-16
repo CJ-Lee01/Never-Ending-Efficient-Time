@@ -1,3 +1,4 @@
+import { toDateTimeLocalHTMLString } from "@/lib/GenericHelper";
 import { TasksInformation } from "@/lib/types";
 import {
   ModalBody,
@@ -51,7 +52,6 @@ const TaskFormComponemt = (
     });
   }
 
-
   return (
     <>
       <ModalBody pb={6}>
@@ -62,23 +62,28 @@ const TaskFormComponemt = (
               <Input
                 type="text"
                 size="md"
-                placeholder={taskToChange?.title ?? "Type Here"}
+                placeholder={taskToChange?.title || "Type Here"}
                 borderColor="gray.300"
                 onChange={updateTitle}
+                value={taskToChange?.title}
               />
             </FormControl>
             <FormControl>
               <FormLabel>Deadline</FormLabel>
               <InputGroup borderColor="gray.300">
-                <Input type="datetime-local" size="md" onChange={updateDeadline} />
+                <Input type="datetime-local" 
+                size="md" 
+                onChange={updateDeadline}
+                value={taskToChange.deadline && toDateTimeLocalHTMLString(taskToChange.deadline)} />
               </InputGroup>
             </FormControl>
             <FormControl>
               <FormLabel>Description</FormLabel>
               <Textarea
                 borderColor="gray.300"
-                placeholder={taskToChange?.description ?? "Write your task description here"}
+                placeholder={taskToChange?.description || "Write your task description here"}
                 onChange={updateDescription}
+                value={taskToChange.description}
               />
             </FormControl>
           </VStack>

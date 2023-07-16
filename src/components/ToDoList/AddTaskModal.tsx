@@ -1,5 +1,4 @@
 import { addTask } from "@/lib/CRUD_Tasks";
-import { supabaseUser } from "@/lib/initSupabase";
 import { TasksInformation } from "@/lib/types";
 import {
   useDisclosure,

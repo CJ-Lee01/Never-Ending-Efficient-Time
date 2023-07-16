@@ -21,6 +21,7 @@ import {
 import { ChangeEvent, ChangeEventHandler, FC, FormEvent, useContext, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { editEvent } from "@/lib/CRUD_Calendar";
+import { toDateTimeLocalHTMLString } from "@/lib/GenericHelper";
 
 const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -115,7 +116,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
                         type="datetime-local"
                         size="md"
                         onChange={startChangeHandler}
-                        value={eventInfo.start_time.toLocaleString()}
+                        value={toDateTimeLocalHTMLString(eventInfo.start_time)}
                       />
                     </InputGroup>
                   </FormControl>
@@ -126,7 +127,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
                         type="datetime-local"
                         size="md"
                         onChange={endChangeHandler}
-                        value={eventInfo.end_time.toLocaleString()}
+                        value={toDateTimeLocalHTMLString(eventInfo.end_time)}
                       />
                     </InputGroup>
                   </FormControl>
