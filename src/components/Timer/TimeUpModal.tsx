@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { FC, useEffect } from "react";
 
-let ringtone = new Audio("sounds/ringtone.mp3");
 interface TimeUpModalProps {
   isTimeUp: boolean;
   setIsTimeUp: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,6 +26,8 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
   isIntervalComplete,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  //The Audio constructor is not supported by Node and therefore needs to be inside the function instead.
+  let ringtone = new Audio("sounds/ringtone.mp3");
 
   useEffect(() => {
     if (isTimeUp) {
