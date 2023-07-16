@@ -7,10 +7,11 @@ import {
   ModalCloseButton,
   ModalBody,
   Text,
+  Divider,
+  Stack,
 } from "@chakra-ui/react";
 import { FC, useEffect } from "react";
 
-let ringtone = new Audio("sounds/ringtone.mp3");
 interface TimeUpModalProps {
   isTimeUp: boolean;
   setIsTimeUp: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,7 +26,8 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
   isIntervalComplete,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
+  //The Audio constructor is not supported by Node and therefore needs to be inside the function instead.
+  let ringtone = new Audio("sounds/ringtone.mp3");
 
   useEffect(() => {
     if (isTimeUp) {
@@ -36,7 +38,7 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
     }
   }, [isTimeUp]);
 
-  //for Time's Up! being the modal header, usng the ' normally gives 
+  //for Time's Up! being the modal header, usng the ' normally gives
   //Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
   //And therefore to fix it, refer to
   //https://github.com/mateusfg7/portifolio/commit/a89379a5b3fcaea2dd035fd60a0dbbe9490050d7
@@ -50,15 +52,20 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Time&apos;s Up!</ModalHeader> 
+        <ModalHeader>Time&apos;s Up!</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6} fontSize={18}>
-          <Text>
-            {intervalTitle} Interval Done! <br />
-            {isIntervalComplete
-              ? " Interval Timer Complete!"
-              : " Press the Next Interval button to continue!"}
-          </Text>
+          <Stack direction={"column"} gap={2}>
+            <Text>
+              <Text as="b">{intervalTitle}</Text> Interval Done! <br />
+            </Text>
+            <Divider></Divider>
+            <Text>
+              {isIntervalComplete
+                ? " Interval Timer Complete!"
+                : " Press the Next Interval button to continue!"}
+            </Text>
+          </Stack>
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -39,6 +39,7 @@ const Laps: FC<LapsProps> = ({ LapsList }) => {
             p={{ base: 2, sm: 4 }}
             gap={3}
             _hover={{ bg: bgColorScheme }}
+            data-testid="lapItem"
           >
             <Stack>
               <chakra.h3 fontWeight="bold" fontSize="lg">
