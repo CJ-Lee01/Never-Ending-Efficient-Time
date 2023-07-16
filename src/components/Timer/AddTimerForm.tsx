@@ -32,6 +32,7 @@ const AddTimerForm: FC<AddTimerFormProps> = ({
             size="md"
             onChange={(event) => setIntervalTitle(event.target.value)}
             isRequired={true}
+            data-testid="addTimerIntervalTitle"
           />
         </InputGroup>
       </FormControl>
@@ -45,6 +46,7 @@ const AddTimerForm: FC<AddTimerFormProps> = ({
               min={0}
               onChange={(valueString) => setTimerHr(parseInt(valueString))}
               isRequired={true}
+              data-testid="addTimerIntervalHr"
             >
               <NumberInputField />
             </NumberInput>
@@ -58,6 +60,7 @@ const AddTimerForm: FC<AddTimerFormProps> = ({
               min={0}
               onChange={(valueString) => setTimerMin(parseInt(valueString))}
               isRequired={true}
+              data-testid="addTimerIntervalMin"
             >
               <NumberInputField />
             </NumberInput>
@@ -71,6 +74,7 @@ const AddTimerForm: FC<AddTimerFormProps> = ({
               min={0}
               onChange={(valueString) => setTimerSec(parseInt(valueString))}
               isRequired={true}
+              data-testid="addTimerIntervalSec"
             >
               <NumberInputField />
             </NumberInput>

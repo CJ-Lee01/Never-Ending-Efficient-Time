@@ -89,11 +89,12 @@ const Timers: FC<TimersProps> = ({
                   isDisabled={
                     !isIntervalComplete || isStopwatchStart ? true : false
                   }
+                  data-testid="timerItemStartButton"
                 >
                   Start
                 </Button>
                 <EditTimerModal timer={timer} />
-                <DeleteTimerModal timer={timer} />
+                <DeleteTimerModal timer={timer} pageUpdater={pageUpdater} />
               </Stack>
             </Grid>
             {TimerList.length - 1 !== index && <Divider m={0} />}

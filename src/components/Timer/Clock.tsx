@@ -38,6 +38,7 @@ const Clock: FC<ClockProps> = ({
         fontSize={{ base: "4xl", md: "5xl" }}
         fontWeight="bold"
         textAlign="left"
+        data-testid="timerTitle"
       >
         {timerData.title}
       </chakra.h1>

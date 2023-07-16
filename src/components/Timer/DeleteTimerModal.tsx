@@ -16,14 +16,19 @@ import { FiTrash2 } from "react-icons/fi";
 
 interface DeleteTimerModalProps {
   timer: TimerDataType;
+  pageUpdater: () => void;
 }
 
-const DeleteTimerModal: FC<DeleteTimerModalProps> = ({ timer }) => {
+const DeleteTimerModal: FC<DeleteTimerModalProps> = ({
+  timer,
+  pageUpdater,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleDelete = async () => {
     const error = await removeTimer(timer);
     onClose();
+    pageUpdater();
   };
 
   return (

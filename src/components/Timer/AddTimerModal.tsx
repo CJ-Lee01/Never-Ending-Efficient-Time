@@ -90,7 +90,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
         _hover={{
           bg: "purple.300",
         }}
-        data-testid="addIntervalButton"
+        data-testid="addTimerButton"
       >
         Add New Timer
       </Button>
@@ -117,6 +117,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
                       borderColor="gray.300"
                       isRequired={true}
                       onChange={(event) => setTimerTitle(event.target.value)}
+                      data-testid="addTimerTitle"
                     />
                   </FormControl>
                   <FormControl>
@@ -137,6 +138,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
                         inputMode="numeric"
                         isRequired={true}
                         onChange={handleIntervalChange}
+                        data-testid="addTimerIntervals"
                       >
                         <NumberInputField />
                         <NumberInputStepper>
@@ -177,6 +179,7 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
                 _hover={{ bg: "blue.600" }}
                 mr={3}
                 type="submit"
+                data-testid="addTimerSave"
               >
                 Save
               </Button>
