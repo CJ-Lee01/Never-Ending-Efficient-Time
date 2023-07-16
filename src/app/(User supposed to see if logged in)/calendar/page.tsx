@@ -15,6 +15,7 @@ import { PostgrestError } from "@supabase/supabase-js";
 import { createContext, useEffect, useState } from "react";
 import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 import AddEventButton from "@/components/Calendar/AddEventButton";
+import { SemClassesDeleteHandler } from "@/components/Calendar/SemClassesDeleteHandler";
 
 export default function CalendarPage() {
   const [eventList, setEventList] = useState<{
@@ -60,6 +61,7 @@ export default function CalendarPage() {
               mb={4}
             >
               <URLinputHandler />
+              <SemClassesDeleteHandler />
             </Stack>
             <Divider
               borderColor={useColorModeValue("orange.300", "green.300")}
