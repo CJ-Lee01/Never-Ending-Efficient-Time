@@ -1,9 +1,7 @@
 import { PostgrestError } from "@supabase/supabase-js";
 import { ProfileType } from "../types"
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
 /*
 getProfile: Everytime getProfile is called, the next profile is given. There are total of 4 profiles plus 1 error profile.
 updateName: If username == "", returns a PostgrestError. Otherwise, returns null.
