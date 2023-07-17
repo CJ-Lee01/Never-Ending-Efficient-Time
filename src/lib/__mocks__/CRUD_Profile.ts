@@ -104,7 +104,7 @@ profileFunctions.updateAvatar = async (avatarFile: File) => {
       code: "Test code"
     }
   }
-  if (avatarFile.type != "image/jpeg" && avatarFile.type == "image/png") {
+  if (avatarFile.type != "image/jpeg" && avatarFile.type != "image/png") {
     return {
       message: "Invalid file type",
       details: "Invalid file type w details",
@@ -115,9 +115,7 @@ profileFunctions.updateAvatar = async (avatarFile: File) => {
   return null
 }
 
-profileFunctions.updateSettings = jest.fn(
-  async (newName: string, avatarFile: File | null, pageUpdater: () => void) => { }
-)
+profileFunctions.updateSettings = async (newName: string, avatarFile: File | null, pageUpdater: () => void) => { }
 
 module.exports = profileFunctions
 
