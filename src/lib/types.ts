@@ -82,6 +82,7 @@ export interface ProfileType {
   created_at?: Date;
   full_name?: string;
   avatar_url?: string;
+  last_canvas_sync: Date;
 }
 
 export interface api_canvassyncResponse {
