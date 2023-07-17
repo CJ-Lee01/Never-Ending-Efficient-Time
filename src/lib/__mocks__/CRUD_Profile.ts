@@ -9,8 +9,6 @@ getOldFilePath: returns defaultAvatarURL.
 updateAvatar: if filename == "" or filetype is wrong, returns PostgrestError. Otherwise, returns null. Unable to mock StorageError at the moment.
 updateSettings: Does nothing.
 */
-const path = require('path');
-
 
 const defaultCreationDate = new Date("2023-01-01");
 const defaultCanvasSyncDate = new Date("2023-02-02");

@@ -31,4 +31,3 @@ const tasks: TasksInformation[] = [
   },
 ]
 
-export { tasks };
