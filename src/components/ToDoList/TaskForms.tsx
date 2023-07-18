@@ -72,6 +72,7 @@ const TaskFormComponemt = (
               <FormLabel>Deadline</FormLabel>
               <InputGroup borderColor="gray.300">
                 <Input type="datetime-local" 
+                data-testid="DeadlineInput"
                 size="md" 
                 onChange={updateDeadline}
                 value={taskToChange.deadline && toDateTimeLocalHTMLString(taskToChange.deadline)} />
