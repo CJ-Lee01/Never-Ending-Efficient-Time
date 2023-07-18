@@ -9,7 +9,7 @@ import DefaultEventList from "../DefaultEventList";
 
 jest.mock("../../CRUD_Calendar")
 
-const TaskComponent: FC = () => {
+const EventComponent: FC = () => {
   const [event, setEvent] = useState<{
     data: eventInformation[] | null;
     error: PostgrestError | null
@@ -133,7 +133,7 @@ describe("Mock", () => {
     })
     describe("Getting and setting events", () => {
       it("Gets events and sets events successfully", async () => {
-        const { unmount, findAllByText } = render(<TaskComponent />)
+        const { unmount, findAllByText } = render(<EventComponent />)
         const htmlArray = await findAllByText(/Event:/)
         unmount()
         htmlArray.forEach((elem, index) => {
