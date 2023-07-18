@@ -24,7 +24,6 @@ const EditTaskModal: FC<EditTaskModalProps> = ({ }) => {
 
   const submitTasksHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(taskInfo)
     const { data, error } = await editTask(taskInfo)
     error ? alert(error.message) : setSaveSuccess(true);
     pageUpdater();
