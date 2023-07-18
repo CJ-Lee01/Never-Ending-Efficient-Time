@@ -2,23 +2,26 @@ import { AnnouncementData, TasksInformation } from "../types";
 
 const announcements: AnnouncementData[] = [
   {
+    canvas_id: 1,
     course_name: "CP2106",
     title: "Announcement for CP2106",
-    description: "Remember to rate our project :)",
+    description: "<div>Remember to rate our project :)</div>",
     is_read: false,
     announced_at: new Date()
   },
   {
+    canvas_id: 2,
     course_name: "CS1101S",
     title: "Announcement for CS1101S",
-    description: "I have nothing to announce",
+    description: "<div>I have nothing to announce</div>",
     is_read: false,
     announced_at: new Date()
   },
   {
+    canvas_id: 3,
     course_name: "CS2030S",
     title: "Announcement for CS2030S",
-    description: "Lab 4 due on Friday",
+    description: "<div>Lab 4 due on Friday</div>",
     is_read: false,
     announced_at: new Date()
   }
