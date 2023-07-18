@@ -58,18 +58,6 @@ describe("Mock", () => {
         error: null
       })
     })
-    it("Returns an error if input list has no userID", async () => {
-      const result = await addBulkAnnoucement(announcements)
-      expect(result).toEqual({
-        data: null,
-        error: {
-          message: "No user ID",
-          details: "No user ID associated with announcement",
-          hint: "IDK",
-          code: "Test code"
-        }
-      })
-    })
   })
   describe("Removes Announcements", () => {
     it("Gives an error if announcement has no userID", async () => {

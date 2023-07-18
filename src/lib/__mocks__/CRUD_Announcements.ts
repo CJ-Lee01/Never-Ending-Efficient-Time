@@ -11,24 +11,6 @@ removeAnnouncement: Returns an error if there is no user_id or user_id is empty 
 const announcementFunctions = jest.createMockFromModule<typeof import("../CRUD_Announcements")>("../CRUD_Announcements")
 
 announcementFunctions.addBulkAnnoucement = async (announcementList: AnnouncementData[]) => {
-  console.log("Mock being run")
-  if (announcementList.length == 0) {
-    return {
-      data: [],
-      error: null
-    }
-  }
-  if (!announcementList[0].user_id) {
-    return {
-      data: null,
-      error: {
-        message: "No user ID",
-        details: "No user ID associated with announcement",
-        hint: "IDK",
-        code: "Test code"
-      }
-    }
-  }
   return {
     data: [],
     error: null
