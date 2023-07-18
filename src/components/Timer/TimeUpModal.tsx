@@ -32,11 +32,13 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
   useEffect(() => {
     if (isTimeUp) {
       ringtone.play();
-      ringtone.loop = true;
-    } else {
-      ringtone.pause();
     }
   }, [isTimeUp]);
+
+  const handleClose = () => {
+    ringtone.pause();
+    setIsTimeUp(false);
+  };
 
   //for Time's Up! being the modal header, usng the ' normally gives
   //Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
@@ -47,7 +49,7 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
     <Modal
       closeOnOverlayClick={true}
       isOpen={isTimeUp}
-      onClose={() => setIsTimeUp(false)}
+      onClose={handleClose}
       isCentered
     >
       <ModalOverlay />
