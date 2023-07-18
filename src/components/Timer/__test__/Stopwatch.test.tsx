@@ -70,6 +70,36 @@ describe("Stopwatch functionality testing", () => {
     expect(pauseButton).toHaveTextContent("Resume");
   });
 
+  it("should render the clock properly after stopwatch is started", () => {
+    jest.useFakeTimers();
+    const pauseMock = jest.fn();
+    HTMLAudioElement.prototype.pause = pauseMock;
+    render(
+      <TimerDataContextProvider>
+        <ClockPage />
+      </TimerDataContextProvider>
+    );
+
+    const stopwatchStartButton = screen.getByTestId("stopwatchStartButton");
+    const pauseButton = screen.getByTestId("pauseButton");
+    const lapButton = screen.getByTestId("lapButton");
+    expect(lapButton).toBeDisabled();
+    expect(pauseButton).toBeDisabled();
+    expect(stopwatchStartButton).not.toBeDisabled();
+    fireEvent.click(stopwatchStartButton);
+    expect(stopwatchStartButton).toBeDisabled();
+    expect(lapButton).not.toBeDisabled();
+    act(() => {
+      jest.advanceTimersByTime(5000);
+    });
+    fireEvent.click(pauseButton);
+    expect(stopwatchStartButton).not.toBeDisabled();
+    expect(pauseButton).toHaveTextContent("Resume");
+    const secondText = screen.getByTestId("secondText");
+    expect(secondText).not.toHaveTextContent("00");
+    jest.useRealTimers();
+  });
+
   it("should start the stopwatch when the start button is pressed and reset when reset button is pressed", () => {
     const pauseMock = jest.fn();
     HTMLAudioElement.prototype.pause = pauseMock;
@@ -82,6 +112,7 @@ describe("Stopwatch functionality testing", () => {
     const stopwatchStartButton = screen.getByTestId("stopwatchStartButton");
     const resetButton = screen.getByTestId("resetButton");
     const timerTitle = screen.getByTestId("timerTitle");
+
     expect(resetButton).not.toBeDisabled();
     expect(stopwatchStartButton).not.toBeDisabled();
     expect(timerTitle).toHaveTextContent("No Timer Selected");
