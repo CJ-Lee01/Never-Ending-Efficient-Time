@@ -48,6 +48,7 @@ const Clock: FC<ClockProps> = ({
           borderWidth={3}
           borderRadius={10}
           padding={2}
+          data-testid="timerIntervals"
         >
           {counterIntervals}/{timerData.intervals}
         </Flex>

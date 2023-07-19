@@ -33,7 +33,7 @@ function getTasksSummary(tasks: TasksInformation[] | null): number[] {
 }
 
 // Calculates the value for the CircularProgress
-function calculateTaskPercentage(taskSummaryArray: number[]): number {
+export function calculateTaskPercentage(taskSummaryArray: number[]): number {
   const len = taskSummaryArray[0];
   const completedCounter = taskSummaryArray[1];
 
@@ -81,17 +81,33 @@ const ToDoSummary = () => {
           thickness={12}
         />
         <Stack direction={"column"} pl={{ base: 5, md: 10 }}>
-          <Text fontSize={{ base: "lg", sm: "xl" }} fontWeight={"bold"}>
+          <Text
+            fontSize={{ base: "lg", sm: "xl" }}
+            fontWeight={"bold"}
+            data-testid="totalTasksText"
+          >
             You have {taskSummaryArray[0]} tasks :
           </Text>
           <Text fontSize={{ base: "md", sm: "lg" }}>
-            <Text as="span" color={"green.300"} fontSize={"2xl"} pr={2}>
+            <Text
+              as="span"
+              color={"green.300"}
+              fontSize={"2xl"}
+              pr={2}
+              data-testid="completedTasksText"
+            >
               {taskSummaryArray[1]}
             </Text>
             Tasks Completed
           </Text>
           <Text fontSize={{ base: "md", sm: "lg" }}>
-            <Text as="span" color={"red.400"} fontSize={"2xl"} pr={2}>
+            <Text
+              as="span"
+              color={"red.400"}
+              fontSize={"2xl"}
+              pr={2}
+              data-testid="incompleteTasksText"
+            >
               {taskSummaryArray[2]}
             </Text>
             Tasks Incomplete
