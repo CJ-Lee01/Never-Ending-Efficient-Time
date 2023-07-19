@@ -33,6 +33,7 @@ const EditTaskModal: FC<EditTaskModalProps> = ({ }) => {
   return (
     <>
       <FiEdit
+        data-testid="EditTaskIcon"
         cursor="pointer"
         className="text-blue-500"
         size={20}
@@ -49,8 +50,8 @@ const EditTaskModal: FC<EditTaskModalProps> = ({ }) => {
         <ModalContent>
           <ModalHeader>Edit Task</ModalHeader>
           <ModalCloseButton />
-          <TaskFormComponemt setFormInfo={setTaskInfo} taskToChange={task} />
-          <form onSubmit={submitTasksHandler}>
+          <form onSubmit={submitTasksHandler} data-testid="EditTaskForm">
+            <TaskFormComponemt setFormInfo={setTaskInfo} taskToChange={task} />
             <ModalFooter>
               <Button
                 variant="solid"
