@@ -1,5 +1,5 @@
 import { PostgrestError } from "@supabase/supabase-js";
-import { ProfileType } from "../types"
+import { ProfileType } from "../types";
 import { Dispatch, SetStateAction } from "react";
 
 /*
@@ -13,7 +13,8 @@ updateSettings: Does nothing.
 const defaultCreationDate = new Date("2023-01-01");
 const defaultCanvasSyncDate = new Date("2023-02-02");
 const noCanvasSyncDate = new Date(0);
-const defaultAvatarURL = "https://ftildovxenjyztgzfvla.supabase.co/storage/v1/object/public/avatars/avatars/30f651bb-b647-455a-84b9-42923c2d8064/1689557673915_avatar.png"
+const defaultAvatarURL =
+  "https://ftildovxenjyztgzfvla.supabase.co/storage/v1/object/public/avatars/avatars/30f651bb-b647-455a-84b9-42923c2d8064/1689557673915_avatar.png";
 
 const testUsers: ProfileType[] = [
   //names were randomly generated online
@@ -44,16 +45,23 @@ const testUsers: ProfileType[] = [
     full_name: "James Kemp",
     avatar_url: defaultAvatarURL,
     last_canvas_sync: defaultCanvasSyncDate,
-  }
+  },
 ];
 
-const profileFunctions = jest.createMockFromModule<typeof import("../CRUD_Profile")>("../CRUD_Profile")
+const profileFunctions =
+  jest.createMockFromModule<typeof import("../CRUD_Profile")>(
+    "../CRUD_Profile"
+  );
 const wrapperProfileGetter = () => {
-  let ptr = 0
-  return async (setter: Dispatch<SetStateAction<{
-    data: any;
-    error: PostgrestError | null
-  }>>) => {
+  let ptr = 0;
+  return async (
+    setter: Dispatch<
+      SetStateAction<{
+        data: any;
+        error: PostgrestError | null;
+      }>
+    >
+  ) => {
     if (ptr == 4) {
       setter({
         data: null,
@@ -61,21 +69,21 @@ const wrapperProfileGetter = () => {
           message: "Test error message",
           details: "Test error details",
           hint: "Test hint",
-          code: "Test code"
-        }
-      })
-      ptr = 0
-    }
-    else {
+          code: "Test code",
+        },
+      });
+      ptr = 0;
+    } else {
       setter({
         data: testUsers[ptr],
-        error: null
-      })
-      ptr++
+        error: null,
+      });
+      ptr++;
     }
-  }
-}
-profileFunctions.getProfile = wrapperProfileGetter()
+  };
+};
+
+profileFunctions.getProfile = wrapperProfileGetter();
 
 profileFunctions.updateName = async (username: string) => {
   if (!username) {
@@ -83,14 +91,13 @@ profileFunctions.updateName = async (username: string) => {
       message: "Invalid username",
       details: "Invalid username w details",
       hint: "Give a username",
-      code: "Test code"
-    }
+      code: "Test code",
+    };
   }
-  return null
-}
+  return null;
+};
 
-
-profileFunctions.getOldFilePath = async () => defaultAvatarURL//jest.fn(async () => defaultAvatarURL)
+profileFunctions.getOldFilePath = async () => defaultAvatarURL; //jest.fn(async () => defaultAvatarURL)
 
 profileFunctions.updateAvatar = async (avatarFile: File) => {
   //I cannot replicate the StorageError so ill just exclude it.
@@ -99,23 +106,24 @@ profileFunctions.updateAvatar = async (avatarFile: File) => {
       message: "Invalid filename",
       details: "Invalid filename w details",
       hint: "Give a filename",
-      code: "Test code"
-    }
+      code: "Test code",
+    };
   }
   if (avatarFile.type != "image/jpeg" && avatarFile.type != "image/png") {
     return {
       message: "Invalid file type",
       details: "Invalid file type w details",
       hint: "Give a file type",
-      code: "Test code"
-    }
+      code: "Test code",
+    };
   }
-  return null
-}
+  return null;
+};
 
-profileFunctions.updateSettings = async (newName: string, avatarFile: File | null, pageUpdater: () => void) => { }
+profileFunctions.updateSettings = async (
+  newName: string,
+  avatarFile: File | null,
+  pageUpdater: () => void
+) => {};
 
-module.exports = profileFunctions
-
-
-
+module.exports = profileFunctions;

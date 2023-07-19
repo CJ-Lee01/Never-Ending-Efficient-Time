@@ -16,7 +16,7 @@ import {
 import { PostgrestError } from "@supabase/supabase-js";
 import { ChangeEvent, FC, useEffect, useState } from "react";
 
-const isValidExtension = (fileName: string) => {
+export const isValidExtension = (fileName: string) => {
   const arr = fileName.split(".");
   const extension = arr[arr.length - 1];
   const validExtensions = ["jpg", "jpeg", "png"];
@@ -132,12 +132,12 @@ const SettingsForm: FC<SettingsFormProps> = ({}) => {
             Save Changes
           </Button>
           {isSuccess && !isInvalidFile ? (
-            <Alert status="success">
+            <Alert status="success" data-testid="settingsSuccessAlert">
               <AlertIcon /> {"Updating changes..."}
             </Alert>
           ) : (
             isInvalidFile && (
-              <Alert status="error">
+              <Alert status="error" data-testid="settingsErrorAlert">
                 <AlertIcon /> {"File is invalid!"}
               </Alert>
             )
