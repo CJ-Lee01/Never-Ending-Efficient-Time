@@ -62,6 +62,7 @@ const TaskFormComponemt = (
               <Input
                 type="text"
                 size="md"
+                name="Title"
                 placeholder={taskToChange?.title || "Type Here"}
                 borderColor="gray.300"
                 onChange={updateTitle}
@@ -71,15 +72,17 @@ const TaskFormComponemt = (
             <FormControl>
               <FormLabel>Deadline</FormLabel>
               <InputGroup borderColor="gray.300">
-                <Input type="datetime-local" 
-                size="md" 
-                onChange={updateDeadline}
-                value={taskToChange.deadline && toDateTimeLocalHTMLString(taskToChange.deadline)} />
+                <Input type="datetime-local"
+                  name="Deadline"
+                  size="md"
+                  onChange={updateDeadline}
+                  value={taskToChange.deadline && toDateTimeLocalHTMLString(taskToChange.deadline)} />
               </InputGroup>
             </FormControl>
             <FormControl>
               <FormLabel>Description</FormLabel>
               <Textarea
+                name="Description"
                 borderColor="gray.300"
                 placeholder={taskToChange?.description || "Write your task description here"}
                 onChange={updateDescription}
