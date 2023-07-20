@@ -6,23 +6,32 @@ import {
   ModalContent,
   ModalHeader,
   ModalCloseButton,
-  ModalBody,
   ModalFooter,
-  Box,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  Textarea,
-  VStack,
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { FC, FormEvent, SetStateAction, useContext, useState } from "react";
 import { FiEdit } from "react-icons/fi";
+import { TaskInfoContext } from "./Tasks";
+import TaskFormComponemt from "./TaskForms";
+import { TasksInformation } from "@/lib/types";
+import defaultTask from "./DefaultTask";
+import { editTask } from "@/lib/CRUD_Tasks";
 
 interface EditTaskModalProps {}
 
 const EditTaskModal: FC<EditTaskModalProps> = ({}) => {
+  const {task, pageUpdater} = useContext(TaskInfoContext)
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [taskInfo, setTaskInfo] = useState(task)
+  const [saveSuccess, setSaveSuccess] = useState(false); //for future use.
+
+  const submitTasksHandler = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(taskInfo)
+    const { data, error } = await editTask(taskInfo)
+    error ? alert(error.message) : setSaveSuccess(true);
+    pageUpdater();
+    onClose();
+  }
 
   return (
     <>
@@ -43,35 +52,8 @@ const EditTaskModal: FC<EditTaskModalProps> = ({}) => {
         <ModalContent>
           <ModalHeader>Edit Task</ModalHeader>
           <ModalCloseButton />
-          <ModalBody pb={6}>
-            <Box m={4}>
-              <VStack spacing={5}>
-                <FormControl>
-                  <FormLabel>Task Title</FormLabel>
-                  <Input
-                    type="text"
-                    size="md"
-                    placeholder="Type Here"
-                    borderColor="#E0E1E7"
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Deadline</FormLabel>
-                  <InputGroup borderColor="#E0E1E7">
-                    <Input type="date" size="md" />
-                  </InputGroup>
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Description</FormLabel>
-                  <Textarea
-                    borderColor="gray.300"
-                    placeholder="Write your task description here"
-                  />
-                </FormControl>
-              </VStack>
-            </Box>
-          </ModalBody>
-
+          <TaskFormComponemt setFormInfo={setTaskInfo} taskToChange={task} />
+          <form onSubmit={submitTasksHandler}>
           <ModalFooter>
             <Button
               variant="solid"
@@ -79,11 +61,13 @@ const EditTaskModal: FC<EditTaskModalProps> = ({}) => {
               color="white"
               _hover={{ bg: "blue.600" }}
               mr={3}
+              type="submit"
             >
               Save
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
+          </form>
         </ModalContent>
       </Modal>
     </>
