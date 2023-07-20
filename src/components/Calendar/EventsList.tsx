@@ -38,37 +38,39 @@ const EventsList: FC<EventsListProps> = ({ }) => {
       >
         {events.map((event, index) => (
           <Fragment key={index}>
-            <Grid
-              templateRows={{ base: "auto auto", md: "auto" }}
-              w="100%"
-              templateColumns={{ base: "5fr 2fr", md: "5fr 2fr" }}
-              p={{ base: 2, sm: 4 }}
-              gap={3}
-              alignItems="center"
-              _hover={{ bg: bgColorScheme }}
-            >
-              <Stack>
-                <chakra.h3 fontWeight="bold" fontSize="lg">
-                  {event.event_name}
-                </chakra.h3>
-                <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                  Start Date/Time: {event.start_time.toLocaleString()}
-                </chakra.p>
-                <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
-                  End Date/Time: {event.end_time.toLocaleString()}
-                </chakra.p>
-              </Stack>
-              <Stack
-                spacing={{ base: 5, md: 4 }}
-                direction="row"
-                fontSize={{ base: "sm", sm: "md" }}
-                justifySelf="flex-end"
+            <div data-testid="eventCardComponent">
+              <Grid
+                templateRows={{ base: "auto auto", md: "auto" }}
+                w="100%"
+                templateColumns={{ base: "5fr 2fr", md: "5fr 2fr" }}
+                p={{ base: 2, sm: 4 }}
+                gap={3}
                 alignItems="center"
+                _hover={{ bg: bgColorScheme }}
               >
-                <EditEventModal eventInfo={event} />
-                <DeleteEventModal eventInfo={event} />
-              </Stack>
-            </Grid>
+                <Stack>
+                  <chakra.h3 fontWeight="bold" fontSize="lg">
+                    {event.event_name}
+                  </chakra.h3>
+                  <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
+                    Start Date/Time: {event.start_time.toLocaleString()}
+                  </chakra.p>
+                  <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>
+                    End Date/Time: {event.end_time.toLocaleString()}
+                  </chakra.p>
+                </Stack>
+                <Stack
+                  spacing={{ base: 5, md: 4 }}
+                  direction="row"
+                  fontSize={{ base: "sm", sm: "md" }}
+                  justifySelf="flex-end"
+                  alignItems="center"
+                >
+                  <EditEventModal eventInfo={event} />
+                  <DeleteEventModal eventInfo={event} />
+                </Stack>
+              </Grid>
+            </div>
             {events.length - 1 !== index && <Divider m={0} />}
           </Fragment>
         ))}

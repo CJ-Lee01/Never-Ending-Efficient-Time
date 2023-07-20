@@ -21,7 +21,7 @@ const TaskCardRenderer = TaskContextRenderer(TaskComponent)
 const displayDate = (task: TasksInformation) => task.deadline.valueOf() == (new Date("9999-12-12").valueOf())
     ? "No deadline"
     : task.deadline.toLocaleString();
-describe("Testing Task Components", () => {
+describe("Testing Task Components (Integration Test)", () => {
   describe.each(taskWithUserID)("Rendering the components", (task) => {
     it("Contains view, delete and edit components.", () => {
       const { unmount, getByTestId } = render(TaskCardRenderer(task))

@@ -78,6 +78,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
   return (
     <>
       <FiEdit
+        data-testid="EditEventIcon"
         cursor="pointer"
         className="text-blue-500"
         size={20}
@@ -91,7 +92,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
         isCentered
       >
         <ModalOverlay />
-        <form onSubmit={submitEditHandler}>
+        <form onSubmit={submitEditHandler} data-testid="EditEventForm">
           <ModalContent>
             <ModalHeader>Edit Event</ModalHeader>
             <ModalCloseButton />
@@ -101,22 +102,24 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
                   <FormControl>
                     <FormLabel>Event Title</FormLabel>
                     <Input
+                      name="title"
                       type="text"
                       size="md"
                       placeholder="Type Here"
                       borderColor="#E0E1E7"
                       onChange={titleChangeHandler}
-                      value={eventInfo.event_name}
+                      value={calendarEvent.event_name}
                     />
                   </FormControl>
                   <FormControl>
                     <FormLabel>Start Date/Time</FormLabel>
                     <InputGroup borderColor="#E0E1E7">
                       <Input
+                        name="Start-DateTime"
                         type="datetime-local"
                         size="md"
                         onChange={startChangeHandler}
-                        value={toDateTimeLocalHTMLString(eventInfo.start_time)}
+                        value={toDateTimeLocalHTMLString(calendarEvent.start_time)}
                       />
                     </InputGroup>
                   </FormControl>
@@ -124,20 +127,22 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
                     <FormLabel>End Date/Time</FormLabel>
                     <InputGroup borderColor="#E0E1E7">
                       <Input
+                        name="End-DateTime"
                         type="datetime-local"
                         size="md"
                         onChange={endChangeHandler}
-                        value={toDateTimeLocalHTMLString(eventInfo.end_time)}
+                        value={toDateTimeLocalHTMLString(calendarEvent.end_time)}
                       />
                     </InputGroup>
                   </FormControl>
                   <FormControl>
                     <FormLabel>Description</FormLabel>
                     <Textarea
+                      name="Description"
                       borderColor="gray.300"
                       placeholder="Write your task description here"
                       onChange={descriptionChangeHandler}
-                      value={eventInfo.event_description}
+                      value={calendarEvent.event_description}
                     />
                   </FormControl>
                 </VStack>

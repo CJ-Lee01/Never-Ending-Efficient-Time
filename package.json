@@ -7,7 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest "
+    "test": "jest --testPathIgnorePatterns=__mock/* --verbose",
+    "test-json": "jest --json --testPathIgnorePatterns=__mock/* --verbose",
+    "test-mock": "jest __mock/* --verbose",
+    "test-mock-json": "jest __mock/* --json --verbose",
+    "test-all": "jest --verbose"
+
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",

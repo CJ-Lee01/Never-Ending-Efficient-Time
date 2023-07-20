@@ -15,7 +15,7 @@ import {
 import { FC, useContext } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
-const DeleteEventModal = ({eventInfo}: {eventInfo: eventInformation}) => {
+const DeleteEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { events, pageUpdater } = useContext(EventListInfoContext);
 
@@ -28,6 +28,7 @@ const DeleteEventModal = ({eventInfo}: {eventInfo: eventInformation}) => {
   return (
     <>
       <FiTrash2
+        data-testid="DeleteEventIcon"
         cursor="pointer"
         className="text-red-500"
         size={20}
@@ -42,25 +43,27 @@ const DeleteEventModal = ({eventInfo}: {eventInfo: eventInformation}) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Delete Event</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            Are you sure you want to delete this event?
-          </ModalBody>
+          <div data-testid="DeleteEventConfirmation">
+            <ModalHeader>Delete Event</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              Are you sure you want to delete this event?
+            </ModalBody>
 
-          <ModalFooter>
-            <Button
-              variant="solid"
-              bg="#D11A2A"
-              color="white"
-              _hover={{ bg: "red.600" }}
-              mr={3}
-              onClick={deleteEventHandler}
-            >
-              Delete
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
+            <ModalFooter>
+              <Button
+                variant="solid"
+                bg="#D11A2A"
+                color="white"
+                _hover={{ bg: "red.600" }}
+                mr={3}
+                onClick={deleteEventHandler}
+              >
+                Delete
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+            </ModalFooter>
+          </div>
         </ModalContent>
       </Modal>
     </>

@@ -1,0 +1,19 @@
+on: [push, pull_request]
+
+jobs:
+  run-test:
+    name: Runs tests
+    runs-on: windows-latest
+    steps: 
+        - name: Setup Node.js environment
+          uses: actions/setup-node@v3.7.0
+        - uses: actions/checkout@v2
+        - name: Install Dependencies
+          run: npm install
+        - name: Test Mock API
+          run: npm run test-mock
+        - name: Test Components and Functions
+          run: npm run test
+        
+          
+    
