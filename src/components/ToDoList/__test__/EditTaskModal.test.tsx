@@ -6,6 +6,7 @@ import { toDateTimeLocalHTMLString } from '@/lib/GenericHelper';
 import TaskContextRenderer from './TaskContextRenderer';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom'
+import exp from 'constants';
 
 jest.mock("../../../lib/CRUD_Tasks")
 
@@ -34,6 +35,50 @@ describe("Edit Task Modal", () => {
         "Description": task.description
       })
       unmount()
+    })
+    describe("Allows form values to be edited.", () => {
+      it("Allows the title to be edited.", () => {
+        const { unmount, getByTestId, queryByTestId, getByDisplayValue } = render(modalContextRender(task))
+        const editButton = getByTestId("EditTaskIcon")
+        fireEvent.click(editButton, { button: 1 })
+        const htmlForm = queryByTestId("EditTaskForm")
+        const titleHTML = getByDisplayValue(task.title)
+        fireEvent.change(titleHTML, { target: { value: "Test Title" } })
+        expect(htmlForm).toHaveFormValues({
+          "Title": "Test Title",
+          "Deadline": toDateTimeLocalHTMLString(task.deadline),
+          "Description": task.description
+        })
+        unmount()
+      })
+      it("Allows the deadline to be edited.", () => {
+        const { unmount, getByTestId, queryByTestId, getByDisplayValue } = render(modalContextRender(task))
+        const editButton = getByTestId("EditTaskIcon")
+        fireEvent.click(editButton, { button: 1 })
+        const htmlForm = queryByTestId("EditTaskForm")
+        const titleHTML = getByDisplayValue(toDateTimeLocalHTMLString(task.deadline))
+        fireEvent.change(titleHTML, { target: { value: toDateTimeLocalHTMLString(new Date("2022-12-12")) } })
+        expect(htmlForm).toHaveFormValues({
+          "Title": task.title,
+          "Deadline": toDateTimeLocalHTMLString(new Date("2022-12-12")),
+          "Description": task.description
+        })
+        unmount()
+      })
+      it("Allows the description to be edited", () => {
+        const { unmount, getByTestId, queryByTestId, getByDisplayValue } = render(modalContextRender(task))
+        const editButton = getByTestId("EditTaskIcon")
+        fireEvent.click(editButton, { button: 1 })
+        const htmlForm = queryByTestId("EditTaskForm")
+        const titleHTML = getByDisplayValue(task.description)
+        fireEvent.change(titleHTML, { target: { value: "Test Description" } })
+        expect(htmlForm).toHaveFormValues({
+          "Title": task.title,
+          "Deadline": toDateTimeLocalHTMLString(task.deadline),
+          "Description": "Test Description"
+        })
+        unmount()
+      })
     })
     it("Closes after clicking on close modal button", async () => {
       const { unmount, getByTestId, queryByTestId, getAllByRole } = render(modalContextRender(task))
@@ -74,20 +119,5 @@ describe("Edit Task Modal", () => {
       unmount()
     })
   })
-  /* test.each(taskWithUserID)("Fields show the correct values", async (task) => {
-    const { findAllByRole, getByTestId } = render(modalContextRender(task))
-    const editButton = getByTestId("EditTaskIcon")
-    fireEvent.click(editButton, { button: 1 })
-    const htmlForm = getByTestId("EditTaskForm")
-    expect(htmlForm).toHaveFormValues({
-      "Title": task.title,
-      "Deadline": toDateTimeLocalHTMLString(task.deadline),
-      "Description": task.description
-    })
-    const [submitButton, cancelButton] = await findAllByRole("button")
-    fireEvent.click(submitButton, { button: 1 })
-    await waitFor(() => {
-      expect(htmlForm).not.toBeInTheDocument()
-    })
-  }) */
+
 })
