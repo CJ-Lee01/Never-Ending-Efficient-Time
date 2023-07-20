@@ -1,0 +1,16 @@
+on: [push, pull_request]
+
+jobs:
+  run-test:
+    name: Runs tests
+    runs-on: ubuntu-latest
+    steps: 
+        - name: Install Dependencies
+          run: npm install
+        - name: Test Mock API
+          run: npm run test-mock
+        - name: Test Components and Functions
+          run: npm run test
+        
+          
+    
