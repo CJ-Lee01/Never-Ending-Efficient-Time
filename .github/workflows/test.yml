@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     container: node:18.16.0
     steps: 
+        - name: Setup Node.js environment
+          uses: actions/setup-node@v3.7.0
         - name: Install Dependencies
           run: npm install
         - name: Test Mock API
