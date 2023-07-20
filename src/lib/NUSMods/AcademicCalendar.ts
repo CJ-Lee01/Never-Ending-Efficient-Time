@@ -1,5 +1,3 @@
-import { stringify } from "querystring";
-
 type startDate = [number, number, number];
 
 type academicCalendarMapInfo = { "start": startDate }[]
@@ -75,6 +73,21 @@ const academicCalendar = new Map<string, academicCalendarMapInfo>([
   ]
 ])
 
+const semesterString = new Map<number, string>( //The default semData string.
+  [
+    [1, "sem 1"],
+    [2, "sem 2"],
+    [3, "st 1"],
+    [4, "st 2"]
+  ]
+)
+
+export function semStringBuilder(acadYear: academicYearInfo, semNum: number) {
+  return semesterString.get(semNum)
+    ? `AY ${acadYear.year1}/${acadYear.year2} ${semesterString.get(semNum)}`
+    : ""
+}
+
 export const getacademicYearList: () => string[] = () => {
   const arr: string[] = [];
   const acadCalIterator = academicCalendar.keys();
@@ -85,13 +98,13 @@ export const getacademicYearList: () => string[] = () => {
   return arr;
 }
 
-const defaultStart = { start: [0, 0, 0] };
+const defaultStart = { start: [0, 1, 0] };
 
 export function getStartDate(acadYear: academicYearInfo, semester: number) {
   const yearInfo = academicCalendar.get(`${acadYear.year1}/${acadYear.year2}`);
   const dateStart = (yearInfo ? yearInfo[semester - 1] : defaultStart) ?? defaultStart;
   const dateArray = dateStart.start;
-  return new Date(dateArray[0], dateArray[1], dateArray[2]);
+  return new Date(dateArray[0], dateArray[1] - 1, dateArray[2]); //-1 due to month data for js Date starting from 0 instead of 1.
 }
 
 export function convertAcadYearStringToArray(acadYearString: string): { result: academicYearInfo | null, error: string } {

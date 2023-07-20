@@ -1,23 +1,35 @@
 "use client";
 
-import NotLoggedIn from "@/components/AuthUI/NotLoggedIn";
-import { AuthError, Session } from "@supabase/supabase-js";
-import { useState } from "react";
-import { supabaseUser } from "@/lib/initSupabase";
-import SignOutButton from "@/components/AuthUI/SignOutButton";
 import ToDoSummary from "@/components/Dashboard/ToDoSummary";
 import Annoucements from "@/components/Dashboard/Annoucements";
-import { Button, Flex, Stack } from "@chakra-ui/react";
+import { Stack, Heading } from "@chakra-ui/react";
+import { getProfile } from "@/lib/CRUD_Profile";
+import { ProfileType } from "@/lib/types";
+import { PostgrestError } from "@supabase/supabase-js";
+import { useState, useEffect } from "react";
 
-export default function dashboard() {
+export default function Dashboard() {
+  const [ProfileData, setProfileData] = useState<{
+    data: ProfileType | null;
+    error: PostgrestError | null;
+  }>({
+    data: null,
+    error: null,
+  });
 
+  useEffect(() => {
+    getProfile(setProfileData);
+  }, []);
 
   return (
-    <Flex>
-      <Stack direction={{ base: "column", md: "row" }}>
+    <Stack direction="column" minH={"100vh"}>
+      <Heading textAlign={"left"} p={14}>
+        Welcome, {ProfileData.data?.full_name}
+      </Heading>
+      <Stack direction={{ base: "column", lg: "row" }} mb={{ base: 10, lg: 0 }}>
         <ToDoSummary />
         <Annoucements />
       </Stack>
-    </Flex>
+    </Stack>
   );
 }

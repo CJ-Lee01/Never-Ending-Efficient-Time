@@ -21,6 +21,7 @@ import {
 import { ChangeEvent, ChangeEventHandler, FC, FormEvent, useContext, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { editEvent } from "@/lib/CRUD_Calendar";
+import { toDateTimeLocalHTMLString } from "@/lib/GenericHelper";
 
 const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -32,7 +33,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
     setEvent(x => {
       return {
         ...x,
-        eventName: event.target.value
+        event_name: event.target.value
       }
     })
   }
@@ -52,7 +53,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
     setEvent(x => {
       return {
         ...x,
-        start_time: event.target.value
+        start_time: new Date(event.target.value)
       }
     })
   }
@@ -62,7 +63,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
     setEvent(x => {
       return {
         ...x,
-        end_time: event.target.value
+        end_time: new Date(event.target.value)
       }
     })
   }
@@ -115,7 +116,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
                         type="datetime-local"
                         size="md"
                         onChange={startChangeHandler}
-                        value={eventInfo.start_time}
+                        value={toDateTimeLocalHTMLString(eventInfo.start_time)}
                       />
                     </InputGroup>
                   </FormControl>
@@ -126,7 +127,7 @@ const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
                         type="datetime-local"
                         size="md"
                         onChange={endChangeHandler}
-                        value={eventInfo.end_time}
+                        value={toDateTimeLocalHTMLString(eventInfo.end_time)}
                       />
                     </InputGroup>
                   </FormControl>

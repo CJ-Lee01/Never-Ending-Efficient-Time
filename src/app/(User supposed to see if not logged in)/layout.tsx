@@ -1,7 +1,5 @@
 "use client";
 
-import NotLoggedIn from "@/components/AuthUI/NotLoggedIn";
-import { AuthError, Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { supabaseUser } from "@/lib/initSupabase";
 import AlreadySignedIn from "@/components/AuthUI/AlreadySignIn";
@@ -26,7 +24,7 @@ export default function LayoutForNonUser({
       }
       setCompleteFetch(false)
     });
-  }, [isLoggedIn]);
+  }, [supabase.auth]);
 
   return haventFetch ? <>Fetching data....</>
     : isLoggedIn ? <AlreadySignedIn />

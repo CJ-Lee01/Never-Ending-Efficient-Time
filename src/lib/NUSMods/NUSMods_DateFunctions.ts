@@ -1,4 +1,4 @@
-import { Weeks, isNumberArray, isWeekRange } from "./NUSMod_ModuleTypes";
+import { isNumberArray, isWeekRange } from "./NUSMod_ModuleTypes";
 
 const dayValues: Map<string, number> = new Map([
   ['Monday', 0],
@@ -10,7 +10,7 @@ const dayValues: Map<string, number> = new Map([
   ['Sunday', 6],
 ])
 
-function addDate(date: Date, days: number): Date {
+export function addDate(date: Date, days: number): Date {
   let result = new Date(date);
   result.setDate(result.getDate() + days);
   return result;
@@ -20,14 +20,14 @@ function daysSinceStart(num: number, dayOfWeek: string): number {
   return num * 7 + (dayValues.get(dayOfWeek) ?? 0);
 }
 
-export function convertWeeksToDateArray(weeks: any, startDate: Date, semester: number, day: string): Date[] {
-  const offset = semester == 2 ? -1 : 0; //as sem 2 starts with week 1 but sem 1 starts with week 0.
+export function convertWeeksToDateArray(weeks: any, startDate: Date, day: string): Date[] {
+  const offset = -1; //the NUSMods academic year information starts with week 1 for both sem 1 and 2.
   //I hate doing this but i need to set weeks to any. Otherwise typescript will complain and idk how to fix it.
   //Type checking is done in the functions and function returns empty array if it fails the checks.
   const isWeekRangeBool = isWeekRange(weeks);
   const isNumberArrayBool = isNumberArray(weeks)
   if (dayValues.get(day) == undefined) {
-    alert(`invalid day ${day}`)
+    //alert(`invalid day ${day}`) usually we do not have to worry abt this since it is direct from NUSMods
     return [];
   }
   if (!isNumberArrayBool && !isWeekRangeBool) {
@@ -39,7 +39,7 @@ export function convertWeeksToDateArray(weeks: any, startDate: Date, semester: n
   const newStartDate = new Date(weeks.start);
   const newEndDate = new Date(weeks.end);
   if (weeks.weeks) {
-    return weeks.weeks.map((num: number) => addDate(startDate, daysSinceStart(num - 1, day)));
+    return weeks.weeks.map((num: number) => addDate(newStartDate, (num - 1) * 7));
   }
   const weekInterval = weeks.weekInterval ?? 1;
   const dateList = []

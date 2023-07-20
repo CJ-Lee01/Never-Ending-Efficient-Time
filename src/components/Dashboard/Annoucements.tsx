@@ -1,45 +1,36 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   Container,
   chakra,
   Flex,
-  Stack,
   VStack,
-  Grid,
   Divider,
   Link,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { getAnnouncements } from "@/lib/CRUD_Announcements";
+import { AnnouncementData } from "@/lib/types";
+import { PostgrestError } from "@supabase/supabase-js";
+import { error } from "console";
+import AnnoucementDisplayUnit from "./AnnouncementDisplayUnit";
 
-
-interface ItemAttributes {
-  title: string;
-  created_at: string;
-}
-
-const items: ItemAttributes[] = [
-  {
-    title: "Annoucement 1",
-    created_at: "21 Jan 2022",
-  },
-  {
-    title: "Annoucement 2 Go and Study, Stop playing",
-    created_at: "20 Jun 2021",
-  },
-  {
-    title: `Find out what's new in our Web Application hehe`,
-    created_at: "31 Sept 2022",
-  },
-];
 
 const Annoucements = () => {
+  const [announcementListData, setAnnouncementList] = useState<{
+    data: AnnouncementData[]; 
+    error: PostgrestError | null
+  }>({
+    data: [],
+    error: null
+  })
 
-  const bgColorScheme = useColorModeValue("gray.200", "gray.700");
-  const otherStuffPlsExplainRichie = useColorModeValue("gray.600", "gray.300");
+  useEffect(() => {
+    getAnnouncements(setAnnouncementList);
+  }, [])
 
   return (
     <Container maxW="5xl" p={{ base: 5, md: 10 }}>
-      <Flex justify="left" mb={3}>
+      <Flex justify="center" mb={3}>
         <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
           Annoucements
         </chakra.h3>
@@ -48,45 +39,14 @@ const Annoucements = () => {
         border="1px solid"
         borderColor="gray.400"
         rounded="md"
-        overflow="hidden"
+        overflow="auto"
+        maxHeight='500px'
         spacing={0}
       >
-        {items.map((item, index) => (
-          <Fragment key={index}>
-            <Grid
-              templateRows={{ base: "auto auto", md: "auto" }}
-              w="100%"
-              templateColumns={{ base: "unset", md: "5fr 3fr" }}
-              p={{ base: 2, sm: 4 }}
-              gap={3}
-              alignItems="center"
-              _hover={{ bg: bgColorScheme }}
-            >
-              <Stack gridColumnEnd={{ base: "span 2", md: "unset" }}>
-                <chakra.h3 fontWeight="bold" fontSize="lg">
-                  {item.title}
-                </chakra.h3>
-                <chakra.p
-                  fontWeight="medium"
-                  fontSize="sm"
-                  color={otherStuffPlsExplainRichie}
-                >
-                  Created: {item.created_at}
-                </chakra.p>
-              </Stack>
-              <Stack
-                spacing={2}
-                direction="row"
-                fontSize={{ base: "sm", sm: "md" }}
-                justifySelf="flex-end"
-                alignItems="center"
-              >
-                {["Manage", "Edit"].map((label, index) => (
-                  <ItemSettingLink key={index} label={label} />
-                ))}
-              </Stack>
-            </Grid>
-            {items.length - 1 !== index && <Divider m={0} />}
+        {announcementListData.data.map((item, index) => (
+          <Fragment key={item.id}>
+            <AnnoucementDisplayUnit announcement={item} setAnnouncements={setAnnouncementList}/>
+            {announcementListData.data.length - 1 !== index && <Divider m={0} />}
           </Fragment>
         ))}
       </VStack>
@@ -94,17 +54,5 @@ const Annoucements = () => {
   );
 };
 
-const ItemSettingLink = ({ label }: { label: string }) => {
-  return (
-    <chakra.p
-      as={Link}
-      _hover={{ bg: useColorModeValue("gray.400", "gray.600") }}
-      p={1}
-      rounded="md"
-    >
-      {label}
-    </chakra.p>
-  );
-};
 
 export default Annoucements;

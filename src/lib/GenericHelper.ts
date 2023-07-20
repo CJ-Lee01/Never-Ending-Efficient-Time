@@ -8,3 +8,8 @@ export function containsObject(obj: any, list: { [x: string]: any; hasOwnPropert
 
   return false;
 }
+
+export function toDateTimeLocalHTMLString(day: Date): string {
+  const resultDate = new Date(day.valueOf() - day.getTimezoneOffset() * 60 * 1000)
+  return resultDate.toISOString().slice(0, 16)
+}

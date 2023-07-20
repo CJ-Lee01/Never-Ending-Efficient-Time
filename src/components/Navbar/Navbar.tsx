@@ -1,8 +1,4 @@
-import {
-  Flex,
-  useColorModeValue,
-  Spacer,
-} from "@chakra-ui/react";
+import { Flex, useColorModeValue, Spacer } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Logo from "./Logo";
 import AccessBar from "./AccessBar";
@@ -22,13 +18,15 @@ const Navbar: React.FC = () => {
         setLogin(false);
       }
     });
-  }, [isLoggedIn]);
+  }, [supabase.auth]);
 
   return (
     <Flex
-      bg={useColorModeValue("gray.100", "gray.900")}
-      height="64px"
-      padding="8px 12px"
+      bg={useColorModeValue("navbarColor.light", "navbarColor.dark")}
+      height={16}
+      py={10}
+      px={{ base: "2%", lg: "5%", xl: "10%" }}
+      boxShadow="xl"
     >
       <Logo />
       <Spacer />
