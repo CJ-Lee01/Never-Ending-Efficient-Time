@@ -22,7 +22,7 @@ const EventListContext = () => {
   </EventListInfoContext.Provider>
 }
 
-describe("Renders list of events correctly with edit and delete", () => {
+describe("Renders list of events correctly with edit and delete (Integration Test)", () => {
   it("Renders correct values with edit and delete button", () => {
     const {unmount, getAllByTestId} = render(EventListContext())
     const htmlArr = getAllByTestId("eventCardComponent")
