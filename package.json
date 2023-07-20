@@ -7,7 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest --testPathIgnorePatterns=__mock/* --verbose",
+    "test-json": "jest --json --testPathIgnorePatterns=__mock/* --verbose",
+    "test-mock": "jest __mock/* --verbose",
+    "test-mock-json": "jest __mock/* --json --verbose",
+    "test-all": "jest --verbose"
+
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
@@ -46,6 +51,7 @@
     "@babel/preset-typescript": "^7.22.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
     "autoprefixer": "^10.4.14",
     "babel-jest": "^29.5.0",
     "encoding": "^0.1.13",

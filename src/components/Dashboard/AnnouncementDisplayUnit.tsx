@@ -1,6 +1,5 @@
 import { AnnouncementData } from "@/lib/types";
 import {
-  Box,
   Card,
   CardBody,
   Grid,
@@ -11,7 +10,6 @@ import {
 import { Dispatch, FC, SetStateAction } from "react";
 import DeleteAnnouncementModal from "./DeleteAnnouncementsModal";
 import { PostgrestError } from "@supabase/supabase-js";
-import { render } from "react-dom";
 
 const AnnoucementDisplayUnit: FC<{
   announcement: AnnouncementData;

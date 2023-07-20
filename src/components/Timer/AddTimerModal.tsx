@@ -61,8 +61,8 @@ const AddTimerModal: FC<AddTimerModalProps> = ({ pageUpdater }) => {
     };
     const { data, error } = await addTimer(newTimer);
     error ? alert(error.message) : "";
-    pageUpdater();
     onClose();
+    pageUpdater();
   };
 
   const handleIntervalChange = (

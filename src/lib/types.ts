@@ -1,14 +1,15 @@
 import { Session, User } from "@supabase/supabase-js";
-import { ChangeEventHandler, ReactElement } from "react";
+import { ChangeEventHandler, ReactElement, ReactNode } from "react";
 
 export interface InputFormFieldProps {
   type?: string;
   changeHandler: ChangeEventHandler<HTMLInputElement>;
-  children?: React.ReactNode;
+  children?: ReactNode;
   isRequired?: boolean;
   placeholder?: string;
   borderColor?: string;
   size?: string;
+  value?: number | string;
 }
 
 export interface UserData {
@@ -36,6 +37,8 @@ export interface eventInformation {
   event_description: string;
   start_time: Date;
   end_time: Date;
+  sem_data?: string; //sem data should be in the format of "AY {year}/{year} {semester string}". 
+  //see lib/NUSMods/AcademicCalendar.ts for details
 }
 
 export interface TasksInformation {
@@ -79,4 +82,18 @@ export interface ProfileType {
   created_at?: Date;
   full_name?: string;
   avatar_url?: string;
+  last_canvas_sync: Date;
+}
+
+export interface api_canvassyncResponse {
+  announcements: AnnouncementData[];
+  assignments: TasksInformation[];
+  error: string | null
+}
+
+export interface canvasSyncQuery {
+  canvasToken: String;
+  includeCompletedAssignments?: Boolean;
+  includeConcludedCourses?: Boolean;
+  startDateInfo?: String;
 }

@@ -10,12 +10,11 @@ import {
   Divider,
   Stack,
 } from "@chakra-ui/react";
-import { FC, useEffect } from "react";
-
+import { Dispatch, FC, SetStateAction, useEffect } from "react";
 
 interface TimeUpModalProps {
   isTimeUp: boolean;
-  setIsTimeUp: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsTimeUp: Dispatch<SetStateAction<boolean>>;
   intervalTitle: string;
   isIntervalComplete: boolean;
 }
@@ -27,16 +26,19 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
   isIntervalComplete,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  //The Audio constructor is not supported by Node and therefore needs to be inside the function instead.
   let ringtone = new Audio("sounds/ringtone.mp3");
 
   useEffect(() => {
     if (isTimeUp) {
       ringtone.play();
-      ringtone.loop = true;
-    } else {
-      ringtone.pause();
     }
   }, [isTimeUp]);
+
+  const handleClose = () => {
+    ringtone.pause();
+    setIsTimeUp(false);
+  };
 
   //for Time's Up! being the modal header, usng the ' normally gives
   //Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
@@ -47,7 +49,7 @@ const TimeUpModal: FC<TimeUpModalProps> = ({
     <Modal
       closeOnOverlayClick={true}
       isOpen={isTimeUp}
-      onClose={() => setIsTimeUp(false)}
+      onClose={handleClose}
       isCentered
     >
       <ModalOverlay />

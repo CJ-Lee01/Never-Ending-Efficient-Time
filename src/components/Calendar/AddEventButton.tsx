@@ -7,7 +7,7 @@ import { ChangeEvent, FormEvent, useContext, useState } from "react";
 
 const AddEventButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { events, pageUpdater } = useContext(EventListInfoContext);
+  const { pageUpdater } = useContext(EventListInfoContext);
   const [newEvent, setEvent] = useState(defaultEvent);
 
   const titleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +52,7 @@ const AddEventButton = () => {
 
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const {data, error} = await addEvent(newEvent)
+    const { error } = await addEvent(newEvent)
     if (error) {
       alert(error.message)
     }
@@ -68,7 +68,7 @@ const AddEventButton = () => {
       isCentered
     >
       <ModalOverlay />
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} data-testid="AddEventForm">
         <ModalContent>
           <ModalHeader>Add Event</ModalHeader>
           <ModalCloseButton />

@@ -15,7 +15,7 @@ import { AiOutlineCalendar } from "react-icons/ai";
 import { RiDashboardFill } from "react-icons/ri";
 import ProfileDropdown from "./ProfileDropdown";
 
-const AccessBar: FC = ({}) => {
+const AccessBar: FC = () => {
   return (
     <Flex alignItems={"center"}>
       <Stack direction={"row"} spacing={7}>

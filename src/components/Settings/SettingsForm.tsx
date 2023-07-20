@@ -16,7 +16,7 @@ import {
 import { PostgrestError } from "@supabase/supabase-js";
 import { ChangeEvent, FC, useEffect, useState } from "react";
 
-const isValidExtension = (fileName: string) => {
+export const isValidExtension = (fileName: string) => {
   const arr = fileName.split(".");
   const extension = arr[arr.length - 1];
   const validExtensions = ["jpg", "jpeg", "png"];
@@ -30,7 +30,7 @@ const isValidExtension = (fileName: string) => {
 
 interface SettingsFormProps {}
 
-const SettingsForm: FC<SettingsFormProps> = ({}) => {
+const SettingsForm: FC<SettingsFormProps> = () => {
   const [username, setUsername] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [ProfileData, setProfileData] = useState<{
@@ -66,7 +66,7 @@ const SettingsForm: FC<SettingsFormProps> = ({}) => {
       setIsInvalidFile(true);
       setIsSuccess(false);
     } else {
-      const error = updateSettings(username, avatarFile, pageUpdater);
+      // const error = updateSettings(username, avatarFile, pageUpdater); //unused.
       setIsLoading(true);
       setIsInvalidFile(false);
       setIsSuccess(true);
@@ -132,12 +132,12 @@ const SettingsForm: FC<SettingsFormProps> = ({}) => {
             Save Changes
           </Button>
           {isSuccess && !isInvalidFile ? (
-            <Alert status="success">
+            <Alert status="success" data-testid="settingsSuccessAlert">
               <AlertIcon /> {"Updating changes..."}
             </Alert>
           ) : (
             isInvalidFile && (
-              <Alert status="error">
+              <Alert status="error" data-testid="settingsErrorAlert">
                 <AlertIcon /> {"File is invalid!"}
               </Alert>
             )

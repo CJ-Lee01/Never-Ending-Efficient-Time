@@ -1,15 +1,14 @@
 "use client";
 
-import NotLoggedIn from "@/components/AuthUI/NotLoggedIn";
-import { AuthError, Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { supabaseUser } from "@/lib/initSupabase";
 import AlreadySignedIn from "@/components/AuthUI/AlreadySignIn";
+import { ReactNode } from "react";
 
 export default function LayoutForNonUser({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const supabase = supabaseUser();
   const [haventFetch, setCompleteFetch] = useState<boolean>(true);

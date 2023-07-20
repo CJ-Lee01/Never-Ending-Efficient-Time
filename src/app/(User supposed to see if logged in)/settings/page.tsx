@@ -1,14 +1,13 @@
 "use client";
-import { Heading, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import SettingsForm from "@/components/Settings/SettingsForm";
+import SettingsHeader from "@/components/Settings/SettingsHeader";
 
 export default function SettingsPage() {
   return (
     <>
       <Stack mb={48}>
-        <Heading textAlign={"left"} py={14} px={{ base: 10, xl: 48 }}>
-          Settings
-        </Heading>
+        <SettingsHeader></SettingsHeader>
         <SettingsForm></SettingsForm>
       </Stack>
     </>

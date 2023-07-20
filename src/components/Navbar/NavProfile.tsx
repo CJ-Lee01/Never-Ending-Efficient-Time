@@ -6,7 +6,7 @@ import { FC, useEffect, useState } from "react";
 
 interface NavProfileProps {}
 
-const NavProfile: FC<NavProfileProps> = ({}) => {
+const NavProfile: FC<NavProfileProps> = () => {
   const [ProfileData, setProfileData] = useState<{
     data: ProfileType | null;
     error: PostgrestError | null;

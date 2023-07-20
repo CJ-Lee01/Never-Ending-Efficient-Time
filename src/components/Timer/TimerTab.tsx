@@ -7,7 +7,7 @@ import { PostgrestError } from "@supabase/supabase-js";
 
 interface TimerTabProps {}
 
-const TimerTab: FC<TimerTabProps> = ({}) => {
+const TimerTab: FC<TimerTabProps> = () => {
   const [timerList, setTimerList] = useState<{
     data: TimerDataType[] | null;
     error: PostgrestError | null;

@@ -16,7 +16,7 @@ import { removeTask } from "@/lib/CRUD_Tasks";
 
 interface DeleteTaskModalProps { }
 
-const DeleteTaskModal: FC<DeleteTaskModalProps> = ({ }) => {
+const DeleteTaskModal: FC<DeleteTaskModalProps> = () => {
   const { task, pageUpdater } = useContext(TaskInfoContext)
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -29,6 +29,7 @@ const DeleteTaskModal: FC<DeleteTaskModalProps> = ({ }) => {
   return (
     <>
       <FiTrash2
+        data-testid="DeleteTaskIcon"
         cursor="pointer"
         className="text-red-500"
         size={20}
@@ -41,28 +42,30 @@ const DeleteTaskModal: FC<DeleteTaskModalProps> = ({ }) => {
         onClose={onClose}
         isCentered
       >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Delete Task</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            Are you sure you want to delete this task?
-          </ModalBody>
+        <div data-testid="DeleteConfirmationModal">
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Delete Task</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              Are you sure you want to delete this task?
+            </ModalBody>
 
-          <ModalFooter>
-            <Button
-              variant="solid"
-              bg="#D11A2A"
-              color="white"
-              _hover={{ bg: "red.600" }}
-              mr={3}
-              onClick={deleteHandler}
-            >
-              Delete
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
+            <ModalFooter>
+              <Button
+                variant="solid"
+                bg="#D11A2A"
+                color="white"
+                _hover={{ bg: "red.600" }}
+                mr={3}
+                onClick={deleteHandler}
+              >
+                Delete
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+            </ModalFooter>
+          </ModalContent>
+        </div>
       </Modal>
     </>
   );

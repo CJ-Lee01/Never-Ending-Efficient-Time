@@ -67,7 +67,11 @@ const Timers: FC<TimersProps> = ({
               data-testid="timerItem"
             >
               <Stack>
-                <chakra.h3 fontWeight="bold" fontSize="lg">
+                <chakra.h3
+                  fontWeight="bold"
+                  fontSize="lg"
+                  data-testid="timerItemTitle"
+                >
                   {timer.title}
                 </chakra.h3>
                 <chakra.p fontWeight="medium" fontSize="sm" color={textColor}>

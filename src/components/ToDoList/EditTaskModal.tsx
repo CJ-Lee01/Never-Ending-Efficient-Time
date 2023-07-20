@@ -12,21 +12,18 @@ import { FC, FormEvent, SetStateAction, useContext, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { TaskInfoContext } from "./Tasks";
 import TaskFormComponemt from "./TaskForms";
-import { TasksInformation } from "@/lib/types";
-import defaultTask from "./DefaultTask";
 import { editTask } from "@/lib/CRUD_Tasks";
 
-interface EditTaskModalProps {}
+interface EditTaskModalProps { }
 
-const EditTaskModal: FC<EditTaskModalProps> = ({}) => {
-  const {task, pageUpdater} = useContext(TaskInfoContext)
+const EditTaskModal: FC<EditTaskModalProps> = () => {
+  const { task, pageUpdater } = useContext(TaskInfoContext)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [taskInfo, setTaskInfo] = useState(task)
   const [saveSuccess, setSaveSuccess] = useState(false); //for future use.
 
   const submitTasksHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(taskInfo)
     const { data, error } = await editTask(taskInfo)
     error ? alert(error.message) : setSaveSuccess(true);
     pageUpdater();
@@ -36,6 +33,7 @@ const EditTaskModal: FC<EditTaskModalProps> = ({}) => {
   return (
     <>
       <FiEdit
+        data-testid="EditTaskIcon"
         cursor="pointer"
         className="text-blue-500"
         size={20}
@@ -52,21 +50,21 @@ const EditTaskModal: FC<EditTaskModalProps> = ({}) => {
         <ModalContent>
           <ModalHeader>Edit Task</ModalHeader>
           <ModalCloseButton />
-          <TaskFormComponemt setFormInfo={setTaskInfo} taskToChange={task} />
-          <form onSubmit={submitTasksHandler}>
-          <ModalFooter>
-            <Button
-              variant="solid"
-              bg="#0D74FF"
-              color="white"
-              _hover={{ bg: "blue.600" }}
-              mr={3}
-              type="submit"
-            >
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
+          <form onSubmit={submitTasksHandler} data-testid="EditTaskForm">
+            <TaskFormComponemt setFormInfo={setTaskInfo} taskToChange={taskInfo} />
+            <ModalFooter>
+              <Button
+                variant="solid"
+                bg="#0D74FF"
+                color="white"
+                _hover={{ bg: "blue.600" }}
+                mr={3}
+                type="submit"
+              >
+                Save
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+            </ModalFooter>
           </form>
         </ModalContent>
       </Modal>
