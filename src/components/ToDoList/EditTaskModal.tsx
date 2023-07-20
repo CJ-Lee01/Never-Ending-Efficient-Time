@@ -51,7 +51,7 @@ const EditTaskModal: FC<EditTaskModalProps> = ({ }) => {
           <ModalHeader>Edit Task</ModalHeader>
           <ModalCloseButton />
           <form onSubmit={submitTasksHandler} data-testid="EditTaskForm">
-            <TaskFormComponemt setFormInfo={setTaskInfo} taskToChange={task} />
+            <TaskFormComponemt setFormInfo={setTaskInfo} taskToChange={taskInfo} />
             <ModalFooter>
               <Button
                 variant="solid"

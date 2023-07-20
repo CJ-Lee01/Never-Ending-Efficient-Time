@@ -68,7 +68,7 @@ const AddEventButton = () => {
       isCentered
     >
       <ModalOverlay />
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} data-testid = "AddEventForm">
         <ModalContent>
           <ModalHeader>Add Event</ModalHeader>
           <ModalCloseButton />

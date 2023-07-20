@@ -7,7 +7,7 @@ import { render } from "@testing-library/react";
 
 jest.mock("../../../lib/CRUD_Tasks")
 
-describe("Testing list of tasks rendering", () => {
+describe("Testing list of tasks rendering (Integration Test)", () => {
   it("Contains same number of cards as length of task list", () => {
     const { unmount, getAllByTestId } = render(<Tasks />)
     const htmlArray = getAllByTestId("ViewTaskIcon")

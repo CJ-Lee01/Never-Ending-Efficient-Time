@@ -47,7 +47,7 @@ describe("Edit Task Modal", () => {
     })
   })
   it("Closes after clicking on close modal button", async () => {
-    const { unmount, getByTestId, queryByTestId, getAllByRole, getByRole } = render(modalContextRender(defaultTask))
+    const { unmount, queryByTestId, getAllByRole, getByRole } = render(modalContextRender(defaultTask))
     const addButton = getByRole("button")
     fireEvent.click(addButton, { button: 1 })
     const htmlForm = queryByTestId("AddTaskForm")
@@ -57,8 +57,6 @@ describe("Edit Task Modal", () => {
     await waitFor(() => {
       expect(htmlForm).not.toBeVisible()
     })
-
-    expect(htmlForm).not.toBeVisible()
     unmount()
   })
   it("Closes after clicking on Cancel", async () => {
