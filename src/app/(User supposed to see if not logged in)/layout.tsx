@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { supabaseUser } from "@/lib/initSupabase";
 import AlreadySignedIn from "@/components/AuthUI/AlreadySignIn";
+import { ReactNode } from "react";
 
 export default function LayoutForNonUser({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const supabase = supabaseUser();
   const [haventFetch, setCompleteFetch] = useState<boolean>(true);

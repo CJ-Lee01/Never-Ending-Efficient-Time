@@ -9,7 +9,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
-import { Dispatch, FC, SetStateAction, useContext } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { AnnouncementData } from "@/lib/types";
 import { removeAnnouncement } from "@/lib/CRUD_Announcements";

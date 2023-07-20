@@ -1,9 +1,9 @@
-import { FC, useContext, useEffect } from "react";
+import { Dispatch, FC, SetStateAction, useContext, useEffect } from "react";
 import { TimerDataContext } from "./TimerDataContextProvider";
 import Clock from "./Clock";
 
 interface ClockTickerProps {
-  setIsTimeUp: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsTimeUp: Dispatch<SetStateAction<boolean>>;
 }
 
 const ClockTicker: FC<ClockTickerProps> = ({ setIsTimeUp }) => {

@@ -1,24 +1,17 @@
 import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
-import { addBulkEvent, removeNUSModsCalendar } from "@/lib/CRUD_Calendar";
-import {
-  academicYearInfo,
-  currentAcademicYear,
-  getacademicYearList,
-} from "@/lib/NUSMods/AcademicCalendar";
-import NUSModsURLToEventList from "@/lib/NUSMods/NUSModsURLparser";
+import { removeNUSModsCalendar } from "@/lib/CRUD_Calendar";
+
 import {
   Stack,
   FormControl,
   FormLabel,
-  Image,
   Input,
   Select,
   Text,
 } from "@chakra-ui/react";
 import { useState, ChangeEvent, useContext, FC } from "react";
 
-export const SemClassesDeleteHandler: FC = ({ }) => {
-  const [urlString, setUrlString] = useState<string>("");
+export const SemClassesDeleteHandler: FC = () => {
   const [semseter, setSemester] = useState<string>("");
   const { events, pageUpdater } = useContext(EventListInfoContext);
   const acadYearList = events.map(x => x.sem_data ?? "")

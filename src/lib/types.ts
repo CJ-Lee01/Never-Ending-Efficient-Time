@@ -1,10 +1,10 @@
 import { Session, User } from "@supabase/supabase-js";
-import { ChangeEventHandler, ReactElement } from "react";
+import { ChangeEventHandler, ReactElement, ReactNode } from "react";
 
 export interface InputFormFieldProps {
   type?: string;
   changeHandler: ChangeEventHandler<HTMLInputElement>;
-  children?: React.ReactNode;
+  children?: ReactNode;
   isRequired?: boolean;
   placeholder?: string;
   borderColor?: string;

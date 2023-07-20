@@ -1,4 +1,3 @@
-import { Grid, Stack, Image } from "@chakra-ui/react";
 import { FC, useContext } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -6,8 +5,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 
-const CalendarGrid: FC = ({ }) => {
-  const { events, pageUpdater } = useContext(EventListInfoContext);
+const CalendarGrid: FC = () => {
+  const { events } = useContext(EventListInfoContext);
   return (
     <div className="calendar-container">
       <FullCalendar
@@ -26,7 +25,6 @@ const CalendarGrid: FC = ({ }) => {
             title: item.event_name,
             start: item.start_time,
             end: item.end_time,
-            
           }
         })}
         timeZone="local"

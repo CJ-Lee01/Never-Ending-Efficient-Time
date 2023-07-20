@@ -1,4 +1,7 @@
 {
   "extends": ["eslint:recommended", "next"],
-  "ignorePatterns": "**/__test__/*"
+  "ignorePatterns": ["**/__test__/*", "**/__mocks__/*"],
+  "rules": {
+    "no-unused-vars": "off" //Not very friendly with typescript.
+  }
 }

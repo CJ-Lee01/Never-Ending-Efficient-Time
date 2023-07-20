@@ -1,5 +1,5 @@
 "use client";
-import { Heading, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import SettingsForm from "@/components/Settings/SettingsForm";
 import SettingsHeader from "@/components/Settings/SettingsHeader";
 

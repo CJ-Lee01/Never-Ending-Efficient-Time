@@ -15,7 +15,6 @@ import {
   VStack,
   chakra,
   Link,
-  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FC, useContext } from "react";
@@ -24,9 +23,9 @@ import { toDateTimeLocalHTMLString } from "@/lib/GenericHelper";
 
 interface ViewTaskModalProps { }
 
-const ViewTaskModal: FC<ViewTaskModalProps> = ({ }) => {
+const ViewTaskModal: FC<ViewTaskModalProps> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { task, pageUpdater } = useContext(TaskInfoContext)
+  const { task } = useContext(TaskInfoContext)
 
 
   return (

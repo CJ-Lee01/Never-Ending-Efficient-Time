@@ -15,8 +15,8 @@ import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 import AddEventButton from "./AddEventButton";
 interface EventsListProps { }
 
-const EventsList: FC<EventsListProps> = ({ }) => {
-  const { events, pageUpdater } = useContext(EventListInfoContext);
+const EventsList: FC<EventsListProps> = () => {
+  const { events } = useContext(EventListInfoContext);
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
 
@@ -78,11 +78,5 @@ const EventsList: FC<EventsListProps> = ({ }) => {
     </Stack>
   );
 };
-
-interface EventAttributes {
-  title: string;
-  date: string;
-}
-
 
 export default EventsList;

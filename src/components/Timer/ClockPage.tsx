@@ -7,7 +7,7 @@ import ClockTicker from "./ClockTicker";
 
 interface ClockPageProps {}
 
-const ClockPage: FC<ClockPageProps> = ({}) => {
+const ClockPage: FC<ClockPageProps> = () => {
   const { isIntervalComplete, intervalTitle } = useContext(TimerDataContext);
   const [isTimeUp, setIsTimeUp] = useState<boolean>(false);
 
