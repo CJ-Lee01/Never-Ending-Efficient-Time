@@ -1,27 +1,27 @@
 "use client";
 
 import { TimerDataType } from "@/lib/types";
-import { FC, createContext, useState } from "react";
+import { Dispatch, FC, ReactNode, SetStateAction, createContext, useState } from "react";
 import { dummyTimer } from "./DummyTimer";
 
 // Context to share with the rest of the Components
 export const TimerDataContext = createContext<{
   isStopwatchStart: boolean;
-  setStopwatchStart: React.Dispatch<React.SetStateAction<boolean>>;
-  setTimerStart: React.Dispatch<React.SetStateAction<boolean>>;
+  setStopwatchStart: Dispatch<SetStateAction<boolean>>;
+  setTimerStart: Dispatch<SetStateAction<boolean>>;
   isTimerStart: boolean;
   counterSeconds: number;
-  setCounterSeconds: React.Dispatch<React.SetStateAction<number>>;
+  setCounterSeconds: Dispatch<SetStateAction<number>>;
   timerData: TimerDataType;
-  setTimerData: React.Dispatch<React.SetStateAction<TimerDataType>>;
+  setTimerData: Dispatch<SetStateAction<TimerDataType>>;
   counterIntervals: number;
-  setCounterIntervals: React.Dispatch<React.SetStateAction<number>>;
+  setCounterIntervals: Dispatch<SetStateAction<number>>;
   isIntervalComplete: boolean;
-  setIntervalComplete: React.Dispatch<React.SetStateAction<boolean>>;
-  setIntervalTitle: React.Dispatch<React.SetStateAction<string>>;
+  setIntervalComplete: Dispatch<SetStateAction<boolean>>;
+  setIntervalTitle: Dispatch<SetStateAction<string>>;
   intervalTitle: string;
   isPaused: boolean;
-  setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsPaused: Dispatch<SetStateAction<boolean>>;
 }>({
   isStopwatchStart: false,
   setStopwatchStart: () => {},
@@ -42,13 +42,13 @@ export const TimerDataContext = createContext<{
 });
 
 interface TimerDataContextProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const TimerDataContextProvider: FC<TimerDataContextProviderProps> = ({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
   // Declaring the States for the Context
   const [isStopwatchStart, setStopwatchStart] = useState<boolean>(false);

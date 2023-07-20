@@ -6,13 +6,14 @@ import Footer from "@/components/Footer";
 import { Inter } from "next/font/google";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "@/chakra/theme";
+import { ReactNode } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="en">

@@ -10,11 +10,11 @@ import {
   Divider,
   Stack,
 } from "@chakra-ui/react";
-import { FC, useEffect } from "react";
+import { Dispatch, FC, SetStateAction, useEffect } from "react";
 
 interface TimeUpModalProps {
   isTimeUp: boolean;
-  setIsTimeUp: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsTimeUp: Dispatch<SetStateAction<boolean>>;
   intervalTitle: string;
   isIntervalComplete: boolean;
 }

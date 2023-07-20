@@ -30,7 +30,7 @@ export const isValidExtension = (fileName: string) => {
 
 interface SettingsFormProps {}
 
-const SettingsForm: FC<SettingsFormProps> = ({}) => {
+const SettingsForm: FC<SettingsFormProps> = () => {
   const [username, setUsername] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [ProfileData, setProfileData] = useState<{
@@ -66,7 +66,7 @@ const SettingsForm: FC<SettingsFormProps> = ({}) => {
       setIsInvalidFile(true);
       setIsSuccess(false);
     } else {
-      const error = updateSettings(username, avatarFile, pageUpdater);
+      // const error = updateSettings(username, avatarFile, pageUpdater); //unused.
       setIsLoading(true);
       setIsInvalidFile(false);
       setIsSuccess(true);

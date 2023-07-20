@@ -10,10 +10,14 @@ jobs:
         - uses: actions/checkout@v2
         - name: Install Dependencies
           run: npm install
+        - name: Check Build
+          run: npm run build
         - name: Test Mock API
           run: npm run test-mock
         - name: Test Components and Functions
           run: npm run test
+        - name: Check linting
+          run: npm run lint
         
           
     

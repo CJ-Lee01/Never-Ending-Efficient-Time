@@ -16,7 +16,7 @@ import { editTask } from "@/lib/CRUD_Tasks";
 
 interface EditTaskModalProps { }
 
-const EditTaskModal: FC<EditTaskModalProps> = ({ }) => {
+const EditTaskModal: FC<EditTaskModalProps> = () => {
   const { task, pageUpdater } = useContext(TaskInfoContext)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [taskInfo, setTaskInfo] = useState(task)

@@ -15,7 +15,9 @@ import {
 import { FC, useContext } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
-const DeleteEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
+const DeleteEventModal: FC<{ eventInfo: eventInformation }> = (
+  { eventInfo }: { eventInfo: eventInformation }
+) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { events, pageUpdater } = useContext(EventListInfoContext);
 

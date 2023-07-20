@@ -1,4 +1,4 @@
-import { Stack, Heading, Text, Link } from "@chakra-ui/react";
+import { Stack, Heading, Text } from "@chakra-ui/react";
 
 export default function UpdatePasswordHeader() {
   return (

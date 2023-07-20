@@ -4,7 +4,6 @@ import {
   Container,
   Flex,
   Heading,
-  Icon,
   Image,
   Stack,
   Text,
@@ -22,7 +21,7 @@ interface CardProps {
   href: string;
 }
 
-const Card = ({ heading, description, icon, href }: CardProps) => {
+const Card = ({ heading, description, icon }: CardProps) => {
   return (
     <Box
       maxW={{ base: "full", md: "275px" }}
@@ -65,7 +64,7 @@ const Card = ({ heading, description, icon, href }: CardProps) => {
 };
 
 export default function Features() {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode, } = useColorMode();
   return (
     <Box p={14}>
       <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>

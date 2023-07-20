@@ -18,7 +18,7 @@ import defaultTask from "./DefaultTask";
 
 interface AddTaskModalProps { }
 
-const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
+const AddTaskModal: FC<AddTaskModalProps> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [saveSuccess, setSaveSuccess] = useState(false);
   const { task, pageUpdater } = useContext(TaskInfoContext)

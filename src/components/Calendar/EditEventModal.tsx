@@ -18,14 +18,14 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { ChangeEvent, ChangeEventHandler, FC, FormEvent, useContext, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { editEvent } from "@/lib/CRUD_Calendar";
 import { toDateTimeLocalHTMLString } from "@/lib/GenericHelper";
 
-const EditEventModal = ({ eventInfo }: { eventInfo: eventInformation }) => {
+const EditEventModal: FC<{ eventInfo: eventInformation }> = ({ eventInfo }: { eventInfo: eventInformation }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { events, pageUpdater } = useContext(EventListInfoContext);
+  const { pageUpdater } = useContext(EventListInfoContext);
   const [calendarEvent, setEvent] = useState<eventInformation>(eventInfo);
 
   const titleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {

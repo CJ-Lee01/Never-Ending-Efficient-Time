@@ -6,7 +6,7 @@ import { TaskInfoContext } from "./Tasks";
 import ViewTaskModal from "./ViewTaskModal";
 import { editTask } from "@/lib/CRUD_Tasks";
 
-const TaskComponent: FC<{ }> = ({ }) => {
+const TaskComponent: FC = () => {
   const { task, pageUpdater } = useContext(TaskInfoContext)
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
@@ -16,12 +16,12 @@ const TaskComponent: FC<{ }> = ({ }) => {
     : task.deadline.toLocaleString();
 
   const checkHandler = (event: ChangeEvent<HTMLInputElement>) => {
-      event.preventDefault();
-      editTask({
-        ...task,
-        is_complete: !task.is_complete,
-      });
-    };
+    event.preventDefault();
+    editTask({
+      ...task,
+      is_complete: !task.is_complete,
+    });
+  };
 
 
   return <Grid
@@ -48,14 +48,14 @@ const TaskComponent: FC<{ }> = ({ }) => {
       justifySelf="flex-end"
       alignItems="center"
     >
-        <ViewTaskModal />
-        <Checkbox
-          colorScheme="green"
-          defaultChecked={task.is_complete}
-          onChange={checkHandler}
-        />
-        <EditTaskModal />
-        <DeleteTaskModal />
+      <ViewTaskModal />
+      <Checkbox
+        colorScheme="green"
+        defaultChecked={task.is_complete}
+        onChange={checkHandler}
+      />
+      <EditTaskModal />
+      <DeleteTaskModal />
     </Stack>
   </Grid>
 }

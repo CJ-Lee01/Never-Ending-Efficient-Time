@@ -1,7 +1,6 @@
 import { EventListInfoContext } from "@/lib/PageUpdaters/CalendarPageUpdater";
 import { addBulkEvent } from "@/lib/CRUD_Calendar";
 import {
-  academicYearInfo,
   currentAcademicYear,
   getacademicYearList,
 } from "@/lib/NUSMods/AcademicCalendar";
@@ -16,10 +15,10 @@ import {
 } from "@chakra-ui/react";
 import { useState, ChangeEvent, useContext, FC } from "react";
 
-export const URLinputHandler: FC = ({}) => {
+export const URLinputHandler: FC = () => {
   const [urlString, setUrlString] = useState<string>("");
   const [acadYear, setAcadYear] = useState<string>(currentAcademicYear());
-  const { events, pageUpdater } = useContext(EventListInfoContext);
+  const { pageUpdater } = useContext(EventListInfoContext);
 
   const academicYearChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault();

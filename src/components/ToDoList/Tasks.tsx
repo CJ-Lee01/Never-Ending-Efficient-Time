@@ -31,7 +31,7 @@ export const TaskInfoContext = createContext<{
   pageUpdater: () => {},
 });
 
-const Tasks: FC<TasksProps> = ({}) => {
+const Tasks: FC<TasksProps> = () => {
   const bgColorScheme = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.600", "gray.300");
   const [taskList, setTaskList] = useState<{

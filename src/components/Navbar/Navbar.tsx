@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
   const [isLoggedIn, setLogin] = useState(false);
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabase.auth.onAuthStateChange((event) => {
       if (event == "SIGNED_IN") {
         setLogin(true);
       }

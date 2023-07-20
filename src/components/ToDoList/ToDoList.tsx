@@ -5,7 +5,7 @@ import Tasks from "./Tasks";
 
 interface ToDoListProps {}
 
-const ToDoList: FC<ToDoListProps> = ({}) => {
+const ToDoList: FC<ToDoListProps> = () => {
   return (
     <Container maxW="5xl" p={{ base: 5, md: 10 }}>
       <Stack mb={16} align="center" spacing={16}>

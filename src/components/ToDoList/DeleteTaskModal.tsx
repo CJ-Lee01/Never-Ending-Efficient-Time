@@ -16,7 +16,7 @@ import { removeTask } from "@/lib/CRUD_Tasks";
 
 interface DeleteTaskModalProps { }
 
-const DeleteTaskModal: FC<DeleteTaskModalProps> = ({ }) => {
+const DeleteTaskModal: FC<DeleteTaskModalProps> = () => {
   const { task, pageUpdater } = useContext(TaskInfoContext)
   const { isOpen, onOpen, onClose } = useDisclosure();
 
