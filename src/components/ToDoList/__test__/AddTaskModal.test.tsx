@@ -52,7 +52,6 @@ describe("Edit Task Modal", () => {
     fireEvent.click(addButton, { button: 1 })
     const htmlForm = queryByTestId("AddTaskForm")
     const [modalCloseButton, submitButton, cancelButton] = getAllByRole("button")
-    console.log(getAllByRole("button").length)
     fireEvent.click(modalCloseButton, { button: 1 })
     await waitFor(() => {
       expect(htmlForm).not.toBeVisible()

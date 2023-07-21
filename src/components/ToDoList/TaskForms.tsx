@@ -34,7 +34,6 @@ const TaskFormComponemt = (
   const updateDescription = (event: ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
     setFormInfo((prevTask) => {
-      console.log(prevTask)
       return {
         ...prevTask,
         description: event.target.value
