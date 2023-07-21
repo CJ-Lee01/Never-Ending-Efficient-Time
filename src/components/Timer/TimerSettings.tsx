@@ -12,7 +12,7 @@ import TimerTab from "./TimerTab";
 
 interface TimerSettingsProps {}
 
-const TimerSettings: FC<TimerSettingsProps> = ({}) => {
+const TimerSettings: FC<TimerSettingsProps> = () => {
   return (
     <Tabs
       isFitted

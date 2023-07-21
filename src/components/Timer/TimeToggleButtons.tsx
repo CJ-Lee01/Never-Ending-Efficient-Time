@@ -4,7 +4,7 @@ import { TimerDataContext } from "./TimerDataContextProvider";
 
 interface TimeToggleButtonsProps {}
 
-const TimeToggleButtons: FC<TimeToggleButtonsProps> = ({}) => {
+const TimeToggleButtons: FC<TimeToggleButtonsProps> = () => {
   const [resumeState, setResumeState] = useState<"stopwatch" | "timer" | null>(
     null
   );

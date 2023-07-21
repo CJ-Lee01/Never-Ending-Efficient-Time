@@ -16,7 +16,7 @@ import { editTask } from "@/lib/CRUD_Tasks";
 
 interface EditTaskModalProps { }
 
-const EditTaskModal: FC<EditTaskModalProps> = ({ }) => {
+const EditTaskModal: FC<EditTaskModalProps> = () => {
   const { task, pageUpdater } = useContext(TaskInfoContext)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [taskInfo, setTaskInfo] = useState(task)
@@ -24,7 +24,6 @@ const EditTaskModal: FC<EditTaskModalProps> = ({ }) => {
 
   const submitTasksHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(taskInfo)
     const { data, error } = await editTask(taskInfo)
     error ? alert(error.message) : setSaveSuccess(true);
     pageUpdater();
@@ -34,6 +33,7 @@ const EditTaskModal: FC<EditTaskModalProps> = ({ }) => {
   return (
     <>
       <FiEdit
+        data-testid="EditTaskIcon"
         cursor="pointer"
         className="text-blue-500"
         size={20}
@@ -50,8 +50,8 @@ const EditTaskModal: FC<EditTaskModalProps> = ({ }) => {
         <ModalContent>
           <ModalHeader>Edit Task</ModalHeader>
           <ModalCloseButton />
-          <TaskFormComponemt setFormInfo={setTaskInfo} taskToChange={task} />
-          <form onSubmit={submitTasksHandler}>
+          <form onSubmit={submitTasksHandler} data-testid="EditTaskForm">
+            <TaskFormComponemt setFormInfo={setTaskInfo} taskToChange={taskInfo} />
             <ModalFooter>
               <Button
                 variant="solid"

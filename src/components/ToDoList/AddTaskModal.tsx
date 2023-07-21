@@ -18,10 +18,10 @@ import defaultTask from "./DefaultTask";
 
 interface AddTaskModalProps { }
 
-const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
+const AddTaskModal: FC<AddTaskModalProps> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const {task, pageUpdater} = useContext(TaskInfoContext)
+  const { task, pageUpdater } = useContext(TaskInfoContext)
 
 
   const [taskInfo, updateTaskInfo] = useState<TasksInformation>({
@@ -90,26 +90,27 @@ const AddTaskModal: FC<AddTaskModalProps> = ({ }) => {
         onClose={onClose}
         isCentered
       >
-        <ModalOverlay />
-        <form onSubmit={submitTasksHandler}>
-        <ModalContent>
-          <ModalHeader>Add New Task</ModalHeader>
-          <ModalCloseButton />
-          <TaskFormComponemt setFormInfo={updateTaskInfo} taskToChange={defaultTask}/>
-          <ModalFooter>
-            <Button
-              variant="solid"
-              bg="#0D74FF"
-              color="white"
-              _hover={{ bg: "blue.600" }}
-              mr={3}
-              type="submit"
-            >
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
+        <form onSubmit={submitTasksHandler} data-testid="AddTaskForm">
+          <ModalOverlay />
+
+          <ModalContent>
+            <ModalHeader>Add New Task</ModalHeader>
+            <ModalCloseButton />
+            <TaskFormComponemt setFormInfo={updateTaskInfo} taskToChange={defaultTask} />
+            <ModalFooter>
+              <Button
+                variant="solid"
+                bg="#0D74FF"
+                color="white"
+                _hover={{ bg: "blue.600" }}
+                mr={3}
+                type="submit"
+              >
+                Save
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+            </ModalFooter>
+          </ModalContent>
         </form>
       </Modal>
     </>

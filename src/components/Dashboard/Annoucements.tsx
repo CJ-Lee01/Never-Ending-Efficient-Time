@@ -5,13 +5,10 @@ import {
   Flex,
   VStack,
   Divider,
-  Link,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { getAnnouncements } from "@/lib/CRUD_Announcements";
 import { AnnouncementData } from "@/lib/types";
 import { PostgrestError } from "@supabase/supabase-js";
-import { error } from "console";
 import AnnoucementDisplayUnit from "./AnnouncementDisplayUnit";
 
 

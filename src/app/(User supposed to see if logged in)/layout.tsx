@@ -3,18 +3,19 @@
 import NotLoggedIn from "@/components/AuthUI/NotLoggedIn";
 import { useEffect, useState } from "react";
 import { supabaseUser } from "@/lib/initSupabase";
+import { ReactNode } from "react";
 
 export default function LayoutForUser({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const supabase = supabaseUser();
   const [isLoggedIn, setLogin] = useState(false);
   const [haventFetch, setCompleteFetch] = useState<boolean>(true);
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabase.auth.onAuthStateChange((event) => {
       if (event == "SIGNED_IN") {
         setLogin(true);
       }

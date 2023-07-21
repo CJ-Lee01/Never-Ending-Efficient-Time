@@ -12,9 +12,9 @@ import { supabaseUser } from "@/lib/initSupabase";
 import { AuthError } from "@supabase/supabase-js";
 import PasswordFormField from "../PasswordFormField";
 
-interface UpdatePasswordFormProps {}
+interface UpdatePasswordFormProps { }
 
-const UpdatePasswordForm: FC<UpdatePasswordFormProps> = ({}) => {
+const UpdatePasswordForm: FC<UpdatePasswordFormProps> = () => {
   const supabase = supabaseUser();
   const [password, setPassword] = useState("");
   const [authError, setError] = useState<AuthError | null>();
@@ -26,7 +26,7 @@ const UpdatePasswordForm: FC<UpdatePasswordFormProps> = ({}) => {
     event.preventDefault();
     setIsSubmitted(false);
     setIsLoading(true);
-    const { data, error } = await supabase.auth.updateUser({
+    const { error } = await supabase.auth.updateUser({
       password: password,
     });
     setError(error);

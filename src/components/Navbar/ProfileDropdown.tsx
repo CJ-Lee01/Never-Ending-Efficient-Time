@@ -6,7 +6,6 @@ import {
   HStack,
   MenuList,
   Stack,
-  MenuItem,
   Divider,
 } from "@chakra-ui/react";
 import { FC } from "react";
@@ -18,7 +17,7 @@ import SettingsButton from "./SettingsButton";
 
 interface ProfileDropdownProps {}
 
-const ProfileDropdown: FC<ProfileDropdownProps> = ({}) => {
+const ProfileDropdown: FC<ProfileDropdownProps> = () => {
   return (
     <Flex alignItems={"center"} zIndex={2}>
       <Menu>

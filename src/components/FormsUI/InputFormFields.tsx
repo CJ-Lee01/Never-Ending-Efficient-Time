@@ -1,6 +1,6 @@
 import { InputFormFieldProps } from "@/lib/types";
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
-import { ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 export default function InputFormFields({ type, changeHandler, children, isRequired, value }: InputFormFieldProps) {
   return (

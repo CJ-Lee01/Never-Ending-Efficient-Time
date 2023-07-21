@@ -1,5 +1,4 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Link } from "@chakra-ui/next-js";
 import NextLink from "next/link";
 import {
   Flex,
@@ -10,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { FC } from "react";
 
-const AuthButtons: FC = ({}) => {
+const AuthButtons: FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (

@@ -1,7 +1,7 @@
 import { InputFormFieldProps } from "@/lib/types";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
-import { ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
 export default function PasswordFormField({changeHandler}: InputFormFieldProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false);

@@ -11,9 +11,9 @@ import InputFormFields, { genericInputHandler } from "../InputFormFields";
 import { supabaseUser } from "@/lib/initSupabase";
 import { AuthError } from "@supabase/supabase-js";
 
-interface ForgetPasswordFormProps {}
+interface ForgetPasswordFormProps { }
 
-const ForgetPasswordForm: FC<ForgetPasswordFormProps> = ({}) => {
+const ForgetPasswordForm: FC<ForgetPasswordFormProps> = () => {
   const supabase = supabaseUser();
 
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ const ForgetPasswordForm: FC<ForgetPasswordFormProps> = ({}) => {
     event.preventDefault();
     setIsSubmitted(false);
     setIsLoading(true);
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/update-password`,
     });
     setError(error);

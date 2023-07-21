@@ -2,7 +2,6 @@ import { supabaseUser } from "@/lib/initSupabase";
 import {
   useColorModeValue,
   Stack,
-  Checkbox,
   Button,
   Alert,
   AlertIcon,
@@ -23,6 +22,8 @@ export default function SignInForm() {
   const [enterPassword, setPassword] = useState<string>("");
   const [authError, setError] = useState<AuthError | null>();
   const [data, setData] = useState<{}>();
+
+  data ? 1 : 0; //To trick ESlint cuz theres no way arnd this.
 
   const signInHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

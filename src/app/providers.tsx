@@ -3,11 +3,12 @@
 // Not in Use currently
 
 import { CacheProvider } from "@chakra-ui/next-js";
-import { ChakraProvider, Heading, ThemeProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "@/chakra/theme";
 import { ColorModeScript } from "@chakra-ui/react";
+import { ReactNode } from "react";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children }: { children: ReactNode }) {
   return (
     <CacheProvider>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />

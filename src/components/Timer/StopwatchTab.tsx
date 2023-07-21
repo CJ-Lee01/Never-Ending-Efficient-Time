@@ -13,7 +13,7 @@ import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 interface StopwatchTabProps {}
 
-const StopwatchTab: FC<StopwatchTabProps> = ({}) => {
+const StopwatchTab: FC<StopwatchTabProps> = () => {
   const {
     isStopwatchStart,
     setStopwatchStart,

@@ -1,11 +1,13 @@
 import { addBulkAnnoucement } from "@/lib/CRUD_Announcements";
 import { addBulkTasks } from "@/lib/CRUD_Tasks";
 import { api_canvassyncResponse, canvasSyncQuery } from "@/lib/types";
-import { Button, Modal, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Textarea, useDisclosure } from "@chakra-ui/react";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { Button, Modal, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack } from "@chakra-ui/react";
+import { ChangeEvent, useState } from "react";
 import DefaultCanvasForm from "./DefaultForm";
 import AdvancedCanvasForm from "./AdvancedForm";
 import { setLastCanvasAccess } from "@/lib/CRUD_LastCanvasSyncTime";
+
+type RequestInfo = string | Request
 
 function convertCanvasOptionsToQuery(canvasOptions: canvasSyncQuery): string[][] {
   const result: string[][] = []
@@ -17,7 +19,7 @@ function convertCanvasOptionsToQuery(canvasOptions: canvasSyncQuery): string[][]
   }
   return result;
 }
-function CanvasForm({ startDate, openState, opener, closer }: { startDate: Date, openState: boolean, opener: () => void, closer: () => void }) {
+function CanvasForm({ startDate, openState, closer }: { startDate: Date, openState: boolean, closer: () => void }) {
   const [canvasOptions, setCanvasOptions] = useState<canvasSyncQuery>(
     {
       canvasToken: "",
