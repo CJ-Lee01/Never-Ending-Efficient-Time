@@ -90,7 +90,7 @@ describe("Edit event modal", () => {
       fireEvent.click(editEventButton, { button: 1 })
       const editEventForm = getByTestId("EditEventForm")
       const titleHTML = getByDisplayValue(event.event_name)
-      fireEvent.change(titleHTML, {target: {value: "Testing Title"}})
+      fireEvent.change(titleHTML, { target: { value: "Testing Title" } })
       expect(editEventForm).toHaveFormValues({
         "title": "Testing Title",
         "Start-DateTime": toDateTimeLocalHTMLString(event.start_time),
@@ -108,7 +108,7 @@ describe("Edit event modal", () => {
       fireEvent.click(editEventButton, { button: 1 })
       const editEventForm = getByTestId("EditEventForm")
       const startDateHTML = getByDisplayValue(toDateTimeLocalHTMLString(event.start_time))
-      fireEvent.change(startDateHTML, {target: {value: toDateTimeLocalHTMLString(new Date("2022-12-12"))}})
+      fireEvent.change(startDateHTML, { target: { value: toDateTimeLocalHTMLString(new Date("2022-12-12")) } })
       expect(editEventForm).toHaveFormValues({
         "title": event.event_name,
         "Start-DateTime": toDateTimeLocalHTMLString(new Date("2022-12-12")),
@@ -126,7 +126,7 @@ describe("Edit event modal", () => {
       fireEvent.click(editEventButton, { button: 1 })
       const editEventForm = getByTestId("EditEventForm")
       const endDateHTML = getByDisplayValue(toDateTimeLocalHTMLString(event.end_time))
-      fireEvent.change(endDateHTML, {target: {value: toDateTimeLocalHTMLString(new Date("2025-12-12"))}})
+      fireEvent.change(endDateHTML, { target: { value: toDateTimeLocalHTMLString(new Date("2025-12-12")) } })
       expect(editEventForm).toHaveFormValues({
         "title": event.event_name,
         "Start-DateTime": toDateTimeLocalHTMLString(event.start_time),
@@ -144,7 +144,7 @@ describe("Edit event modal", () => {
       fireEvent.click(editEventButton, { button: 1 })
       const editEventForm = getByTestId("EditEventForm")
       const titleHTML = getByDisplayValue(event.event_description)
-      fireEvent.change(titleHTML, {target: {value: "Testing description"}})
+      fireEvent.change(titleHTML, { target: { value: "Testing description" } })
       expect(editEventForm).toHaveFormValues({
         "title": event.event_name,
         "Start-DateTime": toDateTimeLocalHTMLString(event.start_time),
@@ -154,19 +154,21 @@ describe("Edit event modal", () => {
       unmount()
     })
   })
-  it.each(eventListWithUserID)("Shows correct form values", (event) => {
-    const { getByTestId, queryByTestId, unmount } = render(
-      editEventContext(event)
-    )
-    const editEventButton = getByTestId("EditEventIcon")
-    fireEvent.click(editEventButton, { button: 1 })
-    const editEventForm = getByTestId("EditEventForm")
-    expect(editEventForm).toHaveFormValues({
-      "title": event.event_name,
-      "Start-DateTime": toDateTimeLocalHTMLString(event.start_time),
-      "End-DateTime": toDateTimeLocalHTMLString(event.end_time),
-      "Description": event.event_description
+  describe.each(eventListWithUserID)("Shows correct form values", (event) => {
+    it(`Current value: \nTitle: ${event.event_name}, \nstart: ${event.start_time.toISOString()}, end: ${event.end_time.toISOString()}, \ndescription: ${event.event_description}`, () => {
+      const { getByTestId, queryByTestId, unmount } = render(
+        editEventContext(event)
+      )
+      const editEventButton = getByTestId("EditEventIcon")
+      fireEvent.click(editEventButton, { button: 1 })
+      const editEventForm = getByTestId("EditEventForm")
+      expect(editEventForm).toHaveFormValues({
+        "title": event.event_name,
+        "Start-DateTime": toDateTimeLocalHTMLString(event.start_time),
+        "End-DateTime": toDateTimeLocalHTMLString(event.end_time),
+        "Description": event.event_description
+      })
+      unmount()
     })
-    unmount()
   })
 })
