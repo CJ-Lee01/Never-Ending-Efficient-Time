@@ -26,8 +26,8 @@ const AddTaskModal: FC<AddTaskModalProps> = () => {
 
   const [taskInfo, updateTaskInfo] = useState<TasksInformation>({
     canvas_id: -1,
-    title: "No title",
-    description: "No Description",
+    title: "",
+    description: "",
     deadline: new Date(),
     is_complete: false,
   })
@@ -96,7 +96,7 @@ const AddTaskModal: FC<AddTaskModalProps> = () => {
           <ModalContent>
             <ModalHeader>Add New Task</ModalHeader>
             <ModalCloseButton />
-            <TaskFormComponemt setFormInfo={updateTaskInfo} taskToChange={defaultTask} />
+            <TaskFormComponemt setFormInfo={updateTaskInfo} taskToChange={taskInfo} />
             <ModalFooter>
               <Button
                 variant="solid"
