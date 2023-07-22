@@ -35,9 +35,10 @@ import EditTimerForm from "./EditTimerForm";
 
 interface EditTimerModalProps {
   timer: TimerDataType;
+  pageUpdater: () => void;
 }
 
-const EditTimerModal: FC<EditTimerModalProps> = ({ timer }) => {
+const EditTimerModal: FC<EditTimerModalProps> = ({ timer, pageUpdater }) => {
   const [timerTitle, setTimerTitle] = useState(timer.title);
   const [timerIntervals, setTimerIntervals] = useState(timer.intervals);
   const [timerIntervalTitle, setTimerIntervalTitle] = useState(
@@ -83,6 +84,7 @@ const EditTimerModal: FC<EditTimerModalProps> = ({ timer }) => {
     const { data, error } = await editTimer(newTimer);
     error ? alert(error.message) : "";
     onClose();
+    pageUpdater();
   };
 
   const handleIntervalChange = (
