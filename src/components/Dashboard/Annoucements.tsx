@@ -1,35 +1,28 @@
 import { Fragment, useEffect, useState } from "react";
-import {
-  Container,
-  chakra,
-  Flex,
-  VStack,
-  Divider,
-} from "@chakra-ui/react";
+import { Container, chakra, Flex, VStack, Divider } from "@chakra-ui/react";
 import { getAnnouncements } from "@/lib/CRUD_Announcements";
 import { AnnouncementData } from "@/lib/types";
 import { PostgrestError } from "@supabase/supabase-js";
 import AnnoucementDisplayUnit from "./AnnouncementDisplayUnit";
 
-
-const Annoucements = () => {
+const Announcements = () => {
   const [announcementListData, setAnnouncementList] = useState<{
-    data: AnnouncementData[]; 
-    error: PostgrestError | null
+    data: AnnouncementData[];
+    error: PostgrestError | null;
   }>({
     data: [],
-    error: null
-  })
+    error: null,
+  });
 
   useEffect(() => {
     getAnnouncements(setAnnouncementList);
-  }, [])
+  }, []);
 
   return (
     <Container maxW="5xl" p={{ base: 5, md: 10 }}>
       <Flex justify="center" mb={3}>
         <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
-          Annoucements
+          Announcements
         </chakra.h3>
       </Flex>
       <VStack
@@ -37,13 +30,18 @@ const Annoucements = () => {
         borderColor="gray.400"
         rounded="md"
         overflow="auto"
-        maxHeight='500px'
+        maxHeight="500px"
         spacing={0}
       >
         {announcementListData.data.map((item, index) => (
           <Fragment key={item.id}>
-            <AnnoucementDisplayUnit announcement={item} setAnnouncements={setAnnouncementList}/>
-            {announcementListData.data.length - 1 !== index && <Divider m={0} />}
+            <AnnoucementDisplayUnit
+              announcement={item}
+              setAnnouncements={setAnnouncementList}
+            />
+            {announcementListData.data.length - 1 !== index && (
+              <Divider m={0} />
+            )}
           </Fragment>
         ))}
       </VStack>
@@ -51,5 +49,4 @@ const Annoucements = () => {
   );
 };
 
-
-export default Annoucements;
+export default Announcements;
