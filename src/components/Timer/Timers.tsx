@@ -97,7 +97,7 @@ const Timers: FC<TimersProps> = ({
                 >
                   Start
                 </Button>
-                <EditTimerModal timer={timer} />
+                <EditTimerModal timer={timer} pageUpdater={pageUpdater} />
                 <DeleteTimerModal timer={timer} pageUpdater={pageUpdater} />
               </Stack>
             </Grid>
