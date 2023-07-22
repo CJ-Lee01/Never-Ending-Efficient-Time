@@ -1,7 +1,7 @@
 "use client";
 
 import ToDoSummary from "@/components/Dashboard/ToDoSummary";
-import Annoucements from "@/components/Dashboard/Annoucements";
+import Announcements from "@/components/Dashboard/Annoucements";
 import { Stack, Heading } from "@chakra-ui/react";
 import { getProfile } from "@/lib/CRUD_Profile";
 import { ProfileType } from "@/lib/types";
@@ -28,7 +28,7 @@ export default function Dashboard() {
       </Heading>
       <Stack direction={{ base: "column", lg: "row" }} mb={{ base: 10, lg: 0 }}>
         <ToDoSummary />
-        <Annoucements />
+        <Announcements />
       </Stack>
     </Stack>
   );

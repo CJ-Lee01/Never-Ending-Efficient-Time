@@ -48,7 +48,7 @@ export const URLinputHandler: FC = () => {
     <Stack px={{ base: 28, xl: 12 }} pb={10}>
       <Image src="images/NUSMods.png" alt="" />
       <FormControl justifyContent="center">
-        <FormLabel>Enter your NUSmods timetable link:</FormLabel>
+        <FormLabel>Enter your NUSMods timetable link:</FormLabel>
         <Input
           type="url"
           required
