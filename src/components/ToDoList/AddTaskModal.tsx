@@ -96,7 +96,7 @@ const AddTaskModal: FC<AddTaskModalProps> = () => {
           <ModalContent>
             <ModalHeader>Add New Task</ModalHeader>
             <ModalCloseButton />
-            <TaskFormComponemt setFormInfo={updateTaskInfo} taskToChange={defaultTask} />
+            <TaskFormComponemt setFormInfo={updateTaskInfo} taskToChange={taskInfo} />
             <ModalFooter>
               <Button
                 variant="solid"
