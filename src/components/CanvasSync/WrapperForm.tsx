@@ -65,7 +65,7 @@ function CanvasForm({ startDate, openState, closer }: { startDate: Date, openSta
   const viewFormTitle = () => `Click to view ${isDefault ? "advanced" : "default"} form.`
   const formOption = () => isDefault
     ? <DefaultCanvasForm canvasAccessDate={startDate} formSetter={setCanvasOptions} />
-    : <AdvancedCanvasForm canvasAccessDate={startDate} formSetter={setCanvasOptions} />
+    : <AdvancedCanvasForm canvasAccessData={canvasOptions} formSetter={setCanvasOptions} />
 
   return <Modal
     closeOnOverlayClick={false}

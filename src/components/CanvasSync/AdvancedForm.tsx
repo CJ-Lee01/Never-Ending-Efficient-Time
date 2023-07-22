@@ -5,7 +5,7 @@ import { Alert, AlertIcon, Checkbox } from '@chakra-ui/react'
 import getCanvasAccessDate from "./CanvasAccessDateFunction";
 
 
-function AdvancedCanvasForm({ canvasAccessDate, formSetter }: { canvasAccessDate: Date, formSetter: Dispatch<SetStateAction<canvasSyncQuery>> }) {
+function AdvancedCanvasForm({ canvasAccessData, formSetter }: { canvasAccessData: canvasSyncQuery, formSetter: Dispatch<SetStateAction<canvasSyncQuery>> }) {
   const tokenChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     formSetter(query => {
@@ -54,7 +54,7 @@ function AdvancedCanvasForm({ canvasAccessDate, formSetter }: { canvasAccessDate
     <InputFormFields
       changeHandler={dateChangeHandler}
       type="datetime-local"
-      value={getCanvasAccessDate(canvasAccessDate)}>
+      value={getCanvasAccessDate(new Date(canvasAccessData.startDateInfo ?? Date.now()))}>
       Start date
     </InputFormFields>
     <Checkbox
