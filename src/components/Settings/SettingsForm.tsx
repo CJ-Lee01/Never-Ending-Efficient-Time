@@ -66,7 +66,7 @@ const SettingsForm: FC<SettingsFormProps> = () => {
       setIsInvalidFile(true);
       setIsSuccess(false);
     } else {
-      // const error = updateSettings(username, avatarFile, pageUpdater); //unused.
+      updateSettings(username, avatarFile, pageUpdater);
       setIsLoading(true);
       setIsInvalidFile(false);
       setIsSuccess(true);
