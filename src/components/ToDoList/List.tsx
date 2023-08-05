@@ -6,11 +6,11 @@ import { TasksInformation } from "@/lib/types"
 
 const TaskList = ({ taskList, pageUpdater }: { taskList: TasksInformation[], pageUpdater: () => void }) => {
 
+  const [filterCompleted, setFilter] = useState<boolean>(false)
+  
   if (taskList.length == 0) {
     return <>You have no tasks.</>
   }
-  const [filterCompleted, setFilter] = useState<boolean>(false)
-
   const filterHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setFilter(x => !x)
   }
