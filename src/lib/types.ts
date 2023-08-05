@@ -95,5 +95,5 @@ export interface canvasSyncQuery {
   canvasToken: String;
   includeCompletedAssignments?: Boolean;
   includeConcludedCourses?: Boolean;
-  startDateInfo?: string;
+  start?: string;
 }
