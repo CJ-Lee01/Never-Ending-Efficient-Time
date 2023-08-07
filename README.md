@@ -4,7 +4,8 @@ NEET Never Ending Efficient Time
 
 ## Proposed level of Achievement:
 
-Gemini
+<del>Gemini</del>
+Apollo
 
 <details>
 <summary>Motivation</summary>

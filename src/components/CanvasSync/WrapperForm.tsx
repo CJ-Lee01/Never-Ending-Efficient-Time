@@ -23,7 +23,7 @@ function CanvasForm({ startDate, openState, closer }: { startDate: Date, openSta
   const [canvasOptions, setCanvasOptions] = useState<canvasSyncQuery>(
     {
       canvasToken: "",
-      startDateInfo: startDate.toISOString(),
+      start: startDate.toISOString(),
     }
   );
   const [isDefault, toggleDefault] = useState<boolean>(true)

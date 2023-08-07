@@ -54,7 +54,7 @@ function AdvancedCanvasForm({ canvasAccessData, formSetter }: { canvasAccessData
     <InputFormFields
       changeHandler={dateChangeHandler}
       type="datetime-local"
-      value={getCanvasAccessDate(new Date(canvasAccessData.startDateInfo ?? Date.now()))}>
+      value={getCanvasAccessDate(new Date(canvasAccessData.start ?? Date.now()))}>
       Start date
     </InputFormFields>
     <Checkbox

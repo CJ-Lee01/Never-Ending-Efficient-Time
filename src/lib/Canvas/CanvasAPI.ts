@@ -28,7 +28,6 @@ async function getCanvasCourses(canvasToken: string, includeConcluded: boolean =
     method: "GET",
     headers: header
   });
-  console.log(response.status)
   if (response.status == 401) {
     return {
       courses: [],
@@ -73,13 +72,11 @@ async function getCanvasAnnouncements(canvasToken: string, courseList: CourseInf
         .then(announcementList => (announcementList as CanvasAPIAnnoucement[]))
         .then(announcementList => announcementList.filter(item => {
           const announcedDate = new Date(item.posted_at ?? Date.now())
-            console.log(announcedDate.toLocaleString())
             return !(startDate && announcedDate < startDate)
         }))
         .then(announcementList => {
           announcementList.forEach(announcement => {
             const announcedDate = new Date(announcement.posted_at ?? Date.now())
-            console.log(announcedDate.toLocaleString())
             if (startDate && announcedDate < startDate) {
               return
             }
