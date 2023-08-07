@@ -1,7 +1,7 @@
 import { addBulkAnnoucement } from "@/lib/CRUD_Announcements";
 import { addBulkTasks } from "@/lib/CRUD_Tasks";
 import { api_canvassyncResponse, canvasSyncQuery } from "@/lib/types";
-import { Button, Modal, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack } from "@chakra-ui/react";
+import { Button, Link, Modal, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
 import DefaultCanvasForm from "./DefaultForm";
 import AdvancedCanvasForm from "./AdvancedForm";
@@ -23,7 +23,7 @@ function CanvasForm({ startDate, openState, closer }: { startDate: Date, openSta
   const [canvasOptions, setCanvasOptions] = useState<canvasSyncQuery>(
     {
       canvasToken: "",
-      startDateInfo: startDate.toISOString(),
+      start: startDate.toISOString(),
     }
   );
   const [isDefault, toggleDefault] = useState<boolean>(true)
@@ -57,7 +57,7 @@ function CanvasForm({ startDate, openState, closer }: { startDate: Date, openSta
     if (taskResponse.error) {
       alert(taskResponse.error.message);
     }
-    isDefault && setLastCanvasAccess() 
+    isDefault && setLastCanvasAccess()
     closer()
     window.location.reload(); //still using this to refresh the announcements, sth will be done later.
   };
@@ -81,6 +81,13 @@ function CanvasForm({ startDate, openState, closer }: { startDate: Date, openSta
         <Stack p={4}>
           <Button onClick={() => toggleDefault(x => !x)}>{viewFormTitle()}</Button>
           {formOption()}
+          <Link
+            href="https://community.canvaslms.com/t5/Student-Guide/How-do-I-manage-API-access-tokens-as-a-student/ta-p/273"
+            isExternal
+            className="italic"
+          >
+            Where to get my Canvas Access Token?
+          </Link>
         </Stack>
         <ModalFooter>
           <Button

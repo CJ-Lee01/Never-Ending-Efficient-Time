@@ -20,6 +20,7 @@ import { PostgrestError } from "@supabase/supabase-js";
 import defaultTask from "./DefaultTask";
 import AddTaskModal from "./AddTaskModal";
 import TaskComponent from "./TaskComponent";
+import TaskList from "./List";
 
 interface TasksProps {}
 
@@ -48,15 +49,6 @@ const Tasks: FC<TasksProps> = () => {
     getTasks(setTaskList);
   }, [dummy]);
 
-  const checkHandler =
-    (item: TasksInformation) => (event: ChangeEvent<HTMLInputElement>) => {
-      event.preventDefault();
-      editTask({
-        ...item,
-        is_complete: !item.is_complete,
-      });
-    };
-
   return (
     <>
       <TaskInfoContext.Provider
@@ -66,26 +58,7 @@ const Tasks: FC<TasksProps> = () => {
           <AddTaskModal />
         </Stack>
       </TaskInfoContext.Provider>
-      <VStack
-        border="1px solid"
-        borderColor="gray.400"
-        rounded="md"
-        overflow="hidden"
-        spacing={0}
-      >
-        {taskList.data?.map((item, index) => (
-          <Fragment key={item.id}>
-            <TaskInfoContext.Provider
-                  value={{ task: item, pageUpdater: pageUpdater }}
-                >
-                  <TaskComponent />
-                </TaskInfoContext.Provider>
-            {taskList.data != null && taskList.data.length - 1 !== index && (
-              <Divider m={0} />
-            )}
-          </Fragment>
-        ))}
-      </VStack>
+      <TaskList taskList={taskList.data} pageUpdater={pageUpdater}/>
     </>
   );
 };
