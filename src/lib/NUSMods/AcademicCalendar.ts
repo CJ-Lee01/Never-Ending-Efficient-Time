@@ -65,7 +65,7 @@ const academicCalendar = new Map<string, academicCalendarMapInfo>([
   ],
   ["2023/2024",
     [
-      { "start": [2023, 8, 7] },
+      { "start": [2023, 8, 14] },
       { "start": [2024, 1, 15] },
       { "start": [2024, 5, 13] },
       { "start": [2024, 6, 24] }
